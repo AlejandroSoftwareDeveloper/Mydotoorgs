@@ -1,0 +1,277 @@
+#+STARTUP: content
+
+* (Curso) x86 64-bit Assembly Language Step by Step (Resumir en este documento)
+* Sistema de computadoras (Basico)
+** Descripcion basica de los sistemas de computos
+  - Los sistemas de computadoras usan la arquitectura Bon Neuman
+	compuesta por tres elementos basicos conectados a un bus del sistema(*SYSTEM BUS*):
+	- El bus del sistema permite la tranferencia de datos, direcciones (*address*), señales de
+	  control entre componentes
+	- Las Unidad Central de Procesamiento(*CPU*) es el "cerebro" del sistema.
+	  - Los *registros* se usan para almecenar data y resultados temporales.
+	  - La *unidad de control* se usa para decodificar, ejecutar instruciones recibida de la
+		memoria y dirige las operaciones de la CPU
+	  - La *unidad arimetico logica* (*ALU*) realiza operaciones matematicas como suma, resta, ademas
+		de operaciones logicas como *and,* *or* ect.
+
+          - La *Memoria*
+
+       		   Bytes  8bits		
+          |-------------------------------|	
+	    7   6   5   4   3   2   1   0
+	  |---+---+---+---+---+---+---+---| 
+       msb| 1 | 0 | 0 | 1 | 1 | 0 | 0 | 1 |lsb
+	  |---+---+---+---+---+---+---+---|
+
+	  - Cada valor sea 0 o 1 se le conoce como bit que puede ser tener estado de 1 o 0.
+		- El bit mas significativo (*most significative bit* (*msb*)) es el bit mas grande de la cadena y este es primero de
+		  izquierda a derecha.
+		- El bit menos significativo (*less significative bit(lsb)*) es el bit mas pequeno de la cadena y este es primero de
+		  derecha a izquierda.
+	  - Los datos tienen diferentes tamanios en la arquitectura x86
+		|--------+------+---------|
+		| Nombre | bits | byte(s) |
+		|--------+------+---------|
+		| byte   |    8 |       1 |
+		|--------+------+---------|
+		| word   |   16 |       2 |
+		|--------+------+---------|
+		| dword  |   32 |       4 |
+		|--------+------+---------|
+		| qword  |   64 |       8 |
+		|--------+------+---------|
+  
+	- Dispositos de *I/O*
+
+  - Intel introdujo un modo nuevo de x86 llamado *IA-32e* el cual tiene 2 sub modos:
+	- modo *Compatible* para programas de 16 y 32 bits en SO de 64 bit.
+	- modo *64 bits* para programas y sistemas operativos(*SO*) de 64 bit.
+	  - 16 registros de 64 bit de proposito genenal 
+	  - flags register de 64 bit RFLAGS
+	  - 64 bit instruction pointer *RIP*
+		- El *RIP* lee de la memoria las intrucciones a ejecutar.
+	  - 48 bit de direccion de soporte virtuales de 64 bit en forma canonica.
+
+	  - Si el ultimo bit de los 47 esta en 1 todos los demas
+		apartir del 47 se tornaran en 1.
+
+       		63          48    47                  0						
+		|           |     |                   |
+       	        1111 ... 1111 ... 1000100...00100110101
+
+		
+	  - Si el ultimo bit de los 47 esta en 0 todos los demas
+		apartir del 47 se tornaran en 0.
+
+       63           48    47                  0						
+	|           |     |                   |
+        0000 ... 0000 ... 0000100...00100110101
+
+** Registros
+
+		    		Tabla de registros 
+		|----+--------+--------+--------+-------|
+		| n0 | 64 bit | 32 bit | 16 bit | 8 bit |
+		|----+--------+--------+--------+-------|
+		|  1 | RAX    | EAX    | AX     | AH AL |
+		|----+--------+--------+--------+-------|
+		|  2 | RBX    | EBX    | BX     | BH BL |
+		|----+--------+--------+--------+-------|
+		|  3 | RCX    | ECX    | CX     | CH CL |
+		|----+--------+--------+--------+-------|
+		|  4 | RDX    | EDX    | DX     | DH DL |
+		|----+--------+--------+--------+-------|
+		|  5 | RSI    | ESI    | SI     | SIL   |
+		|----+--------+--------+--------+-------|
+		|  6 | RDI    | EDI    | DI     | DIL   |
+		|----+--------+--------+--------+-------|
+		|  7 | R8     | R8D    | R8W    | R8B   |
+		|----+--------+--------+--------+-------|
+		|  8 | R9     | R9D    | R9W    | R9B   |
+		|----+--------+--------+--------+-------|
+		|  9 | R10    | R10D   | R10W   | R10B  |
+		|----+--------+--------+--------+-------|
+		| 10 | R11    | R11D   | R11W   | R11B  |
+		|----+--------+--------+--------+-------|
+		| 11 | R12    | R12D   | R12W   | R12B  |
+		|----+--------+--------+--------+-------|
+		| 12 | R13    | R13D   | R13W   | R13B  |
+		|----+--------+--------+--------+-------|
+		| 13 | R14    | R14D   | R14W   | R14B  |
+		|----+--------+--------+--------+-------|
+		| 14 | R15    | R15D   | R15W   | R15B  |
+		|----+--------+--------+--------+-------|
+		| 15 | RBP    | EBP    | BP     | BPL   |
+		|----+--------+--------+--------+-------|
+		| 16 | RSP    | ESP    | SP     | SPL   |
+		|----+--------+--------+--------+-------|
+
+
+		| RAX 64bit | .......... | ........... | ......... |
+		|           | EAX 32 bit | ........... | ......... |
+		|           |            | AX 16 bit   | ......... |
+		|           |            |             | ......... |
+		|           |            | AH  8bit    | AL 8bit   |
+
+	    - Si queremos acceder a los 32 bits bajos de RAX de 64 bits
+		  usamos *EAX*.
+	    - Si queremos acceder a los 16 bits bajos de RAX de 64 bits
+		  usamos *AX*.
+	    - Si queremos acceder a los 8 bits altos de los primeros
+		  16 bits bajos de RAX de 64 bits usamos *AH*.
+
+	    - Si queremos acceder a los 8 bits bajos de los primeros
+		  16 bits bajos de RAX de 64 bits usamos *AL*.
+
+		- En los 64 bit *RSP* significa register stack pointer y se usa
+		  para operacion en la pila
+
+		- En los 64 bit *RSP* se usa para el stack frame pointer en algunos casos.
+		  
+** Sistemas numericos
+   - _Decimal_
+	 - El sistema decimal se le conoce como base 10 donde de derecha a izquierda
+	   se va incrementando por la potencia de 10.ejemplo.
+       - Se representa del 0 al 9.
+       3 * (10^2) + 5 * (10^1) + 7 * (10^0)
+       3 * 100    + 5 * 10     + 7 * (10^0 == 1)
+	   300        +  50        + 7 = 357
+   
+   - _Binario_
+	 - El sistema binario tiene base 2 y se alla a partir del sistema
+	   decimal donde tambien se inc la potencia pero en base 2
+		Para llevar de binario a decimal a que hacer la misma operacion anterior
+		pero con base 2
+
+	 	2^7 2^6 2^5 2^4 2^3 2^2 2^1 2^0
+	     1   0   0   0   1   0 	 0   1
+		128			     8			 1	= 137
+		
+   - _Hexadecimal_
+	 - El sistema hexadecimal tiene base 16 y va de 0 al 15 pero no hasta el
+	   15 directamente, luego del 9 cuenta como el abecedario desde la A hasta la F.
+	   - 1 2 3 4 5 6 7 8 9 A B C D E F
+     - Para convertir de hexadecimal a binario se usa la base 16
+
+	   16^2 16^1 16^0
+	    2    A     F
+
+		F * 16^0 = 15
+		A * 16^1 = 160 
+	    2 * 16^2 = 512
+		--------------
+				   687
+
+	   - Para covertir de binario a hexadecimal se usa la siguiente tabla
+	   |---------+-------------|
+	   | binario | Hexadecimal |
+	   |---------+-------------|
+	   |    0000 |           0 |
+	   |    0001 |           1 |
+	   |    0010 |           2 |
+	   |    0101 |           3 |
+	   |    0100 |           4 |
+	   |    0101 |           5 |
+	   |    0110 |           6 |
+	   |    0111 |           7 |
+	   |    1000 |           8 |
+	   |    1001 |           9 |
+	   |    1010 |           A |
+	   |    1011 |           B |
+	   |    1100 |           C |
+	   |    1101 |           D |
+	   |    1110 |           E |
+	 binario    = 10100b
+	 hexadecimal = 0x14  o  14h
+
+	 - De binario a hexadecimal se multiplica por la base 2
+	   |---+---+---+---+---+---+---+---|
+	   | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
+	   |---+---+---+---+---+---+---+---|
+	   			 |       |
+			  1 * 2^5 + 1 * 2^3  = 40
+			  
+** Numeros enteros
+*** Representacion de los positivo- Los numeros positivos pueden ser representados desde
+	 0 - (2^n) -siendo n el numero maximo de bits
+
+*** Representacion de los negativos
+	-2^(n-1)  a  2^(n-1) - 1
+	 8 bits
+	|---+---+---+---+---+---+---+---|
+	| 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+	|---+---+---+---+---+---+---+---|
+	  |
+    bit del signo
+	- (0 es positivo)
+	- (1 es negativo)
+
+	Maximo numero positivo de N bit a representar de 0 a (2^(8-1)) - 1
+	siendo 8 el numero maximo de bits en este caso
+	- Numero positivo
+	|---+---+---+---+---+---+---+---|
+	| 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |  = 127
+	|---+---+---+---+---+---+---+---|
+
+**** Calculo de numero negativo
+	Complemento a dos (Two's complement) 
+	- Numero negativo
+	|---+---+---+---+---+---+---+---|
+	| 1 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
+	|---+---+---+---+---+---+---+---|
+
+	- Para llevarlo a binario con complemento a dos se siguen los siguientes pasos
+	  - se invierten los bit, donde habia un 0 se pone un uno y viceversa, se incluye el
+		bit del signo.
+	Antes 
+	|---+---+---+---+---+---+---+---|
+	| 1 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
+	|---+---+---+---+---+---+---+---|
+
+	Despues 
+	|---+---+---+---+---+---+---+---|
+	| 0 | 1 | 0 | 1 | 0 | 1 | 1 | 1 |
+	|---+---+---+---+---+---+---+---|
+
+	- Luego se hace adicion binaria
+      - El carry se genera a partir de la suma de bits en 1 y al resultado ser uno pasa a la proxima posicion
+      - Una vez terminado el posicionamiento del carry se rellena con los valores que quedan originalmente
+      - Luego se calcula el valor binario con la potencia de base 10
+
+	|-----------+---+---+---+---+---+---+---+---|
+	|           | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 1 |
+	|-----------+---+---+---+---+---+---+---+---|
+	| +         |   |   |   |   | 1 | 1 | 1 | 1 |
+	|-----------+---+---+---+---+---+---+---+---|
+	| Resultado | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 0 |
+	|-----------+---+---+---+---+---+---+---+---|
+	| carry     |   |   |   |   |   | 1 | 1 | 1 |
+	|-----------+---+---+---+---+---+---+---+---|
+	   			
+   	0 * 2^7 
+	1 * 2^6   = 64
+	0 * 2^5   
+	1 * 2^4   = 16
+	1 * 2^3   = 8
+ 	0 * 2^2 
+	0 * 2^1 
+	0 * 2^0
+        -------  = -88 
+	Es -88 por ser negativo antes del complemento a dos.
+
+	
+	+---+---+---+---+---+---+---+---|
+	| 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+	+---+---+---+---+---+---+---+---|
+
+	complemento a dos
+	|-----------+---+---+---+---+---+---+---+---|
+	|           | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+	|-----------+---+---+---+---+---+---+---+---|
+	| +         |   |   |   |   |   |   |   | 1 |
+	|-----------+---+---+---+---+---+---+---+---|
+	| Resultado | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | = -1
+	|-----------+---+---+---+---+---+---+---+---|
+	| carry     |   |   |   |   |   |   |   |   |
+	|-----------+---+---+---+---+---+---+---+---|
+	

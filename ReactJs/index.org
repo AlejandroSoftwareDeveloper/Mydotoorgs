@@ -1,0 +1,76 @@
+#+STARTUP: content
+
+* Reactjs
+** React Components
+- Los componentes en React permiten reutilizar todas las funcionalidades necesarias
+  tantas veces lo desees, o sea se pueden repetir tantas veces se considere necesario
+  pasandoles la propiedades necesarias para trabajar con estos.
+- Para exportar las bibliotecas se usan la funcionalidad export 
+#+BEGIN_SRC javascript
+  // Primera variante
+  export function nombre_de_funcion(){}
+
+  // Segunda variante
+  export { nombre_de_funcion }
+
+  //Tercera variante
+  export default  nombre_de_funcion 
+
+  
+#+END_SRC
+- Para importar la biblioteca se usa la siguientes configuraciones
+#+BEGIN_SRC javascript
+
+  //Por convencion los nombre de los componentes se escriben con Mayuscula
+  // React buscara en que archivo se encuentra el componente 
+  // Variante 1
+  import { Funcion1, Funcion2 } from 'ruta/del/componente'
+
+  // Variante 2
+  import Funcion2  from 'ruta/del/componente'
+
+
+#+END_SRC
+  
+** Components Props
+- Los props son las propiedades que recibe los componentes para mostrar
+ #+BEGIN_SRC javascript
+   <Card title ="hola"/> // title es una de las propiedades de javascript
+   export funcion Card(props){
+		<p>{ props.title }</p>
+   }
+
+   <Card2 title="Hola mundo" subtitle="Que tal" /> /
+	// Cuando se le pasa mas de una propiedad se puede usar mas destructuracion
+   export funcion Card2({title, subtitle}){  
+		<p>{ title }</p>
+		<p>{ subtitle }</p>
+   }
+
+   <Card3 subtitle="Que tal" /> /
+   // Las props pueden tener valores por defecto cuando no se le pasa uno
+   export funcion Card2({title="Este es el titulo de la carta 3", subtitle}){  
+		<p>{ title }</p>
+		<p>{ subtitle }</p>
+   }
+ #+END_SRC
+** Components States
+- Me quede en el minuto 0:59
+** Funcionalidades adicionales de Reactjs
+- En los proyectos con next se debe para realizar un accion en el lado del
+  cliente se debe incluir al principio del fichero la linea *'use client'*
+
+#+BEGIN_SRC javascript
+	'use client' //Esta es la etiqueta para incluir funcionalidades en un sitio web
+	import Image from 'next/image'
+	import styles from './pages/modules'
+
+	export default function Home(){
+	const HandlerClick () => {
+		alert('Hi there');
+ 	 }  
+	  return (
+		  <main><p>Hola mundo</p></main>
+	  )}
+#+END_SRC
+

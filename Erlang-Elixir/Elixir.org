@@ -1,0 +1,1056 @@
+#+STARTUP: content
+
+* Lenguaje de programacion Elixir
+	
+** Como crear un modulo en elixir
+  - Los modulos son como los espacios de nombres en c++
+	permiten crear funcionalidades contenidas dentro de
+	defmodulo.
+  - Los modulos deben empezar con la primera letra en mayuscula.
+  - No hace falta que el modulo se llame igual que el archivo
+	- El nombre del archivo se puede llamar _modulo.ex_ y el modulo _Mimodulo_
+#+BEGIN_SRC elixir Modulos con funciones
+   defmodule M do
+	 def main do
+		 name = IO.gets("What is your name? ") |> String.trim
+		 IO.puts "Hello #{name}"
+		 data_stuff()
+	 end
+   end
+
+  # Se puede crear modulos dentro de modulos
+   defmodule Modulo1 do
+	   defmodule Modulo2 do
+	   end
+   end
+
+  # El siguiente codigo es equivalente al de arriba
+   defmodule Modulo1.Modulo2 do
+   end
+
+#+END_SRC
+
+** Funciones en ELixir
+#+BEGIN_SRC elixir Funciones
+  # definicion de funcion 
+  def main2 do
+	  name = IO.gets("What is your name? ") |> String.trim
+  	  # Usar #{} para concatenar una cadena dentro de otra
+	  IO.puts "Hello #{name}"
+	  data_stuff()
+  end
+#+END_SRC
+
+** Tipo de datos
+  - Las variables comienzan con guion bajo, minusculas o letras
+  - Las variables son inmutables. Una vez creadas no pueden ser cambiadas
+  - Las variables son immutables en elixir una vez se asigna un valor a esta. 
+    Al asignar valores nuevamente a esta variable se crea nuevamente esta variable no se rescribe.
+  - Los tipos de datos basicos existente son(puede que me falte uno):
+	1. Interger
+	2. Float
+	3. Atom
+	4. String
+  - Los datos Integer no tienen capacidad maxima 
+  - Los datos Float tienen hasta 16 digito de precicion:
+	- 9.0120132431236743
+	- Despues de los 16 digitos empieza a variar el valor
+  - Los string (cadenas de carateres) se escriben entre con comillas dobles "" y se muestran los es escapes de caracteres como \n \\
+    ejemplo "Alicia dijo: \" NO ME GRITES \", en voz alta " , se mostrara la cadena tal cual. 
+  - Las funciones IO.puts e IO.gets son funciones que muestran y resiven entradas de teclados respectivamente
+    Al imprimir una cadena con puts se muestra la cadena si los escapes de caracteres y otros de tipos especificos ejemplo:
+    IO.puts("\"Hola\" dijo Alejandro") se imprimira "Hola" dijo Alejandro  sin el escape de caracteres \" mostrando el atomo :ok despues de la salida.
+  - IO.gets("") recibe informacion de la consola donde, se debe escribir en la terminal los valores a resivir y posteriormente se emprimira en
+    la terminal. Si a IO.gets se le pasa un parametro (IO.gets("Hola :")) este se mostrara en la maquina y luego se podra escribir los valores deseados
+    IO.gets imprimira los saltos de linea y otros caracteres especiales.
+    ejemplo:
+	#+BEGIN_SRC elixir
+	iex(1)> hola = IO.gets("Hola: ")
+	Hola: esta es mi frase
+	"esta es mi frase\n"
+	iex(2)>hola
+	"esta es mi frase\n"
+	#+END_SRC
+  - El operador de concatenacion de cadenas de caracteres en elixir es <> por lo que "hola " y "mundo" se concatenan "hola " <> "mundo" siendo  "hola mundo"
+  	el resultado final.
+  - Se pueden interpolar la cadenas de caracteres donde la variable nombre = "Alejandro" se puede insertar en
+  	"Hola , " usando #{} dentro de la cadena ejemplo "Hola, #{nombre}" y el resultado sera "Hola Alejandro"  
+
+** Uso de REPL
+  - Para usar el repl de elixir se teclea en la terminal de window cmd (iex) 
+    Los tipos de datos numeros en elixir se pueden escribir casi sin limites ej:
+    123182749839878736489263897628761823947293487 es un numero valido en elixir incluso
+    mas largo aun si es nesesario.
+  - Los flotantes siguen el mismo paradigma anterior incluso despues de la coma.
+
+  - Ejemplo de asignacion de datos a una variable en la consola
+    iex(6)> pi = 3.141592263
+
+  - Los operadores aritmetico en elixir son similares a las operadores basicos de otros lenguage 
+    de programacion ( + - * / )
+  - Las operaciones de division dan valores flotantes (decimales) ejemplo:
+    6 / 2 dara 2.0, igual que 7 / 3 dara 2.333333333335 aproximadamente.
+  - La precedencia de operadores en elixir es igual a otros lenguages de programacion
+    2 + 3 * 5 = 17 y no 25.
+  - Se puede inspeccionar el contenido de las variable en elixir en el repl usando la letra (i)
+       delante de la variable. ejemplo
+#+BEGIN_SRC elixir
+  iex(1)> x = 7
+  iex(2)> i x 
+  Term 
+  7
+  Data type
+  Integer
+  Reference modules
+  Integer
+  IEX.Info, Inspect, List.Chars, String.Chars
+#+END_SRC
+  - Si uso la i para almacenar datos se mostraran los datos con el inpector si pongo la (i) delante la variable
+  - La funcion _recompilar_ en iex recompila un proyecto de mix para reutilizarlo
+#+BEGIN_SRC elixir
+  iex(3)> i = 5
+  iex(4)> i
+  5	
+  iex(5)> i 5
+  Term 
+  7
+  Data type
+  Integer
+  Reference modules
+  Integer
+  IEX.Info, Inspect, List.Chars, String.Chars
+#+END_SRC
+
+  - El repl de elixir autocompleta cualquier palabra que se escriba en la consola y siempre que exista algun semejante.   
+       se presiona la tecla <tab> despues de la letra o palabra, para expandir las posibles coincidencias.
+     - Se puede presionar <tab> sin haber escrito algo y mostrar todas las funcionaes existen con su aridad
+       ejemplo de funcion con aridad
+       use/1  use/2 son dos funciones con aridad 1 y 2. esta funciones aceptan 1 o parametros al igual que las funciones
+       whereami/0  y whereami/1 aceptan ningun o un parametro respectivamente. 
+     - Para invocar estas funciones se escribe whereami() y se presiona enter. O se puede escribir sin parentesis si no aceptan
+       parametros ejemplo runtime_info es igual que runtime_info(). Tambien se puede usar la funcion sin parentesis. ejemplo
+       trunc 3.25
+     - Evitar eliminar los parentesis internos en funciones anidadas ejemplo
+       rem round(3.75) , trunc(2.25)  es igual a 0
+
+  - Los tipos de datos de elixir usan identificadores no numerico al inicio
+       (1nicio e _inicio no estan permitidos, pero in1cio si)son:
+  - Los atomos son expresiones donde su valor es su propio nombre y se definen
+       iex(1)> :hola
+       :hola
+  - El atomo nulo en elixir es :nil este se puede escribir sin : delante o sea _nil_
+  - El atomo verdadero en elixir es :true este se puede escribir sin : delante o sea _true_
+  - El atomo false en elixir es :false este se puede escribir sin : delante o sea _false_
+  - Los operadores logicos se usan para evaluar expresiones en elixir:
+       ==, <, >, >=, <=, !=, ===,!== se usan para comparar elementos.
+       === es el operador extrictamente igual a otro elemento.
+       ejemplo: 3 == 3.0 es true pero 3 === 3.0 es false similar a javascript
+  - Cuando se compara un numero con un atomo se por regla en elixir los atomos son mayoros que
+    los numeros. Existen otras reglas de precedencia en la literatura oficial, revisar el link del 
+    video 11 de elixir de makigas que muestra la tabla estas comparaciones.
+  - Los operadores booleanos son de dos variantes:
+    estrictos y ligeros.
+    estrictos: not, and, or
+    ligeros:   !,   &&, ||
+  - Los operadores estrictos tienen precedencia:
+    - not tiene precedencia sobre and y or
+    - not false and true es true y true and not false es true
+  - Los operadores and not y or no pueden evaluarse sobre numero ejemplo:
+    5 and true (dara error)
+  - Los operadores ligeros pueden evaluar operaciones que los operadores *not* *and* u *or* no pueden hacer:
+    - !5 es false 
+    - !nil es true
+    - 5 && true es true ya que ambas variables son elementos logicos reales.
+    - nil && true es nil
+    - Los operadores logicos ligeros se usan para funciones como corto circuito igual que en javascript
+    - x = 5
+    - 5 == x && 4 devolvera 4 si se cumple la expresion de la izquierda, sino devolvera falso.
+    - nil || :nothing es igual a :nothing
+  - Las funciones se invocan pasando los parametros a la funcion existente o declarada por el usuario.
+    rem(5,2) recibe como parametros 5,2 y retorna los el valor 1 ya que esta funcion calcula el resto de la division de dos elementos. 
+  - Los modulos son funcionalidades encapsuladas en un archivo determinados
+    - Para llamar un modudos se pone el "nombre.funcion" ejemplo
+      Float.rem(4,2) es 0
+** Condicionales if else cond unless
+#+BEGIN_SRC elixir Condicional basica en elixir
+  edad = 19
+  if edad >= 18 do
+	IO.puts "mayor de edad"
+  else
+	IO.puts "menor de edad"
+  end
+#+END_SRC
+
+
+#+BEGIN_SRC elixir Condicional if anidada
+  #los if else se anidan de la siguiente forma:
+  edad = 24
+
+ if edad < 18 do
+  io.puts(¨es menor de edad¨)
+ else
+   if edad > 18 and < 24 do 
+   io.puts(¨es mayor de edad y puede que este en la universidad¨)
+   else
+    io.puts(¨es mayor de edad puede alla terminado la universidad¨)
+   end
+end
+  
+#+END_SRC
+
+#+BEGIN_SRC elixir
+  edad = 19
+  # como en elixir todo se evalua como expresion 
+  # se puede asignar a una variable un expresion de asignacion
+  mensaje = if edad >= 18 do
+	 "mayor de edad"
+  else
+	 "menor de edad"
+  end
+  IO.puts mensaje
+
+  esadmin = false
+
+  # El unless acepta los elementos falso, lo que permite ejecutar
+  # los elementos falsos ligeros. el unless acepta else dentro de la
+  # condicion
+  resultado = unless esadmin do
+   ¨no es admin¨
+  else
+   ¨es admin¨
+  end
+  io.puts(resultado) # ejecutara "no es admin"
+#+END_SRC
+
+** Cond
+- la condicional ¨cond¨ se usa para eliminar la cantidad de elementos a
+  se ejecutara de arriba hacia abajo revisando las condiciones que son verdaderas.
+  ojo ejecutar la primera condicion veradera que encuentre y saldra del grupo de cond
+  nada mas encuentre una verdadera.
+  para trabajar en los elementos anidados.
+#+BEGIN_SRC elixir
+  lluvia = 10  
+  mensaje = cond do
+	lluvia == 0  -> "llovio poco"
+	lluvia <  30 -> "llovio mucho"
+	lluvia <  60 -> "llovio bastante"
+	lluvia <  90 -> "llovio demasiado"
+	true         -> "paso un ciclon"
+  end
+#+END_SRC
+
+** Modulos
+- los modulos se definen de la siguiente forma:
+#+BEGIN_SRC elixir
+  defmodule Mimodulo do               # el nombre del modulo siempre debe empezar con mayuscula
+    def nombre_de_funcion(parametro_1) do  # nombre de la funcion
+      parametro_1 * 2
+    end
+  end
+#+END_SRC
+
+- Muy importante
+- Para importar los archivos .exs en la consola de iex se usa la siguiente sintaxis
+  iex(1)> c("nombre_del_archivo.exs")
+- Esta forma se usa en los archivos .exs para scripts
+  elixir  nombre_del_archivo.ex(s) para ejecutar archivos scripts fuera de iex
+
+- Para compilar e importar los archivos de elixir(ex) se usa:
+  elixirc (elixir compiler) nombre_del_archivo.ex    para compilar archivos .ex
+- Los archivos compilados se generan en la carpeta con la forma "Elixir.nombre_del_archivo.beam".
+  Estos archivos al iniciar el iex se cargan automaticamente por lo que las funciones modulos y variables se podran acceder
+  sin cargarlos explicitamente.
+
+** Guardas
+-  Las guardas permiten ejecutar funciones determinadas en el
+   modulo ya que el modulo se lee de arriba a abjo y va buscando la
+   funcion deseada si se encuentra una funcion con el nombre se ejecutara
+   pero podria ser la funcion no deseada y probocar un error.
+   Por lo tanto se pone la condicion *when* en la declaracion de la funcion
+   antes del *do* con una validacion para evitar la ejecucion de una funcion no deseada.
+   
+#+BEGIN_SRC elixir
+  defmodule Calculadora do
+	# aqui se valida con la guarda que la funcion a invocar sea la
+	# primera funcion de dividir y no la segunda para evitar errores
+	# de division
+	# Si la segunda funcion de dividir se pone arriba de la de la guarda
+	# se ejecutara dicha funcion.
+	def dividir(a,b) when b > 0 do 
+	  a / b	    
+	end
+	# si no se insertar parametros en la funcion se dara error
+	# por lo que la(s) variable(s) que no se van a insertar se les ponen _ delante
+	# para que el interprete o compilador ignore la variable, como es el caso de _b. 
+	def dividir(a,_b) when a == 0  do 
+	   :nil   
+	end
+
+	def dividir(a,b)  do
+  	  :inf
+	end
+  end
+
+	Calculadora.dividir(5/0)
+#+END_SRC
+
+** Funciones anonimas (lambda)
+- la declaracion de funciones anonimas es similar a javascript
+  donde se almacena la funcion en una variable ya que la funcion anonima
+  es de primera clase, pero al invocarla no se hace como la funcion
+  corriente, porque daria error.
+#+BEGIN_SRC elixir
+  # Creacion de una funcion anonima y asignacion a la variable cuadrado
+  cuadrado = fn n -> n * n end
+  # Invocacion de la funcion anonima como funcion normal
+  cuadrado(5)
+  # ** (CompileError) iex:4: undefined function cuadrado/1
+
+  # funcion anonima multiclausulas
+	multitest = fn
+	x when is_number(x) and x < 0 -> :negative
+	x when x == 0 -> :zero
+	x when is_number(x) and x > 0 -> :positive
+	end
+	
+  #Variante 2 de las lambda, solo parametros
+   lambda_v2 = &(&1 + &2) # &1 y &2 son los parametros que se les pasa a las funciones 
+  						  # si se quiere pasar mas se pone los siguientes valores &3,&4 ... ect
+						  # 
+  # Invocacion de la funcion anonima
+  cuadrado.(5) # esto retorna 25
+
+
+  defmodule Calcular do
+	def operar(func) do
+	  func.(5, 2)
+	end
+  end
+
+  IO.puts Calcular.operar(fn a,b -> a + b end)
+
+  restar = fn a,b -> a - b end
+
+  IO.puts Calcular.operar(restar)
+#+END_SRC
+	
+** Capturar funciones 
+- Capturar funciones te permite invocar funciones que ya existen
+  y asignarlas a variables
+  - Para capturarla se usa el & delante de la funcion y se define poniendo su
+	aridad
+#+BEGIN_SRC elixir
+  defmodule Calcular do
+	def operar(func) do
+	  func.(5, 2)
+	end
+  end
+  # ejemplo de captura de la funcion remainder de erlang
+  resto = &rem/2
+
+  IO.puts Calcular.operar(resto)
+
+  # invocacion de la funcion capturada en elixir
+  IO.puts resto.(5,1)
+#+END_SRC
+
+** Invocacion de un modulo a otro
+#+BEGIN_SRC elixir
+  # Modulo en archivo calcular.exs
+  defmodule Calcular do
+	def operar(func) do
+	  func.(5, 2)
+	end
+  end
+
+  # Modulo en archivo Impuestos.exs
+  defmodule Impuestos do
+	def total(precio,tipo) do
+	  # Se puede invocar la funciones del modulo
+	  # usando el nombre del modulo o sin el nombre
+	  #Impuestos.porcentaje(tipo) * precio  
+	  porcentaje(tipo) * precio  
+
+	end
+
+	# defp define una funcion como privada para trabajar solomente con ella
+	# dentro del modulo y no se puede invocar solo se usa como funcion de apollo
+	defp porcentaje(tipo) do
+	  cond do
+		tipo == :normal -> 0.21
+		tipo == :reducido -> 0.10
+		tipo == :super_reducido or true -> 0.04
+	  end
+	end
+
+	IO.inspect Impuestos.total(10, :reducido)
+
+    # Esto es dara error porque porcentaje es un funcion de apollo o privada
+	IO.inspect Impuestos.porcentaje(:reducido)
+#+END_SRC
+
+** Tuplas
+- Estructuras de datos que permite agrupar varios elementos
+  las tuplas pueden ser de diferentes tipos
+ #+BEGIN_SRC elixir
+   # definicion de tuplas
+   mi_tuppla = {:hola , "buenas",5 , 5.25}
+
+   # Para hacer una operacion en una tupla se invoca
+   # con Tuple.nombre_de_la_funcion(nombre_de_la_tupla, otros elm)
+   # mi_tupla {:hola , "buenas",5 , 5.25,45}
+   Tuple.append(mi_tupla,45)
+ #+END_SRC
+
+** Pattern matching
+-  Como el lenguage evalua y no asigna lo que se hace es realizar un pattern matching
+#+BEGIN_SRC elixir  Ejempo basico de pattern matching
+  # aqui esta el ejemplo de pattern matching
+  # el lenguage evalua la expresion asignando la evaluacion en la variables correspondientes
+  # las variables y los valores deben tener la misma cantidad elementos
+  {a,b} = {:goodbye, :mi_friend}
+  {1,a,2} = {1,2,3} 
+
+  # Error, total de valores insuficiente demasiadas variables
+  {a,b,c} = {:goodbye, :mi_friend}
+#+END_SRC
+
+- Se puede usar pattern matching con funciones
+#+BEGIN_SRC elixir
+  # Las siguientes formas muestran como hacer
+  # pattern matching con funciones usando tuplas
+  defmodule MiModulo do
+	def show_data(x) when is_tuple(x) do
+		IO.puts(elme(x,1))
+	end
+
+	def show_data({:ok,x}) do
+		IO.puts x
+	end
+
+	def show_data({:error,_}) do
+		IO.puts("Error en los datos recibidos.")
+	end
+
+  end
+#+END_SRC
+
+- Se puede usar pattern matching con case para validar los parametros de
+  entrada 
+
+#+BEGIN_SRC elixir
+  #1 - se pueden usar guardas en las validaciones de los pattern matching
+  #2 - para no usar la variable se pone _x si se puede usar o no, o _ para que el 
+  # pattern de la variable no la mencione como advertencia.
+  #3 - Para machear con cualquier otro ejemplo que no sea los mencionados
+  # se usa el _ para permitir cualquier otro ejemplo
+  datos  = {:ok,"Hola"}
+  salida = case datos do
+  {:ok,x} 				    -> "Ha realizado la invocacion correctamente #{x}" 	
+  {:ok,x} when is_number(x) -> "El numero es #{x}" # 1
+  {:ok,_} 				    -> "Ha realizado la invocacion correctamente" # 2
+  {:error,y} 				-> "Hubo un error."
+   _ 						-> # 3
+  end
+
+#+END_SRC
+
+- El operador pin permite fijar el valor de una variable ya asignada para no reasignarla
+  siendo improblable el matcheo
+#+BEGIN_SRC elixir
+  # la funcion pin_func dara error porque no se podra
+  # hacer coincidir los valores, ya que x antes valia 4 y luego con pin (^x)
+  # trata de convertir una variable inmutable con valor 4 a valor 5
+  defmodule PinModulo do
+	def pin_fun do
+	  x = 4
+	  ^x = 5
+	  IO.puts x
+	end
+  end
+
+#+END_SRC
+
+** Recursion
+-  La recursion se puede hacer de diferentes formas, debido a que se
+  puede declarar multiples funciones en elixir es posible hacer
+  llamadas con pattern matching.
+#+BEGIN_SRC elixir
+  defmodule Recursion do
+	def factorial(0) do # aqui se hace un pattern matching con 0,en donde
+	  1				    # como parametro de entrada se puede recibir los parametros y hacer
+	end				    # coincidencias por parametros
+	def factorial(n) do
+	  n * factorial(n - 1)
+	end
+  end
+#+END_SRC
+
+** Listas
+- las listas en elixir son lista enlazadas
+  y tienen el comportamiento basico de las lista enlazadas
+  de otros lenguages de prog compilados
+- Para trabajar con las lista se usa el modulo (Enum)
+  este contiene funciones para trabajar con las listas
+  se puede 
+#+BEGIN_SRC elixir
+  lista = [1,2,3]
+  hd  lista    #[1]   devuelve la cadeza de la lista
+  tl  lista    #[2,3] devuelve la cola de la lista
+  tl(tl(li))   #[3]   devuelve la cola de la cola de la lista
+  # Se puede declarar una nueva lista de las siguientes formas
+  base = []
+  uno  = [1 | base]  # [1]
+  dos  = [2 | uno]   # [2,1]
+
+  # Se puede hacer pattern matching con las listas
+  # usando la barra vertical |
+  [uno,dos | resto] = [1,2,3,4] 
+  # uno = 1
+  # dos = 2
+  # resto = [3,4]
+
+  # El siguiente ejemplo NO FUNCIONA
+  # Solo puede haber una cola
+  [uno|dos, resto] = [1,2,3,4] 
+
+  # Pero esto si fucionan porque subdivide la lista
+  # en otro sublista con la longitud de datos deseados
+  # si fuere mas larga la sublista daria error
+  [uno|[dos, resto]] = [1,2,3] 
+
+#+END_SRC
+
+** Operaciones con lista
+- La concatenacion de lista se hacen con el operador
+  ++
+- Se puede eliminar elementos de una lista con otra
+  usando el operador --, donde se puede eliminar filtrando
+  los elementos de la lista izquierda con los de la derecha
+#+BEGIN_SRC elixir
+  [1,2] ++ [3,4]
+  lista1 = [1,2]
+  lista2 = [3,4]
+  lista1 = [lista1,lista2] # [[1,2],[3,4]]
+  lista1 = [lista1|lista2] # [[1,2],3,4]
+
+  [1,2,3,4] -- [2,3]       # [1,4]
+  [1,2] -- [1,3,4,5]       # [2] 
+  [1,2,3,4] -- [5,6]       # [1,2,3,4] 
+#+END_SRC
+
+** KeywordList
+- Las keyword list son lista con palabras como indice
+  una forma de compararla con otro lenguage es como
+  los diccionarios en python o los objetos en javascript
+#+BEGIN_SRC elixir
+  # Declaracion de las keyword list
+  # se crea una lista con tuplas donde el primer elemento
+  # es un atomo y el segundo es el valor separado por coma
+  [{:hola,1},{:mundo,2}] # [hola: 5, mundo: 2]
+  # Tambien se puede crea de la forma:
+  [a: 1,b: 2,mundo: 3]
+
+  # Ademas de acceder a las listas con las funciones de Enum
+  # se puede hacer:
+  lista = [data1: 1,data2: 2]
+  lista[:data1]
+
+  # Las keyword lista al declararse se deben crear con espacios entre el atomo y el valor
+  lista2 = [data4: 1,data3: 3]
+  
+  # Los if else funcionan como keyword list o (macros)
+  edad = 18
+  mensaje = if edad >= 18 do
+	"Es mayor de edad"
+  else
+	"Es menor de edad"
+  end
+  # Esta forma de declarar los if es equivalente a la forma
+  # arriba
+  mensaje = if edad >= 18, do: "Es mayor de edad" ,else: "Es menor de edad" 
+
+  #Tambien funciona de la misma forma con las funciones 
+  def suma(a,b), do: a + b
+
+  # Cuando se declara ^^^ de esta forma no hace falta poner el end
+  # al final de la linea
+#+END_SRC
+
+** Mapas
+-  Los mapas son estructuras asociativas en elixir
+   Normalmente se usan las keyword list para tipo
+   de datos asociativos. Las key de la keyword
+   solos soportan atomos en cambios los mapas
+   pueden soportar otros tipo de datos como key.
+#+BEGIN_SRC elixir
+  # Mapa vacio
+  nuevo_mapa = %{}
+
+  # mapa con llaves de diferentes tipos
+  mapa2 = %{4.5 => "prescion arterial","es_Lunes" => true ,"lunes" => 1,:dia => "martes"} 
+  # Para acceder a un elemento en el mapa se escribe
+  # el nombre_del_mapa[llave]
+  mapa2[4.5]     # "prescion arterial"
+  mapa2["lunes"] # 1
+
+  # Se puede acceder a los valores de un mapa con los atomos aunque no con
+  # otro tipo de datos
+  mapa2.dia # martes
+
+  #En elixir los mapas no hay ningun orden para mostrar los elementos en los mapas 
+   mapa = %{b: 2,a: 1}
+  # se mostrara %{a: 1, b: 2}
+#+END_SRC
+
+** Pattern Matching con mapas y keyword list
+  - No se puede hacer un submapping con el mapa y una lista o keyword list
+#+BEGIN_SRC elixir
+  # El siguiente ejemplo no funciona 
+   mapa = %{:a => 1 ,:b => 2}
+   [] = mapa
+
+   # EL mapa puede adicionarse a un subconjunto vacio o subconjunto limitado
+	%{} = mapa  
+	%{a: 1} = mapa
+
+   # No puedo poner valores que no existan
+	%{c: 2} = mapa #Error
+
+   # Para extraer los valores del mapa se pueden extraer con una variable en el 
+   # pattern matching
+   # x vale 1 ya que es el valor de "a" en el mapa 
+   %{a:x} = mapa 
+
+   # Las keyword list tambien se pueden usar con pattern matching
+   datoskwl = [name:"Alejandro",pais:"Cuba"]
+
+   # No se puede usar una lista vacia en una kwl
+	[] = datoskwl #error
+
+   # Los datos de la kwlist se deben extraer en el orden que se declara
+   datoskwl = [name: "Alejandro",pais: "Cuba"]
+   [name: n,pais: p] = datoskwl
+   [pais: p1,name: n2] = datoskwl #error
+   p == "Cuba"
+	
+
+#+END_SRC
+
+** Operadores de keyword list y mapas
+ - Las keyword list son compatibles con el operador ++
+  #+BEGIN_SRC elixir
+	[a: 1, b: 2] ++ [c: 3] # [a: 1, b: 2, c: 3]
+  #+END_SRC
+ - Los mapas usan merge para unir dos mapas
+  #+BEGIN_SRC elixir
+	Map.merge(%{a: 1, b: 2} %{c: 3}) # %{a: 1, b: 2, c: 3}
+	# Cuando dos mapas tienen llaves iguales, 
+	# las llaves del mapa de la derecha 
+	# actualizan el de la izquierda
+	Map.merge(%{a: 1, b: 2} %{a: 3,c: 3}) # %{a: 3, b: 2, c: 3}
+
+	# Insertar valores en un mapa
+	Map.put(%{a: 1, b: 2} ,:c 3) # %{a: 1, b: 2, c: 3}
+
+	# Obtener valores de un mapa
+	Map.get(%{a: 1, b: 2} ,:a) # 1
+
+	# Obtener obtener copia del mapa donde se eliminad el valor que se le pasa
+	Map.delete(%{a: 1, b: 2} ,:a) # %{b:2}
+
+	# Se puede crear una copia del mapa de la siguiente forma con valores actualizados
+    # Se usa para actualizar la copia no para insertar
+	mapa = %{b: 2,a: 1}
+	%{mapa | b: 3} # actualizar el valor de b: en el mapa
+
+  #+END_SRC
+
+** Estructuras 
+ - Las estructuras en elixir permiten acotar los 
+   parametros que tengan los mapas son parecidas
+   a las intefaces de otros lenguages como java
+ - Para definir una estructura se tiene que crear dentro 
+   de un modulo.
+  #+BEGIN_SRC elixir
+	 # El struct se define dentro del perfil con una lista de atomos
+	 # Las struct pueden usar paramatros por defectos
+     # EL nombre de la estructura es el nombre del modulo
+	 defmodule Perfil do
+		 defstruct [:nombre,:comida ,:pais ,:mascota, explicacion: "Parametro por defecto"]
+	 end
+
+	# Para inicializar un mapa se usa de la siguiente forma
+	%Perfil{} # insertar la lista de parametros
+
+	# %Perfil{nombre: nil,comida: nil ,pais: nil ,mascota: nil, explicacion: "Parametro por defecto"}
+
+	# Para convertir un map puro en un perfil
+	%Perfil{} = %{nombre: "Alejandro",__struct__: Perfil}
+
+  #+END_SRC
+
+** Bitstring (Cadenas de bits)  
+  - Ver capitulo 41 de curso de makigas de youtube
+** Charlist
+  - Ver capitulo 42 de curso de makigas de youtube
+** Funciones de alto orden
+ - Las funciones de alto orden en elixir aceptan
+   otras funcion y las ejecutan pasando los parametros que se necesitan
+  #+BEGIN_SRC elixir
+	double = fn x -> x * x end
+
+	# La funcion apply recibe dos parametros
+	# 1 - La funcion a aplicar 
+	# 2 - La lista de parametros que necesita la funcion aplicar 
+	# rem nesecita 2 y double necesita 1 
+	apply(&rem/2,[9,2]) # 1
+	apply(double,[9]) 	# 81   
+
+	Enum.filter([1,2,3,4,5],fn x -> rem(x,2) == 0 end)
+	Enum.filter(%{a: 1,b: 2,c: 3,d: 4,e: 5},fn {_,x} -> rem(x,2) == 0 end)
+
+	Enum.map([1,2,3,4,5],fn x -> x * 2 == 0 end)
+
+	Map.new(Enum.map([1,2,3,4,5],fn x -> {x,x * 2} end))
+	# %{ 1 => 2, 2 => 4, 3 => 6, 4 => 8, 5 => 10 }
+
+	Enum.reduce([1,2,3,4,5],0,fn x, acc -> acc + x * 2 end)
+	# EL segundo parametro despues de la lista es el valor inicial
+	# del acumulador en este caso es 0, pero puede ser cualquier valor.
+
+	# Para crear mapas con reduce
+	Enum.reduce(["hola","buenas tardes","adios"],%{}, fn cadena,mapa -> Map.put(mapa,cadena,String.length(cad)) end)
+	# %{ "hola" => 4,"buenas noches" => 13,"adios" => 5}
+
+	Enum.reduce(["hola","buenas tardes","adios"],%{}, fn cadena,mapa -> IO.Inspect(Map.put(mapa,cadena,String.length(cad))) end)
+	# %{ "hola" => 4}
+	# %{"adios" => 5,"hola" => 4}
+	# %{"adios" => 5,"buenas tardes" => 13,"hola" => 4}
+
+  #+END_SRC
+
+** Pipelines 
+ - Los pipelines permiten pasar los parametros a distintas funciones
+   eliminando la necesidad de pasar los primeros datos de las funciones
+   donde la funcion que le sige al operador *|>* tambien recibira por defecto
+   el resultado de la funcion anterior como primer parametro.
+  #+BEGIN_SRC elixir Pipelines
+	lista = [1,2,3,4,6]
+	 lista 
+		|> Enum.filter(fn x -> rem(8,2) == 0 end) 
+		|> Enum.mapa(fn x -> x * 2 end) 
+		|> Enum.reduce(0,fn x,acc -> acc + (x * 2) end) 
+	
+    "Hola mundo" |> String.length # 10
+	
+    %{} |> Map.put(%{a: 1}) |> Map.put(%{b: 2}) |> Map.keys  # [:a, :b]
+   #+END_SRC
+
+** Rangos y colecciones *lazy*
+ - Los rangos de los mapas son estructuras que devuelve una estructuras de valores
+ - Un rango se define poniendo el valor inicial y luego dos puntos el valor final
+   1..60
+ - Las funciones *Stream* son colecciones lazy que se ejecutan cuando son absolutamente necesaria
+   #+BEGIN_SRC elixir
+	  1..60 |> Stream.map(&IO.Inspect/1)
+	 # Stream<[enum: 1..60, funs: [#Function<47.104660/1 in Stream.map/2>]]>
+
+	  1..60 |> Stream.map(&IO.Inspect/1) |> Enum.take(5)  # [1,2,3,4,5] 
+     # Si no se usara Stream se mostraria en pantalla todos los elementos
+	 # y se mostraria con el take los primeros 5
+
+	#+END_SRC
+** Funciones recursivas con listas
+  - Ejemplo de funciones recursivas con listas
+  #+BEGIN_SRC elixir
+	defmodule RecursionConListas do
+		def dobles([]) do
+			[]
+		end
+
+		def dobles([ hd | tl ]) do
+			IO.Inspect hd
+			[ hd * 2 | dobles(tl)]
+		end
+
+		def pares([]), do: []
+		def pares([hd | tl ]) when rem(hd, 2) == 0, do: [hd | pares(tl)] 
+		def pares([hd | tl]) do
+			pares(tl)
+		end
+
+		defp suma([],acc), do: acc
+		defp suma([hd | tl],acc), do: suma(tl, acc + hd)
+
+		def suma(lista) do
+			suma(lista,0)
+		end
+	end
+  #+END_SRC
+
+** Herramienta MIX
+  - Mix es la herramienta instalada por defecto de elixir
+  - Para generar un proyecto nuevo escribo *mix* *new* nombre_del_proyecto
+  - mix help muestra una lista de ayuda de paquetes. 
+  - iex -S mix carga todas las dependencias del proyecto y las conpila para trabajar
+    en iex
+** Documentacion dentro de mix 
+	- Para escribir documentacion de elixir a nivel de modulo se usa:
+
+  #+BEGIN_SRC elixir anotaciones 
+	defmodule MyModule do
+	@mapa ${} """
+		Documentacion del modulo
+	"""
+
+	@doc """
+		Esta seria la documentacion de la funcion mundo
+		debe ponerse encima de la funcion que se quiere
+		documentar, en este caso mundo.
+	"""
+	def mundo do
+		:mundo
+	end
+
+	end
+  #+END_SRC
+** Atributos de modulos (Anotaciones en elixir)
+	- El simbolo @ seguido de un nombre sirve para crear constantes 
+	dentro de las funciones y modulos.
+    - Los modulos se pueden actualizar varias veces
+  #+BEGIN_SRC elixir documentacion
+	defmodule MyModule do
+		@mapa %{host: "localhost", port: 8080 }
+
+		@doc "@mapa no es mas que la sustitucion de @mapa en conecttion, como en los macros de c"
+		def conecttion do
+			Map.put(@mapa,:cargado, true)
+		end
+	end
+
+	defmodule Hola do
+
+		@Lista []
+		def uno, do: IO.inspect(@Lista)
+
+		@Lista [ 2 | @Lista ]
+		def dos, do: IO.inspect(@Lista)
+
+		@Lista [ 3 | @Lista ]
+		def tres, do: IO.inspect(@Lista)
+	end
+
+  #+END_SRC
+** Alias e Import
+ - Los alias subtituyen los nombre y rutas por los nombres de las rutas que queramos
+ - Los alias funcionan de forma local en el bloque donde estan trabajando hacia abajo
+ - Los import permiten importar las funciones de las bibliotecas que se van a usar
+   sin poner cabecera de la biblioteca en cuestion.ejemplo:
+   Enum.map() mapea los datos que se les pasa, con import solo hay que usar *map*
+ - Las import pueden dar problemas en casos de funciones que tengan nombre iguales
+   tales como Kernel.length para _listas_ y String.length para _strings_.
+   - Para evitar este problema se puede importar solo las funciones que se desee
+     como se muestra a continuacion en el import de *Enum* con la palabra _only_ donde 
+     en una keyword list de tuplas se pone el identificador como atomo y el segundo
+     parametro como la aridad(total de parametros que se le pasa a una funcion)
+     de la funcion.
+     
+#+BEGIN_SRC elixir
+  defmodule Module.Mimodulo do
+	defstruct [:nombre ,:sueldo]
+  end 
+
+  defmodule Module2 do
+	def func(%Modulo.Mimodulo{nombre: n ,sueldo: s}) do
+		%{nombre: n,sueldo: s}
+	end
+
+	import Enum, only: [{:encode ,1},{:decode , 2}]
+	def mapear(lista) do
+		map(lista, fn x -> rem(x,2) == 0 end)
+	# Sin la importacion seria: Enum.map(lista, fn x -> rem(x,2) == 0 end)
+	end
+
+	def func(_x) do
+		nil
+	end
+  end 
+
+  defmodule Module3 do
+	alias Modulo.Mimodulo, as: MiModulo        # OJO Los alias tienen que comenzar con la primera letra en mayuscula
+	def mimodulo(%MiModulo{nombre: "Alejandro" ,sueldo: 12000}) do
+	end
+  end 
+#+END_SRC 
+
+** Macro *require* y *use*
+ - La palabra require se usa para importar macros
+ - *use* se usa para importar funciones y macros de otro modulo
+#+BEGIN_SRC elixir
+	# Si se usa la funcion Integer.is_odd(5) dara error porque es una macro
+    # y para usarla se usa la palabra require 
+    iex(1)> require Integer 
+    iex(2)> Integer.is_odd(5) # true
+
+	use GenServer 
+    # importa las variables y macros definidas en GenServer
+
+
+#+END_SRC
+** Crear, manejar y enviar mensajes entre procesos en elixir
+ - Para crear un proceso se utiliza la siguiente sintasis
+ - Para recibir mensajes se usa la palabra clave *receive*
+ - la funcion self devuelve el id del proceso 
+ - La funcion pid() devuelve el id del proceso que se le pasa por parametro string
+#+BEGIN_SRC elixir
+  defmodule Mimodulo do
+	def saluda(nombre) do
+		IO.puts nombre
+	end
+  end 
+
+  defmodule Mimodulo2 do
+	def saluda() do
+		receive do
+			{pid, x} -> IO.puts "Hola #{x}, el proceso #{pid} me envio el mensaje."
+		end
+	end
+  end 
+
+  defmodule Mimodulo3 do
+	def saluda() do
+		receive do
+			{pid, x} -> send(pid,{self(),x})
+		end	
+		saluda()
+	end
+  end 
+   # La funcion spawn devuelve se le pasa los tres paramatros
+   # y retorna un id de proceso.
+   # spawn(Nombre,:atomo_como_nombre_de_la_funcion,[lista, de, parametros, segun su aridad] )
+   # Aqui la aridad es uno porque solo recibe nombre y devuelve un id de proceso
+   pid = spawn(Mimodulo,:saluda,["Alejandro"] ) # #PID<0.114.0> devuelve este proceso como ejemplo
+   pid = spawn(Mimodulo,:saluda,[] ) # no funciona pero si lo hiciese seria un ejemplo de funcion sin paramtros
+
+   # En eol caso de Mimodulo2 el proceso se quedara vivo hasta que se le diga que finalice
+   pid = spawn(Mimodulo2,:saluda,[] ) # Process.is_alive?(pid) => true
+   # Process.info(pid) Muestra la info del proceso
+
+   # Para mandar un mensaje a la bandeja de entrada de Mimodulo2 se usa la funcion send(pdi, mensaje)
+   # la cual le envia los datos al proceso que se desea
+   send(pid,{self(),"Alejandro"})
+   # Se enviara el mensaje {self(),"Alejandro"}, que tiene el pid del proceso y mostrara "Hola Alejandro"
+   # Si quiero ejecutar el mensaje de vuelta con iex uso una funcion receive hasta que consuma todo el buzon
+   # receive do x -> IO.puts x end
+   # Se debe tener cuidado porque una vez la bandeja de iex este vacia se puede congelar la consola si se consulta el por otro mensaje.
+	flush() limpia todos los mensaje del buzon de entrada	
+
+   # Devuelve el pid que se le indica como string
+	pid = pid("0.115.0")
+
+#+END_SRC
+
+** Estados de un proceso  
+  - En el video numero 58 de makigas muestra como gestionar estado
+    en un proceso
+** Detectar fallos en los procesos y monitorizacion de procesos
+ - Para poder detectar si un proceso ha fallado se usa la directiva (Process.link(pid))
+   para conectarme al proceso que ya existe y detectar los errores
+#+BEGIN_SRC elixir
+  defmodule Calculadora do
+	def calcular do
+		receive do
+			{pid, :+ ,a , b} -> send(pid, a + b)
+			{pid, :- ,a , b} -> send(pid, a - b)
+			{pid, :* ,a , b} -> send(pid, a * b)
+			{pid, :* ,a , 0} -> exit("Division por cero") # El proceso se termina 
+			{pid, :/ ,a , b} -> send(pid, a / b)
+		end	
+		calcular
+	end
+  end 
+
+   # hace un linkeo directo de los del proceso actual con el que se genera
+   pid = spawn_link(Calculadora,:calcular,[] ) 
+   
+   Process.monitor(pid)
+   send(pid,{self(),:/ ,2,0})
+   flush()
+
+   # Si el proceso se cae se mostrara algo como lo siguiente
+   {:DOWN ,#Reference<0.1221313.56235626.37389>
+   ,:process,
+	#PID<0.119.0>
+   , "Division por cero"}
+   # Process.unlink(pid) elimina el link entre los procesos, si no hay coneccion no da error solo que ya finaliz 
+
+#+END_SRC
+
+** GenServer
+	- Es un servidor generico que para definirlo se usa la variante siguiente:
+	- Los GenServer tiene un comportamiento que tiene que seguir para poder usarse
+      Estos comportamientos se definen dentro de GenServer y son obligatorios
+	  implementarlos donde se llame uno.
+#+BEGIN_SRC elixir
+	# para iniciar un genserver en iex se inicia el comando GenServer.start o start_link
+	# se les pasa el modulo con GenServer y el parametro inicial de la que recibe el init
+	# ejemplo GenServer.start_link(GCalc,{"Hola","A todos"})   
+
+	# Para llamar este genserver se usa {:ok, pid } = GenServer.start(GCalc,[]) 
+	# Luego se llama GenServer.call(pid,{:sub,2,3}) esta funcion devolvera lo que se le 
+	# a handle_call de GCalc
+	# GenServer.call/3 admite un tercer parametro que es el tiempo en milliseconds que le dice 
+	# al genserver cuanto esperar antes de ejecutar la funcion ejemplo:
+	# GenServer.call(pid,{:sub,2,3},10000) espera 10 segundos antes de ejecutar el restos de la funcion despues de proccess.sleep(time)
+	# Si no se le especifica el time y Process.sleep(time > 5000) dara error despues de esperar ya que process solo espera basicamente 
+	# hasta 5 segundos.
+  defmodule GCalc do
+	  use GenServer
+
+	  # Se puede usar un wrapper para evitar usar GenServer.call(pid ,{:add, 2,3})
+	  def add(pid, x, y) do
+		GenServer.call(pid,{:add,x,y})
+	  end
+
+	  def init(param) do      # La funcion init se le pasa un parametro por defecto obligatoriamente
+		{:ok ,%{:conteo ,0}}  # La funcion init debe devolver 
+							  # una tupla con un atomo :ok y un parametro base.
+	  end
+	 def handle_info(mensaje,state) do # maneja la informacion que se le envia al GenServer con send(pid, parametros_de_la_funcion)        
+		{:noreply, state}    		   # Devuelve una tupla con el atomo :noreply y el valor 
+									   # que se les pasa en este caso state 
+	 end
+	 def handle_call({:add ,n ,m},_from,%{contador: 0}) do  # Recibe 3 parametros 
+															# - mensaje en este caso {:add, 2 , 3 }
+															# - el estado
+															# - el pid de donde viene el mensaje (se puede obviar)
+		Process.sleep(2000)
+		result = n + m 
+		{:reply,result ,%{contador: contador + 1}}           # tupla de retorno de la funcion handle_call
+	end
+
+
+	def terminate(reason,state) do
+		IO.puts "TERMINADO"
+		nil
+	end 
+
+
+															  # handle_cast se llama con  GenServer.cast(pid,:reset)         
+	def handle_cast(:reset , _state) do 				      # funcion de GenServer que no necesita respuesta 
+		{:noreply, %{conteo: 0},3000}    					  # OJO Todos los callback de handle_cast, handle_call e init 
+	end														  # ademas de la info base de :noreply se le puede aplicar 
+															  # un callback de tiempo donde le dice al servidor
+															  # que debe recibir un mensaje en ese tiempo 
+															  # y la funcion handle_info manejara la respuesta
+															  # en caso de que falle
+	def handle_info(sms,state) do
+		IO.inpect(sms, label:"INFO")
+		{:noreply,state}
+	end
+end	
+#+END_SRC
+** Capitulo 65 como renombrar procesos (importante)   
+
+	

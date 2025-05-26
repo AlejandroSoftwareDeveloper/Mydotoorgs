@@ -1,0 +1,31 @@
+#+STARTUP: content
+
+* EL lenguage de programacion Ada es un lenguage de tipado estatico
+*** Compilacion
+ - Para compilar un programa en ada se usa un archhivo con dos extenciones
+   .adb o .ads
+ - El compilador que se suele usar es gnatmake (GCC) que realiza tres pasos:
+   >> gnatmake Hola_mundo.adb
+    - gcc -c Hola_mundo.adb      --- Compila el archivo
+    - gnatbind -x Hola_mundo.ali --- Genera los archivos fuentes
+    - gnatlink Hola_mundo.ali    --- Une los archivos fuentes
+      
+#+BEGIN_SRC ada Hola mundo
+  -- Estructura basica de un programa de ADA
+  with Text_IO; use Text_IO; -- Importar bibliotecas de ada
+  --  		^Se pone despues de importar la biblioteca para no usarlo 
+  procedure Hola_mundo is
+  begin
+	Put_line("Hola mundo");
+  --	Text_IO.Put_line("Hola mundo");
+  --    ^ Para usarlo sin escribir use Text_IO despues de la declaracion 
+  end Hola_mundo;
+
+#+END_SRC
+
+Me quede en el minuto 35:34
+  LO MALO
+ - La forma de trabajo me parece buena con mas restriciones que otros lenguages.
+ LO BUENO
+ - Si logro hacerlo que vaya lo sufiente mente rapido puede combinarlo con C y asm para que si casi
+   errores.

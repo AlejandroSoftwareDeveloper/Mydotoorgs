@@ -1,0 +1,184 @@
+#+STARTUP: content
+
+** Comandos
+-- Acceder a postgres
+
+-- Variante 1 (Esta es la que me funciono en linux mint)
+- para entrar a postgres
+>> sudo su - postgres
+- para acceder a la consola de
+>> psql 
+
+-- Variante 2
+sudo -u postgres psql
+
+
+** Revisar cambiar 
+
+Steps to Install PostgreSQL on Ubuntu 24.04 LTS:
+
+#### 1. **Update and Upgrade the System**:
+
+    Before installing PostgreSQL, it’s always a good idea to update and upgrade your system packages to ensure everything is up-to-date.
+    Open the *terminal* and run:
+
+     ```bash
+     sudo apt update && sudo apt upgrade -y
+     ```
+
+#### 2. **Install PostgreSQL**:
+
+    Ubuntu has PostgreSQL available in its default package repositories. To install PostgreSQL, simply use the *apt* package manager:
+
+     ```bash
+     sudo apt install postgresql postgresql-contrib -y
+     ```
+
+    The `postgresql-contrib` package includes useful additional tools and utilities that enhance PostgreSQL's functionality.
+
+
+#### 3. **Check PostgreSQL Status**:
+
+    After installation, PostgreSQL should start automatically. You can check the status with the following command:
+
+     ```bash
+     sudo systemctl status postgresql
+     ```
+
+    You should see an output indicating that PostgreSQL is active and running.
+
+
+#### 4. **Switch to the PostgreSQL User**:
+
+    By default, PostgreSQL creates a user named **postgres**. You can switch to this user to access the PostgreSQL command-line interface:
+
+     ```bash
+     sudo -i -u postgres
+     ```
+
+    Once switched, you can open the PostgreSQL shell using:
+
+     ```bash
+     psql
+     ```
+
+#### 5. **Basic Database Commands**:
+
+    Create a new database:
+
+     ```sql
+     CREATE DATABASE mydatabase;
+     ```
+
+    Create a new user with a password:
+
+     ```sql
+     CREATE USER myuser WITH PASSWORD 'mypassword';
+     ```
+
+    Grant privileges to the user for the new database:
+
+     ```sql
+     GRANT ALL PRIVILEGES ON DATABASE mydatabase TO myuser;
+     ```
+
+    To exit the PostgreSQL shell, type:
+
+     ```sql
+     \q
+     ```
+
+#### 6. **Enable Remote Access (Optional)**:
+
+    If you need to access PostgreSQL remotely, you need to adjust the configuration files.
+    Edit the PostgreSQL configuration file using:
+
+     ```bash
+     sudo nano /etc/postgresql/15/main/postgresql.conf
+     ```
+
+    Find the line:
+
+     ```
+     #listen_addresses = 'localhost'
+     ```
+
+    Change it to:
+
+     ```
+     listen_addresses = '*'
+     ```
+
+    Save the file and exit.
+    Then, edit the *pg_hba.conf* file to allow remote connections:
+
+     ```bash
+     sudo nano /etc/postgresql/15/main/pg_hba.conf
+     ```
+
+    Add the following line at the end:
+
+     ```
+     host    all             all             0.0.0.0/0               md5
+     ```
+
+    Save the file, exit, and restart PostgreSQL for the changes to take effect:
+
+     ```bash
+     sudo systemctl restart postgresql
+     ```
+
+Testing the Installation:
+
+    You can test the PostgreSQL installation by connecting to the database using the `psql` command:
+
+  ```bash
+  psql -U postgres
+  ```
+
+    You should be able to see the PostgreSQL prompt if everything is set up correctly.
+
+
+Managing PostgreSQL Service:
+
+    **Start PostgreSQL**:
+
+  ```bash
+  sudo systemctl start postgresql
+  ```
+
+    **Stop PostgreSQL**:
+
+  ```bash
+  sudo systemctl stop postgresql
+  ```
+
+    **Restart PostgreSQL**:
+
+  ```bash
+  sudo systemctl restart postgresql
+  ```
+
+Uninstalling PostgreSQL:
+
+    If you need to remove PostgreSQL from your system, use the following command:
+
+  ```bash
+  sudo apt remove --purge postgresql postgresql-contrib -y
+  ```
+
+    You can also remove unnecessary packages and clean up residual configuration files:
+
+  ```bash
+  sudo apt autoremove -y && sudo apt autoclean
+  ```
+
+Troubleshooting Tips:
+
+    **Cannot Connect to PostgreSQL**: Make sure the service is running with `sudo systemctl status postgresql`.
+    **Authentication Error**: Verify that your user credentials are correct and that the user has the necessary privileges.
+    **Network Access Issues**: Double-check the configuration files (`postgresql.conf` and `pg_hba.conf`) if you are setting up remote access.
+
+
+By following this guide, you should now have a working PostgreSQL installation on your Ubuntu 24.04 LTS system. This powerful database is ready to handle your data management tasks, and you can start building and managing databases right away.
+

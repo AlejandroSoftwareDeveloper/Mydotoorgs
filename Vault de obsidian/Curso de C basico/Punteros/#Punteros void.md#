@@ -1,0 +1,18 @@
+Los punteros tienen dos versiones de const uno que no permite cambiar el valor a travez del puntero y otro que no permite cambiar la direccion del puntero
+```c
+	int data = 10;
+	const int *ptr = &data  //Esta declaracion no permite cambiar el valor de data atravez del puntero.
+  *ptr = 20;              //Esto dara error
+//------------------------------------------//
+	int data2 = 2;
+	int data3 = 3;
+	int *const ptr2 = &data2; //Esta declaracion no permite cambiar la direccion del puntero 
+	ptr2 = &data3;            //Error
+
+//------------------------------------------//
+	int data4 = 4;
+	int data5 = 5; 
+	const int *const ptr3 = &data4; //No se puede cambiar el valor de data4 atravez del puntero, ni cambiar la direccion al que el puntero apunta.
+	 
+```
+

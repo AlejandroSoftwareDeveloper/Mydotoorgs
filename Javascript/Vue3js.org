@@ -1,0 +1,202 @@
+#+STARTUP: content
+
+* Vue3js
+** Directivas
+ - Las directivas permite al motor de vue renderizar el
+ contenido como si fuera un lenguage de programacion
+  1 - v-if se usa para renderizar un contenido si 
+  el valor es true.
+  2 - v-else se usa para renderizar un contenido si 
+  el valor es false. 
+  3 - v-else-if se usa para renderizar un contenido si 
+  existe condiciones adicionales. 
+  4 - v-for se usa para iterar sobre la lista 
+  de elementos. se usa la llave key para iterar sobra la lista, donde la lista necesita una llave para iterar 
+  diferenciando cada elemento de la lista.
+  5 - Exite en vuejs la atadura de variables con bind para asociar una variable con una propiedad de la etiqueta.
+  6 - v-on Asigna una funcionalidad a un evento de javascript, que asocia a una funcion
+  7 - La directiva v-model permite vincular el valor de una variable con un input u otro elemento de manera interactiva.
+#+BEGIN_SRC javascript Uso de directivas 
+  <script >
+    export default {
+      data(){
+      return {
+          name:"Alejandro",
+          status:true,
+          estado:"activo",
+          age:"edad",
+          link:"https://www.google.com",
+          listadenombres:[
+            {
+              nombre:"Alejandro",
+            },
+            {
+              nombre:"Ana",
+            },
+          ]
+        }
+      },
+      methods:{
+        toogleStatus(){
+          let temp = this.estado
+          this.status = st === 'activo' : 'inactivo' ? st === 'inactivo' ? 'pendiente' : 'activo'
+        }
+      }
+    }
+  </script>
+
+  <template>
+     //Uso del if y else
+    <h1 v-if="status">
+      Solo me muestro si estatus es true
+    </h1>
+    <h1 v-else="status">
+      Solo me muestro si estatus es false
+    </h1>
+    
+    //Uso del else-if
+    <h1 v-if="estado === 'activo'">
+      Solo me muestro si estatus esta activo
+    </h1>
+    <h1 v-else-if="estado === 'inactivo'">
+      Solo me muestro si estatus esta inactivo
+    </h1>
+    <h1 v-else="estado === 'pending'">
+      Solo me muestro si estado esta pendiente
+    </h1>
+
+    <ul>
+      <li v-for="name in listadenombres" :key="name">{{ name.nombres }}</li>
+    </ul>
+
+    // Forma tradicional
+    <a v-bind:href="link">Link to Google</a>
+
+    //Forma acortada
+    <a :href="link">Link to Google</a>
+
+    //Forma tradicional 
+    <button v-on:click="toogleStatus">Cambiar estado</button>
+
+    //Forma acortada
+    <button @click="toogleStatus">Cambiar estado</button>
+    < input type="text" id="name" name="name" v-model="age" />
+  </template>
+
+#+END_SRC 
+
+** Api de composicion
+ - La  nueva version de vue3js permite crear apis de composicion
+   donde no hay que generar tantos datos como en versiones mas
+   antiguas.
+  - Para hacer que los valores sean reactivos en vue se debe usar las funciones:
+  1 - ref para amarrar el valor de primitivas y arreglos
+    y para usar los valores se usa nombre_de_la_variable.
+    value
+  2 - 
+#+BEGIN_SRCjavascript Uso de la api de composicion (version larga)
+    // Version larga
+    <script>
+  import { ref } from 'vue'
+  export default {
+    setup(){
+      const name = ref("Alejandro");
+      const status = ref(true);
+      const estado = ref("activo");
+      const link = ref("https://www.google.com");
+      const listadenombres = ref([
+            {
+              nombre:"Alejandro",
+            },
+            {
+              nombre:"Ana",
+            },
+          ])
+        const toogleStatus = () => {
+          let st = estado.value
+          estado.value = st === 'activo' : 'inactivo' ? st === 'inactivo' ? 'pendiente' : 'activo'
+        }
+
+      return {
+       name,
+       status,
+       estado,
+       link,
+       listadenombres,
+       toogleStatus
+    }
+  }
+  </script>
+
+  //Version corta
+    <script setup>
+  import { ref } from 'vue'
+
+      const name = ref("Alejandro");
+      const status = ref(true);
+      const estado = ref("activo");
+      const link = ref("https://www.google.com");
+      const listadenombres = ref([
+            {
+              nombre:"Alejandro",
+            },
+            {
+              nombre:"Ana",
+            },
+          ])
+        const toogleStatus = () => {
+          let st = estado.value
+          estado.value = st === 'activo' : 'inactivo' ? st === 'inactivo' ? 'pendiente' : 'activo'
+        }
+
+  </script>
+
+  <template>
+    <h1 v-if="estado === 'activo'">
+      Solo me muestro si estatus esta activo
+    </h1>
+    <h1 v-else-if="estado === 'inactivo'">
+      Solo me muestro si estatus esta inactivo
+    </h1>
+    <h1 v-else="estado === 'pending'">
+      Solo me muestro si estado esta pendiente
+    </h1>
+
+    <ul>
+      <li v-for="name in listadenombres" :key="name">{{ name.nombres }}</li>
+    </ul>
+    <a :href="link">Link to Google</a>
+    <button @click="toogleStatus">Cambiar estado</button>
+  
+
+    <form @submit.prevent="adicionarUsuario">
+    <label for="nombre" >Username</label>
+    <input type="text" id="nombre" name="name" v-model="name""/>
+    </form>
+  </template>
+#+END_SRC 
+
+** Metodos de ciclos de vida LifeCicle Methods
+#+BEGIN_SRC javascript 
+  <script setup>
+    import { ref,onMounted } from 'vue'
+    const tasks = ref([])
+    onMounted(async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+        const data = await response.json();
+        tasks.value = data.map(task => task.title);
+      } catch(error){
+        console.log(error);
+      }
+    })
+  </script>
+  <template>
+    <h1>Lista de tareas</h1>
+    <ul>
+    <li v-for="task in tasks">{{ task }}</li>
+    </ul>
+  </template>
+
+
+#+END_SRC 

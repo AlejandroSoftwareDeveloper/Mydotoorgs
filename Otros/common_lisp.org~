@@ -1,0 +1,75 @@
+
+#+STARTUP: overview
+
+* Common Lisp (Contenido) 
+
+** Introduccion 1
+ - [ ]  Revisar [0/8]
+   1. [ ] Proposito 
+   2. [ ] Convenciones y Notaciones
+   3. [ ] Numeros Decimales  
+   4. [ ] Nil, false, lista vacia 
+   5. [ ] Errores
+   6. [ ] Descripcion de funciones y otras entidades  
+   7. [ ] El lector de Lisp
+   8. [ ] Observar syntaxis    
+
+** Tipos de Datos 2
+ - [-] Revisar [1/25]
+   1. [ ] Tipos de Datos
+   2. [ ] Numeros
+   3. [ ] Enteros
+   4. [ ] Radios
+   5. [ ] Numeros punto flotantes  
+   6. [ ] Numeros Complejos
+   7. [ ] Caracteres
+   8. [X] Division de linea
+   9. [ ] Caracteres no estandar
+   10. [ ] Simbolos
+   11. [ ] Listas
+   12. [ ] Arreglos
+   13. [ ] Vectores 
+   14. [ ] Cadenas de caracteres
+   15. [ ] Vectores de bits
+   16. [ ] Tablas hash
+   17. [ ] Read Tables
+   18. [ ] Paquetes
+   19. [ ] Nombre de Rutas
+   20. [ ] Streams
+   21. [ ] Estados aleatorios
+   22. [ ] Estructuras
+   23. [ ] Funciones
+   24. [ ] Objetos de datos inlegibles
+   25. [ ] Overlap, Inclusion, and Disjointness of Types
+
+** Alcanzes y extensiones 3
+** Type Specifiers 4
+ - [ ] Revisar [0/10]
+   1. [ ] Tipo especificador de simbolos
+   2. [ ] Tipo especificador de Lista
+   3. [ ] Especificaor de tipo combinado 
+   4. [ ] Especificador de tipo de predicado
+   5. [ ] Especificador de tipo especializado
+   6. [ ] Especificador de tipo abreviatura 
+   7. [ ] Definicion de nuevos tipos de especificadores
+   8. [ ] Funcion de convercion de tipo 
+   9. [ ] Determinacion de tipo de objeto
+   10. [ ] Upgradeo de tipo
+
+** Estructura del programa 5
+ - [-] Revisar [1/13]
+   - [ ] Formas
+   - [X] Formas auto-evaluadas
+   - [ ] Variables
+   - [ ] Formas especiales
+   - [ ] Macros
+   - [ ] Llamada de funciones
+   - [ ] Funciones nombradas
+   - [ ] Expresiones Lambda
+   - [ ] Formas de alto nivel
+   - [ ] Definicion de funciones nombradas 
+   - [ ] Declaracion de variables globales y constantes
+   - [ ] Formas de alto nivel
+   - [ ] Control de tiempo y evaluacion
+
+     

@@ -1,0 +1,35 @@
+#+STARTUP: content
+
+* COMPUERTAS BASICAS
+	- Las compuertas logicas tienen una base compuesta por tres compuertas basicas
+	las demas compuertas se usan combinando estas tres:
+
+	AND = ^
+	OR  = v
+	NOT = ~
+
+* LEYES BASICAS DE LA LOGICA BOOLEANA (BOOLEAN IDENTITIES)
+	- Existen uun conjunto de leyes que permiten trabajar con las
+	   compuertas basicas creando ecuaciones de alto nivel
+	  - Leyes conmutativas
+		x ^ y = y ^ x
+		x v y = y v x
+		
+	  - Leyes asociativas
+		(x ^ (y ^ z)) = ((x ^ y) ^ z)
+		(x v (y v z)) = ((x v y) v z)
+
+	  - Leyes distributivas
+		(x ^ (y v z)) = (x ^ y) v (x ^ z)
+		(x v (y ^ z)) = (x v y) ^ (x v z)
+		
+	  - Leyes de Morgan
+		~(x ^ y) = ~x v ~y
+		~(x v y) = ~x ^ ~y
+		
+	  - Idempotence
+		w ^ w = w
+		
+	  - Double negacion
+		~~x = x
+	

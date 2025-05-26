@@ -1,0 +1,14 @@
+
+* Common Lisp (Contenido) 
+
+** Introducción 1
+ 1. [ ] Revisar [0/8]
+    1. [ ] Proposito 
+    2. [ ] Convenciones y Notaciones
+    3. [ ] Números Decimales  
+    4. [ ] Nil, false, lista vacia 
+    5. [ ] Errores
+    6. [ ] Descripcion de funciones y otras entidades  
+    7. [ ] El lector de Lisp
+    8. [ ] Observar syntaxis    
+** Tipos de Datos

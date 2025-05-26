@@ -1,0 +1,12 @@
+### Indice
+
+1. Introduccion a c++ ![[Curso de C++/Introduccion a C++/Indice]]
+	1. Introduccion a c++ ![[Introduccion a c++]]
+	2. Herramientas a instalar ![[Herramientas a installar]]
+	3. Comentarios ![[Curso de C++/Introduccion a C++/Comentarios]]
+	4. Errores ![[Errores]]
+	5. Advertencias ![[Advertencias]]
+	6. Entradas y salida de datos ![[Entrada y salida de datos]]
+	7. Declaraciones y funciones ![[Declaraciones(Statements) y funciones]]
+	8. C++ Core, Standard Library, STL![[C++ Core,STD,STL]]
+2. Variables y tipos de datos ![[Curso de C++/Variables y Tipos de datos/Indice]]

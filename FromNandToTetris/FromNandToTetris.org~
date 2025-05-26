@@ -1,0 +1,9 @@
+#+STARTUP: content
+
+Las compuertas logicas tienen una base compuesta por:
+
+AND = ^
+OR  = v
+NOT = ~
+
+Las demas compuertas se usan combinando estas tres.

@@ -1,0 +1,32 @@
+#+STARTUP: content
+
+* Proyecto de automatizacion de tareas (Nombre pendendiente)
+** Descripcion
+   - El objetivo de este _MICRO SISTEMA_ es acelerar todo lo que necesite
+   automatizar en temas de tareas de toda indole, sin dependender de sistema
+   externos como chat gtp, aunque no es excluyente.
+   - Usare python como lenguaje de programacion lo cual me permite usar
+	 gran cantidad de bibliotecas y ejemplos en internet para trabajar. 
+** Objetivos
+   Automatizacion de micro procesos como:
+	1. Copia de elementos entre ficheros y ficheros a ficheros.
+	2. Ejecucion de pequenios procedimientos concurrentemente.
+	3. Almacenamiento de informacion en bases de datos. 
+	4. Reemplazo de codigo por otro ya almacenado
+** Procesamiento de la informacion
+   - Para procesar la informacion se debe tener un archivo central
+     de configuracion donde se hagan las peticiones a otros achivos
+   - El archivo de configuracion se leera con un
+     EL archivo tendra la siguiente configuracion
+#+BEGIN_SRC js
+    //Este es un archivo json
+	{	
+		"nombre_de_usario":"nombre_de_usuario_o_sistema",
+  		"direccion_de_las_tareas":"",
+	}
+#+END_SRC
+** Lectura de archivo json
+	La lectura de los archivos json se realizaran con el siguiente script
+#+BEGIN_SRC python
+  	#Pendiente
+#+END_SRC

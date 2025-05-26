@@ -1,0 +1,145 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file d:/Literatura y Videotutoriales/Base de conocimiento/CSS/CSS.org
+
+
+* Ejemplos de listas
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2024-09-12 jue 19:45
+  :ARCHIVE_FILE: d:/Literatura y Videotutoriales/Base de conocimiento/CSS/CSS.org
+  :ARCHIVE_OLPATH: Curso de HTML y CSS/HTML/Etiquetas
+  :ARCHIVE_CATEGORY: CSS
+  :END:
+    Las lista en html son <li> y se colocan dentro de las etiquetas:
+	- ul (listas desordenadas)
+	- ol (listas ordenadas)
+	Los usos mas comunes de las listas son en los menu de navegacion.
+
+	
+#+BEGIN_SRC html Ejemplo de listas
+  <nav>
+	 <ul>
+	   <li> <a href="#">Ir a youtube</a> </li>
+	   <li> <a href="#">Ir a Facebook</a> </li>
+	   <li> <a href="#">Ir a Twitter</a> </li>
+	 </ul>
+   </nav>
+#+END_SRC
+	
+#+BEGIN_SRC html tablas en html
+  <!-- la etiqueta <caption> le da un titulo a la tabla -->
+  <table>
+  <caption>Tabla de personas</caption>
+	<tr>
+		<th>
+		  Cabecera numero 1
+		</th>	
+	</tr>	
+  </table>
+#+END_SRC
+
+#+BEGIN_SRC html formularios
+   <!-- El atributo action dice a donde se va a mandar la informacion -->
+   <!-- El atributo for de la etiqueta label hace referencia al etiqueta del id
+		del input con id en esta ejempo (nombre). Cuando se da click al label esta hace focus a la etiqueta
+		con la que se�ala el id.
+	-->
+
+   <!-- El de tipo reset resetea los campos del input-->
+
+  <form action="">
+	 <label for="nombre">Ingresa tu nombre</label>
+	 <input type="text" id="nombre"  minlength="3" placeholder="ingresa tu nombre">
+	 <select>
+		<option value="1" selected >Opcion 1</option>
+		<option value="2">Opcion 2</option>
+		<option value="3">Opcion 3</option>
+		<option value="4">Opcion 4</option>
+	 </select>
+
+	 <!-- El label asocia los texto dentro del input cuando es un radio o checkbox-->
+	 <label>
+		<input type="radio" name = "horario">Matutino
+	 </label>
+	 <label>
+		<input type="radio" name = "horario">Mixto
+	 </label>
+	 <label>
+		<input type="radio" name = "horario">Nocturno
+	 </label>
+
+	 <label>
+		<input type="checkbox">Acepta terminos y comentarios
+	 </label>
+
+		<h1>Dejame tus comentarios</h1>
+		<textarea cols="50" rows="10"></textarea>
+
+	 <input type="submit">
+	 <input type="reset">
+  </form>
+
+#+END_SRC
+
+
+#+BEGIN_SRC html Iframe
+
+  <!--La etiqueta iframe permite insertar pagina dentro de paginas-->
+
+   <iframe src="../direccion_de_la_pagina_a_insertar" frameborder="0" witdh="200" height="200"></iframe>
+
+#+END_SRC
+
+
+#+BEGIN_SRC html Audio y Video
+
+  <!-- El atributo controls muestra un menu de controles
+	   El atributo muted inicializa el video en mudo
+	   El atributo autoplay inicializa el video cuando lo carga
+	   El atributo poster pone la imagen seleccionada sobre el video como presentacion
+	   El atributo loop reinicia el video automaticamente cuando este finaliza
+  -->
+  <video src="../direccion_del_video" controls muted ></video>
+
+  <audio src="../direccion_del_audio" ></audio>
+
+
+#+END_SRC
+
+
+
+#+BEGIN_SRC html Etiquetas extras
+
+	  <!-- Las etiquetas figure son elementos bloques que nos ayudan a enmarcar
+		   las imagenes una debajo de la otro ya que la img son elementos en linas -->
+   <figure>
+	  <img src="">
+	  <figcaption>Muestra una leyenda asociada al contenido</figcaption>
+  </figure>
+
+  <!--  Se utiliza para imagenes de diferentes tamanios dependiendo de los dispositivos en los
+		que se muestre. Solo pueden contener una imagen, pero pueden contener varias etiquetas source
+		<source> se mostrara siempre y en caso de que no tenga imagen cargara la img que seria el valor
+		por defecto. Para cargar una imagen con source se usa srcset en vez de src y se usa el atributo
+		media para mostrar imagen segun las condiciones deseadas. En el ejemplo siguiente se muestra la
+		una imagen si el ancho minimo es de 500px.
+		Para que funcione varias source siempre las imagenes deben estar ordenadas de mayor a menor en el
+        min-width
+	 -->
+
+   <picture>
+	  <source srcset="ruta_de_la_imagen" media="(min-width:900px)">
+	  <source srcset="ruta_de_la_imagen" media="(min-width:500px)">
+	  <img src="">
+  </picture>
+#+END_SRC
+
+#+BEGIN_SRC html Metadatos
+  <!--Los metadatos muestran informacion de la pagina y deben estar colocados en la etiqueta head-->
+   <meta name="description" content="Se usa para describir el contenido de la pagina pagina de cara a los 
+	 CEO de los motores de busqueda">
+   <meta name="keywords" content="Palabras claves separadas por comas">
+  <!-- ASi es como se carga un favicon dentro de el header -->
+   <link rel="shortcut icon" href="./favicon-32x32.png" type="image/x-icon">
+#+END_SRC

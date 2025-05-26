@@ -1,0 +1,244 @@
+#+STARTUP: content
+
+* Conocimiento generales
+** (*ISA*) Set de Instrucciones de la Arquitectura
+** Arquitecturas x86 y x86_x64
+*** (*RISC*) Reduced Instruction Set Arquitecture
+*** (*CISC*) Complex Instruction Set Arquitecture
+  - Asignacion de un valor a un registro en x86_64 intel con *nasm*
+    mov rax, 42
+  - Asignacion de un valor a un registro en AT&T  
+    mov $42, %rax
+
+** Instrucciones basicas
+ - Asignacion de valores
+   *mov destino, source*
+   *mov rax, 42*
+
+ - Adicion (adiciona source a destino y guarda en destino)
+   #+BEGIN_SRC asm 
+     add destino, source
+     add rax, 42   ;en C seria  rax += 42
+   #+END_SRC
+
+ - Subtraccion (Substrae source a destino y guarda en destino)
+   #+BEGIN_SRC asm 
+     sub destino, source
+     sub rax, 42   ;en C seria  rax -= 42
+   #+END_SRC
+** Acceso a un registro
+  - Los registro en ensamblador son limitados, y su ves son
+    los que mas cerca estan del procesador por lo que son los mas rapidos
+    a la hora de acceder a ellos.
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | Nombre registro | 64 bits | hasta 32 bits con eax y ect... | hasta 16 bits | hasta 8 bits |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rax             | rax     | eax (32 bits)  ax (16 bits)    | ah (8 bits)   | al (8 bits)  |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rbx             | rbx     | ebx (32 bits)  bx (16 bits)    | bh (8 bits)   | bl (8 bits)  |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rcx             | rcx     | ecx (32 bits)  cx (16 bits)    | ch (8 bits)   | cl (8 bits)  |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rdx             | rdx     | edx (32 bits)  dx (16 bits)    | dh (8 bits)   | dl (8 bits)  |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rdi             | rdi     |                                |               |              |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rsi             | rdi     |                                |               |              |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rip             | rip     | register instruction pointer   |               |              |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rsp             | rsp     | register stack pointer         |               |              |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+ | rbp             | rsp     | register base pointer          |               |              |
+ |-----------------+---------+--------------------------------+---------------+--------------|
+
+** Stack
+ - Los stack tienen la caracteristicas de ser LIFO (Last In First Out)
+  _Ultimo que entra primero que sale._
+ - Para adicionar un elemento al stack se usa la funcion PUSH el cual primero disminuye
+   en uno el stack pointer y luego pone el valor en la pila (QUE CRECE HACIA ABAJO)
+  - Ejemplo
+
+   *mov rax ,42*
+   *push rax*
+
+   |---+----|
+   | 1 |    |
+   |---+----|
+   | 2 |    |
+   |---+----|
+   | 3 |    |
+   |---+----|
+   | 4 | 42 | <- rsp
+   |---+----|
+
+   *mov rax ,70*
+   *push rax*  
+   *push rax*
+   
+   |---+----|
+   | 1 |    |
+   |---+----|
+   | 2 | 70 | <- rsp
+   |---+----|
+   | 3 | 70 | 
+   |---+----|
+   | 4 | 42 |
+   |---+----|
+
+ - Cuando se extrae un valor de la stack se usa POP y se almacena en un registro
+   o puntero.
+   -Ejemplo
+   *pop rbp*
+
+   rbp = 70 
+   |---+----|
+   | 1 |    |
+   |---+----|
+   | 2 |    | 
+   |---+----|
+   | 3 | 70 | <- rsp
+   |---+----|
+   | 4 | 42 |
+   |---+----|
+** Flags
+  - Las flags se actualizan de 0 a 1 y viceversa
+    en ciertas operaciones.
+  - Estas flags sirven como operadores boleanos 
+    para validar operaciones
+
+*** ZeroFlag (ZF)
+    - Si el resultado de una operacion es 0
+      la bandera se actualiza a 1 sino se pone en 0
+      Ejemplo
+      #+BEGIN_SRC asm 
+        mov al, 3 
+        sub al, 1
+      #+END_SRC
+      En este caso la *zf* no se activa porque 3 - 1 = 2
+      por tanto la bandera se queda en 0
+      Si el resultado hubiera sido 0 la zf estaria en 1 
+
+*** SignFlag (SF)
+  - Se usa en el bits mas significativo, (el que esta mas a la izquierda)
+    donde si este es 1 se enciende la bandera del signo
+    #+BEGIN_SRC asm
+      mov al, 0; al 8-bits register
+      sub al, 1 ; 0b11111111 (complemento a dos)
+    #+END_SRC 
+   
+*** CarryFlag (CF)
+  - Se va a encender cuando:
+    1. Hay overflow de un numero sin signo
+    2. Numero prestado en una resta      
+    3. Ultimo bit que se salio de shift
+
+    #+BEGIN_SRC asm numero sin signo
+      mov ah, 255 ; 8-bit register
+      add ah, 1   ; ah = 0 , CF = 1
+      ; Al ser ah un valor unsigned se hace overflow
+      ; y se coloca en 0 activandose la carryflag
+    #+END_SRC 
+
+    #+BEGIN_SRC asm numero prestado en resta
+      mov ah, 5    ; 8-bit register
+      sub ah, 10   ; 5 < 10, CF = 1
+      ; Necesitamos numeros prestados en el siguiente nivel
+    #+END_SRC 
+  
+    #+BEGIN_SRC asm Ultimo bit que se salio
+      mov ah, 0b100000001   
+      shr ah, 1 ; Shift Right, CF=1
+      ; El ultimo bit que se sale es 1
+      ; 0b010000000 | 1
+
+      mov ah, 0b100000000
+      shr ah, 1 ; Shift Right, CF=0
+      ; Si el ultimo hubiera sido 0 se guarda un cero
+      ; en carry flag
+      ; 0b010000000 | 0
+    #+END_SRC
+
+*** OverflowFlag (OF)
+  - Se va a encender cuando cuando hay aritmetica de numeros
+    con signo.
+    #+BEGIN_SRC asm numero prestado en resta
+      mov ah, 100 ; 8-bit register
+      add al, 50  ; 127 (maximo numero con signo) en 8 bits
+		  ; El resultado de vuelta (overflow) a -106
+		  ; en un registro de 8 bits va de -128 a 127.
+		  ; Por lo que hay (signed overflow)
+	          ; OF=1
+    #+END_SRC 
+** Partes basicas de un programa ensamblador   
+*** Secciones
+
+   |---------+-------------+--------------------------------------------------------|
+   | Nombre  | Elementos   | Descripcion                                            |
+   |---------+-------------+--------------------------------------------------------|
+   | .text   | exe         | Contiene el codigo ejecutable(exe)                     |
+   |---------+-------------+--------------------------------------------------------|
+   | .rodata | read-only   | Donde se guardan las constantes del pro                |
+   |         |             | del programa                                           |
+   |---------+-------------+--------------------------------------------------------|
+   | .data   | init vars   | Se usa para valores predefinidos estaticos             |
+   |         |             | y globales                                             |
+   |---------+-------------+--------------------------------------------------------|
+   | .bss    | uninit vars | Es para variables no inicializadas, las cuales no      |
+   |         |             | usan espacio del binario o programa que estas creando. |
+   |---------+-------------+--------------------------------------------------------|
+
+    #+BEGIN_SRC asm Ejemplo de un programa ensamblador 
+      section .data   ; Segmento de datos inicializados
+	msg1 db "Hola desde .data", 10,0 ; 10=\n, 0=\0
+	msg1_len equ $ - msg1 
+
+      section .rodata ; Segmento de datos de solo lectura
+	const1 db "Soy una constante", 10,0 ; 10=\n, 0=\0
+	const1_len equ $ - const1 
+	; Longitud de la constante const1 donde equ saca 
+	; el tamanio de la constante empezando en la posicion
+	; de la memoria actual hacia la posicion de la memoria
+	; de la constante.
+
+      section .bss     ; Segmento de variables no inicializadas
+	buffer resb 64 ; 64 bytes reservados
+	number resq 1  ; 8 bytes reservados para (quad-word)
+
+      section .text   ; Segmento de codigo
+	global _start ; Punto de entrada para el linker
+
+      _start:
+	;Programa de salida
+	mov rax, 60 ; syscall: exit 
+	mov rdi, 0  ; exit 0
+	syscall    
+    #+END_SRC 
+
+** Pasos para compilar en ensamblador en linux x64 con nasm
+   _Compilar_
+   nasm -f elf64 ./nombre_del_archivo_a_compilar.asm
+   - nasm es el compilador
+   - (-f) le indica el formato de salida y debe ir a continuacion
+   - elf64 o elf32 en casos de x86 es el formato a compilar
+     significa Executable an Linkiable Format(ELF) 
+   -  ./nombre_del_archivo_a_compilar.asm es el archivo a compilar en cuestion.
+
+   _Linkear_
+   ld -o ./archivo_ejecutable ./nombre_del_archivo_a_compilar.o
+   - ld linkeador (No se que significa ld, tengo que buscar)
+   - (-o) bandera del archivo de salida que se pone a continuacion 
+   - (-o) bandera del archivo de salida que se pone a continuacion 
+
+   _Ejecutar_
+   ./archivo_ejecutable
+   - Invocacion del archivo ejecutable final
+
+** Debug
+   - Para debuguear se usa *gdb*
+   - Y para hacer una representacion grafica se
+     puede usar *gef*
+
+   *gdb* ./archivo_ejecutable
+   *gef* config context.layout "regs stack code"
+

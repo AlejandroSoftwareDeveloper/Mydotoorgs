@@ -1,0 +1,6 @@
+1. Variables ![[Curso de C++/Variables y Tipos de datos/Variables]]
+2. Sistemas numéricos ![[Sistemas númericos]]
+3. Enteros (Integer)![[Enteros (Integers)]]
+4. Fracionarios ![[Fracionarios]]
+5. Buleanos ![[Booleans]]
+6. Auto ![[Auto]]

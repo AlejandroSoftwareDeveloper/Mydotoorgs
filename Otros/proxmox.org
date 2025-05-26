@@ -1,0 +1,44 @@
+
+* Actividades para el desarrollo de hablidades con proxmox [1/3]
+- [ ] Extraer los conceptos basicos para trabajar con proxmox.
+- [X] Desglosar los conceptos teoricos a aprender.   [2/2]
+  - [X] Conceptos:
+    - ceph: Sistema de almacenamiento altamente escalable y auto gestionable de manage.
+    - ZFS: Sistema combinados de archivos y gestionador de volumenes logicos, con proteccion
+               contra la corrupcion de datos, multiples modos raids, entre otros caracteristicas 
+    - Proxmox wiki: Sistema de ayuda que combina documentacion de referencia con informacion
+                        dada por el contribuidor
+  - [X] Instalacion 
+    - Seleccionar en el menu de instalacion la opcion de instalar en proxmox
+    - El menu de seleccion de saldra con la opcion de ext4 de archivo de sistema por defecto
+    - El gestor de volumenes logicos(LVM) es usado cuando ext4 y zfs es selecionado.
+      Proxmox VE puede ser instalado en ZFS. Mientras ZFS ofrece varias raid a nivel de software.  
+    - Se seleciona posteriormente el correo donde el sistema enviara las notificaciones y mensaje de advertencia
+      y contrasenia del sistema.
+    - Finalmente antes de instalar se configura la interfaz de gestion, nombre host, direcion IP
+      mascara de red,Puerta de enlace, Servidor dns.   
+    - Otras opciones:
+      - hdsize: Define el espacio total a usar en el disco, Se pude resrevar espacie en el disco de esta forma
+                para otros paticionamientos 
+      - swapsize: Define el tamanio del volume de intercambio. El tamanio por defecto es el de la memoria instalada
+                  min 4gb max 8gb. El resultado no puede ser mayor que hdsize/8.
+      - maxroot: Define el tamanio maximo del volumen raiz donde se alamacena las operaciones del sistema  
+                 El limite max del tamanio del volume ed de hdsize/4 
+      - maxvz: Defines the maximum size of the data volume Define el tamanio maximo del volumen de datos. 
+               Se calcula: (datasize = hdsize - rootsize - swapsize - minfree) donde datasize no puede
+               ser mayor que maxvz 
+      - minfree: Define la cantidad de espacio de libre restante en el grupo pve del volumen LVM
+                 con mas de 128 gb disponible en almacenamiento, por defecto es de 16gb, sino
+                 usara hdsize/8.    
+    - Configuraciones Avanzadas ZFS
+        El instalador crea la fuente ZFS rpool. No se crea espacio de intercambios (swap space) pero puede
+        reservar un espacios no particionado para intercambios  
+      - ashift: Define el valor de ashift para la fuente creada. Este necesita se colocado
+        en al menos algun sector subsiguintes (ashift ^ 2 es el sector tamanio del sector) 
+      - compress: Define cuando una compresion esta activada para el rpool 
+      - checksum: Define cual algorithmo de chequeo de suma debera ser usado para rpool.
+      - copies: Define las copias de los parametros de rpool 
+      - hdsize: Define el total de disco usado
+- [ ] Desglosar en tareas las actividades para la adquicicion
+      del conocimiento practico.    
+ - [ ] Marcar ultima pagina marcada (43)

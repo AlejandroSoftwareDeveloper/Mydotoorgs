@@ -1,0 +1,623 @@
+* Instalacion de Rust
+  - curl https://sh.rustup.rs -sSf | sh      // Instala la biblioteca de rust
+  - source ~/.profile                        // Agrega .profile a las variables globales
+  - source ~/.cargo/env                      // Agrega .cargo/env a las variables globales
+  - rustc --version                          // Muestra la version de Rust
+  - Otros paquetes (rustup component add)
+    - rls 
+    - rust-analysis
+    - rust-src
+  - coc-rls                                  // Se usa si tienes neovim con coc   :CocInstall coc-rls
+* Proyecto con gestor de paquetes (cargo)
+  - cargo new nombre_del_proyecto --bin      // Crea nuevo proyecto 
+  - cargo new --help                         // Muestra las opciones del gestor de paquetes
+  - cargo check                              // Chequea que el codigo esta bien sin compilarlo  
+  - cargo build                              // Construye el proyecto y su arbol
+                                             // de dependencias   
+  - cargo run                                // Hace lo mismo que cargo build, y lo corre.
+  - cargo build --release                    // Compila el proyecto para producccion
+                                                     
+* Conceptos basicos
+
+** Variables
+
+  - let x
+      Declara la variable x inmutable no permite el cambio de variable despues de inicializarse
+  - let mut x
+      Declara la variable x mutable lo que permite cambiar su valor despues de haber sido inicializada    
+  - const MAX_POINTS: u32 = 100_000;
+      Declara variable de tipo constante  
+  - Shadowing
+      Esta funcionalidad permite cambiar el valor de las variables inmutables
+      ejemplo 1:
+      let espacio = "   ";
+      let espacio = espacio.len();
+
+      ejemplo 2:
+      let x = 5;
+      let x = 4 + 1;
+      let x = x * 2;
+      
+      (OJO) Solo se permite cambiar las inmutables, las mutable daran error ya que las mutables contienen
+      por definicion el tipo de variable
+      
+  - Declaracion de variables segun su tipo
+    - let age: u8 = 36;
+  
+** Tipo de datos   
+|-------+----------+------------------+----------------------|
+| tipo  | longitud | Con signo/Signed | Sin Signo / Unsigned |
+|-------+----------+------------------+----------------------|
+| int   | 8-bit    | i8               | u8                   |
+| int   | 16-bit   | i16              | u16                  |
+| int   | 32-bit   | i32              | u32                  |
+| int   | 64-bit   | i64              | u64                  |
+|-------+----------+------------------+----------------------|
+| float | 32-bit   | f32              |                      |
+| float | 32-bit   | f32              |                      |
+|-------+----------+------------------+----------------------|
+
+|-------------+-------------|
+| tipo        | valores     |
+|-------------+-------------|
+| Decimal     | 98_000      |
+| Hexadecimal | 0xff        |
+| Octal       | 0o77        |
+| Binary      | 0b1111_0000 |
+| Byte        | b'A'        |
+| Boolean     | true        |
+| Boolean     | false       |
+|-------------+-------------|
+
+** Operaciones numericas
+
+|--------------------+----------------|
+| tipo               | definicion     |
+|--------------------+----------------|
+| let sum = 5 + 10   | suma           |
+| let res = 10 - 5   | resta          |
+| let mul = 4 * 3    | multiplicacion |
+| let div = 10 / 2   | devision       |
+| let resto = 43 % 5 | resto(modulo)  |
+|--------------------+----------------|
+
+
+  - Los carateres unicos usan comillas simple igual que en c++
+    let c = 'a';  //Esto es un caracter
+    let cadena  = "Esto es una cadena"; 
+
+  - Los caracteres permitido van desde el U+0000 al U+D7FF y desde U+E000 al U+10FFFF.
+    Se les conoce caracteres Unicode 
+
+  - Tipos tuplas
+    let tup: (i32, f64, u8) = (500, 6.4, 1);
+
+    let tup = (500, 6.4, 1);
+
+    let (x, y, z) = tup;
+
+    let quinientos = tup.0
+
+    let seis_coma_cuatro = tup.1
+
+   - Arreglos
+     let array:[i32;10];   //Declaracion de arreglo segun su tipo y cantidad
+     let array:[i32;_] = [100,400,360]; 
+     
+     let arr = [1,2,3,4,5];
+  
+     let primero = arr[0];
+
+     let segundo = arr[1];
+
+   - Cadenas de caracteres (Strings)
+     let s = String::from("hello");     //(String Literal) Los String literales no pueden cambiarse una vez definidos
+     let mut s = String::from("hello"); //(String)
+     
+     s.push_str(", world!"); // push_str() appends a literal to a String
+
+     println!("{}", s);      // this will print `hello, world!`
+
+** Funciones
+
+   - Para declarar una nueva funcion se usa el estilo snake case, donde el nombre ese escribe en minuscula
+     separado por guion bajo
+     
+    fn another_function(x: i32, y: i32) -> i32 {
+         println!("The value of x is: {}", x);
+	 
+         let y = {
+             let x = 3;
+             x + 1
+         };
+	 y
+     }
+
+   - Cuando se le pasa un parametro a la funcion se le debe especificar el tipo de datos como se muestra en la funcion
+     anterior. Puede recibir multiples parametros
+   - Las funciones pueden contener expresiones y statements (buscar significado)  
+   - Las statements pueden declararse con expresiones como se ve arriba y el ultimo statement dentro
+     de las llaves no tiene ;. 
+   - Las funciones no nesecitan la palabara clave retornar un valor. Se puede usar return para retornar un valor
+     antes de tiempo.
+
+** Condicionales
+
+    if number % 4 == 0 {
+       println!("number is divisible by 4");
+    } else if number % 3 == 0 {
+       println!("number is divisible by 3");
+    } else if number % 2 == 0 {
+       println!("number is divisible by 2");
+    } else {
+       println!("number is not divisible by 4, 3, or 2");
+    }
+
+    - Los (if else) statements solo evaluan boolenos si se evalua otro valor, entero o cualquier otro tipo
+      dara un error al compilar
+
+    let number = if condition {
+       5
+    } else {
+       6
+    };
+
+    - Se puede almacenar un statement de if en un let con se muestra arriba
+    - Ambos valores deben ser del mismo tipo sino el compilador dara un error  
+
+** Ciclos
+
+      fn main() {
+
+         //Ciclo con loop
+         loop {
+             println!("Hola")
+          }
+
+	 // Ciclo while
+          let mut number = 3;
+          while number != 0 {
+              println!("{}!", number);
+              number = number - 1;
+          }
+         println!("LIFTOFF!!!");
+
+         // Ciclo for
+         let a = [10, 20, 30, 40, 50];
+         for elm in a.iter() {
+             println!("the value is: {}", elm);
+         }
+
+	 //Ciclo for en reverso con la funcion rev()
+         for number in (1..4).rev() {
+             println!("{}!", number);
+         }
+         println!("LIFTOFF!!!");
+
+	 
+       }
+
+** Ownership
+  - Reglas
+    - Cada valor en Rust tiene una variable llamada duenio
+    - Solo puede haber un duenio a la vez
+    - Cuando el duenio se sale del scope el valor se elimina    
+    
+      
+  - Las cadenas de caracteres dinamicas no se copian directamente:
+    let s1 = String::from("Hello!");     // Aqui se libera la variable s1, ya que la copia de una
+    let s2 = s1;                         // cadena a otra daria un error el eliminar los datos  
+				         // de la primera 
+  
+    let s1 = String::from("Hello!");     // No se puede copiar el valor del string pero si se puede
+    let s2 = s1.clone();                 // clonar y no perder los datos del primero 
+
+
+  - Las copias de tipos como enteros no nesecitan ser clonados porque su longitud es fija en la
+    pila de memoria. Los diferentes tipos que no necesitan copias son:
+    
+    - Todos los tipos de enteros como u32 
+    - Los booleanos true y false
+    - los char    
+    - Los flotantes f32 y f64 
+    - Tuplas que contengan que se puedan copiar ej:
+      - (i32,i32)     si
+      - (i32, String) no
+
+
+  
+*** Ejemplos de Ownership en funciones
+      fn main() {
+          let s = String::from("hello"); // s comes into scope
+          takes_ownership(s);            // s's value moves into the function...
+                                         // ... and so is no longer valid here
+          let x = 5;                     // x comes into scope
+          makes_copy(x);                 // x would move into the function,
+                                         // but i32 is Copy, so it's okay to
+                                         // still use x afterward
+      }                                  // Here, x goes out of scope, then s. But because s's value was moved,
+                                         // nothing special happens.
+      fn takes_ownership(some_string: String){ // some_string comes into scope
+          println!("{}", some_string);
+      }                                  // Here, some_string goes out of scope and `drop` is called. The backing
+                                         // memory is freed.
+      fn makes_copy(some_integer: i32) { // some_integer comes into scope
+          println!("{}", some_integer);
+      }                                  // Here, some_integer goes out of scope. Nothing special happens.
+
+      
+
+
+  - Ejemplos de Ownership en funciones con valores de retorno
+      fn main() {
+          let s1 = gives_ownership();           // gives_ownership moves its return value into s1
+          let s2 = String::from("hello");       // s2 comes into scope
+          let s3 = takes_and_gives_back(s2);    // s2 is moved into
+                                                // takes_and_gives_back, which also
+                                                // moves its return value into s3
+      }                                         // Here, s3 goes out of scope and is dropped. s2 goes out of scope but was
+                                                // moved, so nothing happens. s1 goes out of scope and is dropped.
+
+      fn gives_ownership() -> String {          // gives_ownership will move its
+                                                // return value into the function
+                                                // that calls it
+          let some_string = String::from("hello"); // some_string comes into scope
+          some_string                           // some_string is returned and
+                                                // moves out to the calling function
+      }                                         // takes_and_gives_back will take a String and return one
+      
+      fn takes_and_gives_back(a_string: String) -> String {    // a_string comes into
+                                                // scope
+           a_string                             // a_string is returned and moves out to the calling function
+      }
+
+  - Refencias y Prestamos(Borrowing)
+   - ejemplo 1 
+    fn main() {
+        let s1 = String::from("hello");
+        let len = calculate_length(&s1);
+        println!("The length of '{}' is {}.", s1, len);
+    }
+    
+    fn calculate_length(s: &String) -> usize {   // s is a reference to a String
+        s.len()
+    } // Here, s goes out of scope. But because it does not have ownership of
+      // what it refers to, nothing happens.
+
+  - Las variables inmutables de cadenas no se cambian cuando se pasan por referencias
+  - ejemplo 2
+    fn main() {
+        let s = String::from("hello");
+        change(&s);
+    }
+
+    fn change(some_string: &String) {
+       some_string.push_str(", world"); // This code will throw an error
+    }
+
+  - Para cambiar el valor de una variable de cadena pasada por referencia debe haberse declarado mutable   
+    fn main() {
+        let mut s = String::from("hello");
+        change(&mut s);
+    }
+
+    fn change(some_string: &mut String) {
+        some_string.push_str(", world");
+    }
+
+  - No se puede asignar la misma direccion a diferente variables mutables
+    
+    let mut s = String::from("hello");
+    let r1 = &mut s;
+    let r2 = &mut s;  // Here will throw and error  
+
+**** RESUMEN
+   - Se puede tener una pero no dos cosas a la misma vez:
+     - Una referencia mutable
+     - Varias referencias inmutables
+
+    let mut s = String::from("hello");
+    let r1 = &s;
+    let r2 = &s;
+    let r3 = &mut s; //Big Problem 
+    
+** El tipo Slice
+*** Existen varios tipos de slices:
+    - Diferentes formas de dividir el string
+     
+    let s = String::from("hello world");
+    let len  = s.len();
+    
+    let hello = &s[0..5];
+    let world = &s[6..11];
+
+    // Version 2 
+    let hello_v2 = &s[..5];
+
+    //Version 3
+    let world_v2 = &s[5..]
+
+    //Version 4
+    let slice = &s[3..len];
+    let slice = &s[3..]; 
+    let slice = &s[0..len];
+    let slice = &s[..];
+
+  - Los string literales son SLICES
+
+    let s: &str = "Hello world";
+        
+   - Tres formas de usar string literales 
+
+     let my_string = String::from("hello world");
+
+     // first_word works on slices of `String`s
+        let word = first_word(&my_string[..]);
+        let my_string_literal = "hello world";
+
+     // first_word works on slices of string literals
+        let word = first_word(&my_string_literal[..]);
+
+     // Because string literals are string slices already,
+     // this works too, without the slice syntax!
+
+     let word = first_word(my_string_literal);
+
+     // Los slices se utilizan en arreglos numericos tambien
+     let numbers = [1,2,3,4,5];
+
+     let n = &numbers[..];
+    
+** Structs
+*** Definicion de una estructura
+
+   struct User {
+       username: String,
+       email: String,
+       sign_in_count: u64,
+       active: bool,
+   };
+
+   let user1 = User {
+       email: String::from("someone@example.com"),
+       username: String::from("someusername123"),
+       active: true,
+       sign_in_count: 1,
+   };
+   // Todos los campos de la estructura deben ser mutables
+
+*** Definicion de una Struct sin nombre en los campos   
+   struct Color(i32, i32, i32);
+   struct Point(i32, i32, i32);
+
+   let black = Color(0, 0, 0);
+
+*** Factorias de structuras
+   // Factory de User para generar nuevo user
+   fn build_user(email: String,username: String) -> User {
+        User {
+           email: email,       
+           username: username,
+           active: true,
+           sign_in_count: 1,
+       }
+    }
+    
+    //Factory v2 inicializar con sorthand cuando las variables y campos tienen el mismo nombre
+    fn build_user(email: String,username: String) -> User {
+         User {
+           email,
+           username,
+           active: true,
+           sign_in_count: 1,
+       }
+    }
+ 
+*** Inicializacion de una Structura con los datos de otra
+
+  let user1 = User {
+       email: String::from("someone@example.com"),
+       username: String::from("someusername123"),
+       active: true,
+       sign_in_count: 1,
+    }
+
+  let user2 = User {
+       email: String::from("someone2@example.com"),
+       username: String::from("someusername456"),
+       active: user1.active,
+       sign_in_count: user1.sign_in_count,
+    }
+
+  let user3 = User {
+       email: String::from("someone2@example.com"),
+       username: String::from("someusername456"),
+       ..user1
+    }
+*** Funciones con Struct
+
+   //V1
+   struct Rectangle {
+      width: u32,
+      height: u32,
+   }
+   fn main() {
+       let rect1 = Rectangle { width: 30, height: 50 };
+       println!("The area of the rectangle is {} square pixels.",
+       area(&rect1));
+   }
+   
+   fn area(rectangle: &Rectangle) -> u32 {
+      rectangle.width * rectangle.height
+   }
+
+*** Debuggear la Struct
+
+   #[derive(Debug)]
+   struct Rectangle {
+       width: u32,
+       height: u32,
+   }
+   
+   fn main() {
+      let rect1 = Rectangle { width: 30, height: 50 };
+      println!("rect1 is {:?}", rect1); //Para mostrar la struct en el print se usa {:?}
+   }
+
+*** Definicion de metodos de una Structura
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+// Asi se implementa los metodos de la structura
+impl Rectangle {
+     fn area(&self) -> u32 {
+         self.width * self.height
+     }
+
+     fn can_hold(&self, other: &Rectangle) -> bool {
+         self.width > other.width && self.height > other.height
+     }
+}
+
+*** Funciones asociadas 
+
+// Las funciones asociadas se usan para implementar funciones que
+// no necesitan una instancia de la struct para trabajar
+
+impl Rectangle {
+     fn square(size: u32) -> Rectangle {
+          Rectangle { width: size, height: size }
+     }
+}
+
+// Invocacion de funcion asociada
+Rectangle::square(3);
+
+** Enums
+*** Definicion de Enum
+
+struct ipvadrr {
+    // Otro codigo
+}
+
+
+enum IpAddrKind {
+     V4, // Se puede incluir la definicion por tipo ej V4(String) o V4(u8,u8,u8,u8)
+     V6,
+     V6-2(ipvadrr), // Se puede almacenar en enums cualquier tipo de codigo incluso STRUCTS o ENUMS
+}
+
+let four = IpAddrKind::V4;
+let home = IpAddr::V4(127, 0, 0, 1); //Inicializacion por tipo 
+
+*** Variantes de Enums
+
+    enum Message {
+       Quit,                       // Valor vacio 
+       Move { x: i32, y: i32 },    // Structura anonima
+       Write(String),              // Con un solo valor
+       ChangeColor(i32, i32, i32), // Con tres valores
+    }
+
+*** Option Enum
+
+     Option<T> {
+         Some(T),
+         None,
+     }
+
+//El valor de Some puede ser cualquier tipo definido por el sistema o el usuario      
+let some_number = Some(5); 
+let some_string = Some("a string");
+
+//Si no hay un valor definido por el usuario se tiene que declarar que valor tomaria la variable
+let absent_number: Option<i32> = None;
+
+*** Los patrones match para Enums
+
+    enum UsState {
+        Alabama,
+        Alaska,
+      // --snip--
+   }
+   
+    enum Coin {
+        Penny,
+        Nickel,
+        Dime,
+        Quarter(UsState),
+   }
+
+    fn value_in_cents(coin: Coin) -> u32 {
+        match coin {
+            Coin::Penny => 1,
+            Coin::Nickel => 5,
+            Coin::Dime => 10,
+            Coin::Quarter => 25,
+       }
+    }
+
+**** Match que contienen valores    
+
+    fn value_in_cents(coin: Coin) -> u32 {
+        match coin {
+	    // Para ejecutar funciones con un match se escribe entre llaves como a continuacion 
+            Coin::Penny => {
+                 println!("Lucky penny!");
+                 1
+            },
+            Coin::Nickel => 5,
+            Coin::Dime => 10,
+            Coin::Quarter(state) => {
+                  println!("State quarter from {:?}!", state);
+		  25
+             },
+        }
+    }
+
+//Esta llamada de nos retornara el valor 25
+value_in_cents(Coin::Quarter(UsState::Alaska)),
+
+
+**** Ejemplo de match con Option<T> 
+    fn plus_one(x: Option<i32>) -> Option<i32> {
+        match x {
+            None => None,
+            Some(i) => Some(i + 1),
+        }
+    }
+
+let five = Some(5);
+let six = plus_one(five);  //Devuelve 6
+let none = plus_one(None); //Devuelve None
+
+*** The _ Placeholder
+
+// No se puede tomar en cuenta todas las combinaciones con match por eso se usa
+// el _ para denotar el resto de los elementos
+
+fn print_one_value(x: u8){
+    match some_u8_value {
+        1 => println!("one"),
+        3 => println!("three"),
+        5 => println!("five"),
+        7 => println!("seven"),
+        _ => (),
+    }
+}
+
+*** Control de flujo con if let
+
+    //Esta variacion nos permite cambiar el match de Some y None por una sola validacion
+    //del elemento que se busca
+
+    if let Some(3) = some_u8_value {
+        println!("three");
+    }
+    
+* Otros
+  - parsear a str a int
+    let number: u32 = "42".parse().expect("No es el valor esperado.") 

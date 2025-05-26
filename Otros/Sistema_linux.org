@@ -1,0 +1,4 @@
+* Comandos de linux [0/2]
+   - [ ] pwd: Muestra la ruta actual del puntero
+   - [ ] cd /RUTA: selecciona hacia donde navegar
+     

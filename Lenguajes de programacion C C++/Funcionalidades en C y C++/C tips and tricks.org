@@ -1,0 +1,280 @@
+#+STARTUP: content
+
+* Generador de numeros aleatorios
+#+BEGIN_SRC C++
+	  #include <stdio.h>
+	  #include <stdlib.h>
+	  #include <time.h>
+	  #include <unistd.h>
+
+	  int main(int argc,char *argv[]){
+		  // srand(time(NULL)); // srand suele usar con (time) pero suele ser menos preciso
+		  srand( getpid() + time(NULL)); // la funcion (seed random) srand genera la llave
+  										 // que necesita rand para para generar los numeros
+										 // aleatorios
+		  int random = 0;
+		  for(int i = 0;i< 1000;i++){
+			  // si se le suma 1 al final el rango de valores
+			  // estara entre 1 y 100, no entre 0 y 99
+			 random = (rand() % 100) + 1;  //rand % rango te dara el rango entre 0 y el rango no incluido
+			printf("random : %d\n",random);
+		  }   
+	  }
+#+END_SRC
+
+* Versiones de C
+ - las diferentes versiones de C permiten activar diferentes funcionalidades
+   - Un ejemplo es el uso de declaracion de las variables al principio de la
+     funcion en *c89* la cual es un problema porque se accederia a esa variables
+     en toda la funcion siendo un problema en los *forloop*.
+   - En *c99* lo antes mencionado no pasa porque se puede declarar las variables
+     dentro de los forloop.
+   - Otra diferencia en c89 vs c99 es la inicializacion de *struct*
+     - En c89 se debe tomar en cuenta el orden de los parametros para inicializar
+       ya que si hay dos variables del mismo tipo contigua pueder darse un
+       error al inicializarse los datos de forma incorrecta, asignando mal 
+       los datos.
+     - En C99 se usa una caracteristica llamada *Inicializadores designados* para evitar el error antes mencionado
+       permitiendo declarar las variables en el orden deseado y dejando valores en blanco para que los inicialize
+       el compilador.
+     - Ademas en C89 las struct no se pueden dejar parametros sin inicializar dando error
+       en tiempo de compilacion, donde en c99 los parametros se inicializan en 0 o vacio en caso
+       de las cadenas.
+   - C99 introduce ademas la biblioteca estandar #include <stdint.h> la cual estabiliza tipos enteros en
+     todas las plataformas, ejemplo:
+     |----------+------------------|
+     | Type     | Value            |
+     |----------+------------------|
+     | int8_t   | 8 bits           |
+     |----------+------------------|
+     | int16_t  | 16 bits          |
+     |----------+------------------|
+     | int32_t  | 32 bits          |
+     |----------+------------------|
+     | int64_t  | 64 bits          |
+     |----------+------------------|
+     | uint8_t  | unsigned 8 bits  |
+     |----------+------------------|
+     | uint16_t | unsigned 16 bits |
+     |----------+------------------|
+     | uint32_t | unsigned 32 bits |
+     |----------+------------------|
+     | uint64_t | unsigned 64 bits |
+     |----------+------------------|
+     - stdint tambien introduce uintptr_t que garantiza un puntero tipo unsigned int para almacenar
+       cualquier tamanio de puntero que se desea almacenar.
+     - Otra caracteristica son los valores de minimos y maximos de todos los tipos representados anteriormente
+       como es el caso de la constante INT32_MAX y INT32_MIN que representa el maximo valor y minimo valor respectivamente
+       permitido en un entero.
+     - Se puede usar los compuestos literales en c99 donde se pueden inicializar structuras dentro de una funcion
+#+BEGIN_SRC C ejemplos de los forloop en diferentes version de C
+  //c89
+  int main(void){
+	// Obligatorio declararlo aqui
+    int i;
+    for(i=0;i< 10;i++){
+	printf("%d\n",i);
+    }
+      //Aqui se puede acceder a i despues de usarla en el for
+  }
+  
+  //c99
+  int main(void){
+    for(int i=0;i< 10;i++){
+	printf("%d\n",i);
+    }
+      //Aqui no se puede acceder a i despues de usarla en el for
+  }
+#+END_SRC
+
+#+BEGIN_SRC C Inicializacion de paramtetros de una structura en c89 vs c99
+  //C89
+  typedef struct {
+    int group;
+    int categorie;
+    int hashvalue;
+    int id;
+    int age;
+    char* name;
+  } User;
+
+   // Inicializacion incorrecta de tipos de datos por el orden
+   // y no se esta inicializando los parametros group, categorie,hashvalue
+   User jane = {
+    557,
+    26,
+    "Jane"
+   };
+
+   //Si se cambia el orden de los parametros, se asignara mal y causaria error
+   //por diferencia de valores incluso dentro de los parametros
+   User jane = {
+    26,
+    557,
+    "Jane"
+   };
+   //Si se cambia el orden de los parametros dara error por asignacion
+   //incorrecta de tipo de datos
+   User jane = {
+    26,
+    "Jane"
+    557,
+   };
+
+   //C99
+   //En C99 se puede inicializar los parametros con inicializadores designados 
+   //donde el orden no es importante a la hora de inicializarlos
+   //y los campos pueden quedar vacios, siendo inicializados automaticamente 
+   User jane = {
+    .age = 26,
+    .id = 557,
+    .name = "Jane"
+   // Los parametros group, categorie,hashvalue se inicializaran automaticamente
+   };
+#+END_SRC
+
+#+BEGIN_SRC C Compuestos literales
+  typedef struct  {
+      int x,y;
+  }Point;
+
+  //C89
+  Point point = {2,4};
+  pushData(point);
+
+  //C99
+  Point point = {2,4};
+  pushData((Point){2,4});
+#+END_SRC
+
+
+#+BEGIN_SRC C
+  // Para usar la version de c deseada se usa
+  // -std=numero_de_version_deseada
+  // ejemplo
+  gcc -std=c99 -o main main.c
+  clang -std=c99 -o main main.c
+
+#+END_SRC
+
+* Banderas del Compilador (Compiler flags)
+ - Se pueden usar banderas al compilar en C donde se activen ciertas caracteristicas
+   del lenguage.
+ - Una flag que sirve en el proximo punto es la flag --save-temps que sirve para sustituir
+   el contenido de un archivo cabezera donde esta declarado en otro archivo.
+   Esto es util para ver los problemas de inclucion de expansion de macros. 
+#+BEGIN_SRC C Banderas del complador
+  /*
+   Ejemplos 
+   - std=c99 Solo permite activar funcionalidades del compilador hasta la version c99
+	      Lo mismo sucede con c11 c23 ect...
+   - Wall activa todas las advertencias del compilador
+   - Werror toma todas las advertencias del flag -Wall y las convierte en errores de caracter
+     obligatorio a arreglar.
+  */
+      gcc -std=c99 -o main main.c
+      clang -std=c99 -o main main.c
+#+END_SRC
+
+
+#+BEGIN_SRC C Ejemplo --save-temps
+  // file.h
+  const int data = 10;
+
+
+  //file.c
+  #include "file.h"
+  // Incluira por la linea anterio al usar clang o gcc con la flag --save-temps
+  // const int data = 10;
+
+#+END_SRC
+
+* Unity Builds (Constructor Unitario)
+- Las Unity build se usa para compilar todos los archivos .c en el archivo
+  principal para reducir el tiempo de compilacion y la forma que en se agrupa
+  los archivos cabezeras .h en los diferentes archivos
+  - min 11:23
+* Debugger
+* ASAN (Address Sanitaizer)
+ - La sanitarizacion de la memoria es un metodo que permite
+   eliminar los problemas de escritura a espacios de memorias
+   que no se deberian acceder por lectura fuera de los limites
+   del espacio de memoria reservado.
+- Una flag de los compiladores que ayuda a la sanitarizacion
+  es -fsanitize=address
+
+#+BEGIN_SRC C ejemplo de corrupcion de memoria
+  int* mymemory = (int*)malloc(sizeof(int) * 10);
+  if(mymemory == NULL)
+	return 1;
+  // En este ejemplo el compilador funcionara y no
+  // dara error al compilar pero la funcion estara
+  // escribiendo en la memoria fuera de los bordes
+  // reservados.
+  // Para eliminar este problema solo hay que modificar el
+  // i <= 10 por i < 10 manteniendo la asignacion dentro de
+  // los limites reservados de memoria.
+  // for(int i=0;i<=10;i++){ ejemplo de uso incorrecto se va a leer i hasta despues
+  // de los limites reservados
+  for(int i=0;i<10;i++){
+   mymemory[i] = 9;
+  }
+
+  free(mymemory);
+  mymemory = NULL;
+
+#+END_SRC
+
+#+BEGIN_SRC Sanitarizacion de la memoria
+  gcc -fsanitize=address -o main main.c
+  clang -fsanitize=address -o main main.c
+#+END_SRC
+ - Me quede en el min 20:03
+* Arreglos y Cadenas de caracteres (Arrays & Strings)
+ - Una de las formas de chequear los errores en los limites
+   de los arreglos y cadenas dinamicas en C, son los _Runtime Bound Checking_ o
+   chequeo de limites.
+   Los chequeos de limites permite chequear que al recorrer un arreglo
+   no se pase de los limites del mismo con el puntero de posicion.
+ - En el caso de las cadenas se usa una funcion parecida con una estructura
+#+BEGIN_SRC C Chequeo de limites en los arreglos
+       typedef struct {
+	     int * items;
+	     int length;
+	     int capacity;
+       }INT32_array;
+
+
+  int getItem(INT32_array array, int32_t index){
+    if(index>= 0 && index < array.length)
+  	return array.items[index];
+      return 0;
+  }
+
+  void iterateOverItems(INT32_array array){
+      for(int i=0;i < array.length;i++){ 
+       //i <= array->length va a apuntaria a una pocision despues del arreglo;
+       // por lo que se chequearia con otra funcion si esta dentro de los limites
+	int item = getItem(array,i);
+     }
+   }
+
+#+END_SRC 
+   
+#+BEGIN_SRC C Chequeo de limites en las cadenas
+      typedef struct {
+	    char* items;
+	    int32_t length;
+      }String;
+
+    void showString(String str){
+      for(int i=0;i < str.length;i++){ 
+  	printf("%c",str.items[i]);
+     }
+  }
+
+#+END_SRC 
+
+* Indices y punteros (Indices & pointers)
+-- Creo que es a partir del minuto 20:02
+* Arenas

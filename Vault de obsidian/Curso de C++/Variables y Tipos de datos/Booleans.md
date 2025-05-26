@@ -1,0 +1,3 @@
+- Los booleanos ocupan 8 bits 
+- Se representa en salida de teclado como 0 false y 1 true
+- Si se usa std::boolalpha la salida de teclado muestra true o false 

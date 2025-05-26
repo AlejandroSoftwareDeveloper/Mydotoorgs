@@ -1,0 +1,12 @@
+#+STARTUP: content
+
+* CMake (Herramienta para la gestion de proyectos de C/C++)
+** Instalacion de CMake y construccion de nuevo proyecto(Cmake installation and Building first target)
+*** Nuevo archivo de CMake con MinGW
+	- Si se desea saber donde se encuentra instalado 
+      gcc se usa el comando *where gcc* en la terminal de window
+    - Para generar un archivo de cmake con mingw se usa el 
+      comando _cmake ../ -G "MinGW MNakeFiles"_
+	- Los dos puntos del comando anterior es para decirle a cmake
+	  que genere en el directorio actual pero que busque a partir de uno
+	  anterior.

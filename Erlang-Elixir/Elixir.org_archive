@@ -1,0 +1,44 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file d:/Literatura y Videotutoriales/Base de conocimiento/Erlang-Elixir/Elixir.org
+
+
+* Alias e Import
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2024-10-14 lun 22:50
+  :ARCHIVE_FILE: d:/Literatura y Videotutoriales/Base de conocimiento/Erlang-Elixir/Elixir.org
+  :ARCHIVE_OLPATH: Lenguaje de programacion Elixir
+  :ARCHIVE_CATEGORY: Elixir
+  :END:
+ - Los alias subtituyen los nombre y rutas por las que queramos
+#+BEGIN_SRC elixir
+  defmodule Module.Mimodulo do
+	defstruct [:nombre ,:sueldo]
+  end 
+
+
+
+
+
+
+
+	def func(%Modulo.Mimodulo{nombre: "Alejandro" ,sueldo: 12000}) do
+  defmodule Module2 do
+
+	def func(%Modulo.Mimodulo{nombre: "Alejandro" ,sueldo: 12000}) do
+	end
+	def func(_x) do
+	end
+  end 
+
+  defmodule Module3 do
+	alias Modulo.Mimodulo, as: modulo 
+	def mimodulo(%modulo{
+
+
+
+}) do
+	end
+  end 
+#+END_SRC 

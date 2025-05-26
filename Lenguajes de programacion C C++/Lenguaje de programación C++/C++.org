@@ -1,0 +1,2167 @@
+#+STARTUP: content
+
+* Lenguaje C++ [9/14]
+** DONE Adentrandonos en la en C++ (Diving in) [6/6]
+CLOSED: [2023-11-12 dom 13:55]
+*** DONE Primer programa en C++ (First Program in C++)
+CLOSED: [2023-11-12 dom 13:56]
+#+BEGIN_SRC C++
+  #include <iostream>
+  //using namespace std     //Se usa si se quiere importa la biblioteca completa
+  int main(){
+	std::cout << "Hola mundo" << std::endl;
+  }
+
+#+END_SRC
+*** DONE Comentarios (Comments)
+CLOSED: [2023-11-06 lun 12:12]
+	- Los commentarios en c++ se riguen por dos tipos 
+
+#+BEGIN_SRC C++
+	// Commentario de una linea
+	/*
+  		 Commentario de
+		 multiple lineas
+	*/
+#+END_SRC
+
+*** DONE Errores (Errors)
+CLOSED: [2023-11-06 lun 12:24]
+	- Existen varios tipo de errores en c++ :
+	  - Errores en tiempo de compilacion.
+	  - Advertencias.
+	  - Errores de ejecucion.
+	- Los errores en tiempo de compilacion se producen al igual que las advertencias
+	  durante de la compilacion del codigo fuente.
+	- Los errores de ejecucion ocurren durante la ejecucion del codigo fuente compilado.
+	- Las advertencias son avisos del compilador de posibles fallos en el programa
+	  a compilar y ocurren tambien durante el tiempo de compilacion. 
+	   
+*** DONE Declaraciones y funciones (Statement and Funtion)
+CLOSED: [2023-11-06 lun 12:32]
+	- Las declaraciones y funcion en C++ son iguales en concepto
+	  a las declaraciones y funciones en C (Ver Base de conocimiento/Lenguage de programcion C)
+
+*** DONE Entrada de datos y salida (Data input and output)
+CLOSED: [2023-11-12 dom 12:54]
+	TABLA DE SALIDA DE DATOS DE LA BIBLIOTECA DE ESTANDAR
+
+	|-----------+-----------------------------------------------|
+	| Stream    | Descripcion                                   |
+	|-----------+-----------------------------------------------|
+	| std::cout | Muestra los datos en la salida de la terminal |
+	|-----------+-----------------------------------------------|
+	| std::cin  | Lee datos de la terminal                      |
+	|-----------+-----------------------------------------------|
+	| std::cerr | Muestra errores en la terminal                |
+	|-----------+-----------------------------------------------|
+	| std::clog | Muestra los mensajes en la consola            |
+	|-----------+-----------------------------------------------|
+
+#+BEGIN_SRC C++ Mostrando salida de teclado
+	//std::cout Imprime en consola 
+	std::out << "Hola mundo" << std::endl;
+
+	std::out << "El numero es: " << 12 << std::endl;
+
+
+	int age {12};
+	std::out << "La edad es :" << age << std::endl;
+
+
+	//Error 
+	std::cerr << "std::cerr output: Algo salio mal" << std::endl;
+
+	//Mensaje de Log
+	std::clog << "std::log output: este es un mensaje de clog" << std::endl;
+
+#+END_SRC
+
+#+BEGIN_SRC C++ Leyendo de datos de entrada
+  int age;
+  std::string name;
+
+  std::cout << "Please type in your last name : " << std::endl;
+  std::cin >> name;
+
+  std::cout << "Por favor inserte su edad : " << std::endl;
+  std::cin >> age;
+
+  std::cout << "Hola " << name << "! tu edad es de "<< age << std::endl;
+
+#+END_SRC
+
+#+BEGIN_SRC C++ encadenando entrada de datos (std::cin)
+  int age;
+  std::string name;
+
+  std::cout << "Por favor entre su nombre y su edad separado por espacios." << std::endl;
+  std::cin >> name >> age; //Entrada de nombre y edad
+
+  std::cout << "Hola " << name << "! tu edad es de "<< age << std::endl;
+
+#+END_SRC
+
+
+#+BEGIN_SRC C++ Leyendo datos de entrada con espacios con getline
+  int age;
+  std::string full_name;
+
+  std::cout << "Por favor entre su nombre completo" << std::endl;
+  std::getline(std::cin,full_name); //Entrada de nombre y edad
+
+  std::cout << "Por favor inserte su edad : " << std::endl;
+  std::cin >> age;
+
+  std::cout << "Hola " << full_name << "! tu edad es de "<< age << std::endl;
+
+#+END_SRC
+
+*** DONE Caracteristicas base vs Biblioteca standard vs STL 
+CLOSED: [2023-11-12 dom 13:53]
+	- Las caracteristicas bases son las que vienen con el lenguage
+	  sin importar la biblioteca estandar un otras funcionalidades
+	  de otras bibiliotecas. 
+	- La biblioteca estandar se encuentra definida dentro de las declaraciones
+	  de las bibilotecas que se importan con: *#include* como es la bibilioteca
+	  #include <iostream>
+	- STL es una colecion de la biblioteca estandar de C++ que tiene        
+	  contenedores quer contienen funcionalidades de encapsuladas en
+	  en estas.
+	
+** DONE Variables y Tipos de datos (Variables y Tipos de datos) [8/8]
+   CLOSED: [2024-08-04 dom 07:56]
+*** DONE Introduccion (Introduction)
+	CLOSED: [2024-08-02 vie 17:43]
+	- En c++ existe un conjunto de tipo de variables primitivas basicas para el trabajo con
+	  enteros.
+	- Se puede definir como variable a un fragmento de memoria
+	  que almacena tipos de datos especificos.
+	- Para definir el nombre de una variable se debe comenzar con una letra de la a a la z
+	  mayuscula o minuscula y luego puede tener cualquier caracter que se desee.  
+
+#+BEGIN_SRC C++
+
+  int      //Representa los enteros 
+  bool	   //Representa los valores true y false
+  double   //Representa los valores fraccionarios hasta 64 bits punto flotante
+  float    //Representa los valores fraccionarios hasta 32 bits punto flotante
+  char	   //Representa los caracteres 
+  void	   //Es un tipo de dato que no esta definido en los primitivos pero no pertenece a ningn valor compuetos
+  auto     //Es una variable que se adapta a la primera asignacion de datos que se le
+		   //asigna a una variable para adoptar si tipo de forma automatica
+
+#+END_SRC
+
+#+BEGIN_SRC  C++
+  std::cout << "Hola mundo de c++" << std::endl;
+
+  int a {10};
+  int b {10};
+
+  //Error en tiempo de ejecucion
+  int c  = 10 / (a - b);
+
+  //Advertencia
+  20/0;
+
+  return 0;
+
+#+END_SRC
+
+*** DONE Sistema númerico (Number System)
+	CLOSED: [2024-08-02 vie 19:06]
+	- Exiten tres tipos de datos en el sistema numerico.
+	  1. Decimal
+	  2. Hexadecimal
+	  3. Octal
+		 
+    - Los valores de base 10 son llamados asi por su base decimal
+	  del 0 - 9.
+	  - 2371 = 2 * 10^3 + 3 * 10^2 + 7 * 10^1 + 1 * 10^0  
+	  - 924  = 9 * 10^2 + 2 * 10^1 + 4 * 10^0  
+	  - 47   = 4 * 10^1 + 7 * 10^0  
+
+    - Los valores de base 2 son llamados asi por su base binaria
+	  la cual posee dos estados 0 - 1.
+	  - 100101 = 1 * 2^5 + 0 * 2^4 + 0 * 2^3 + 1 * 2^2 + 0 * 2^1 + 1 * 2^0  
+	  - 10010  = 1 * 2^4 + 0 * 2^3 + 0 * 2^2 + 1 * 2^1 + 0 * 2^0  
+	  - 111    = 1 * 2^2 + 1 * 2^1 + 1 * 2^0  
+
+		
+	- Tabla de rango de numeros decimales
+	|--------+-----------------|
+	| Digits | Data range      |
+	|--------+-----------------|
+	|      1 | 0 ~ 1           |
+	|--------+-----------------|
+	|      2 | 0 ~ 3           |
+	|--------+-----------------|
+	|      3 | 0 ~ 7           |
+	|--------+-----------------|
+	|      4 | 0 ~ 15          |
+	|--------+-----------------|
+	|      5 | 0 ~ 31          |
+	|--------+-----------------|
+	|    ... | ...             |
+	|--------+-----------------|
+	|      n | 0 ~ 2 ^( n - 1) |
+	|--------+-----------------|
+
+	
+	- Rango de numeros enteros positivos (unsigned int)
+	|--------+-------+--------------------------------|
+	| Digits | Bytes | Data Range                     |
+	|--------+-------+--------------------------------|
+	|      8 |     1 | 0 ~ 255                        |
+	|--------+-------+--------------------------------|
+	|     16 |     2 | 0 ~ 65.535                     |
+	|--------+-------+--------------------------------|
+	|     32 |     4 | 0 ~ 34.359.738.367             |
+	|--------+-------+--------------------------------|
+	|     64 |     8 | 0 ~ 18.446.744.073.709.551.615 |
+	|--------+-------+--------------------------------|
+
+	- La representacion de numeros hexadecimales se hace desde el valor
+	  0 - 15 donde a partir del 10 se cuenta como A hasta el 15 que es la F.
+	- Cada valor en  hexadecimal ocupa 4 bit y se represaenta con un 0x seguido del valor deseado
+	  ejemplo: 0x6E30F13F 
+	- Para comvertir a otra notacion se escribe cada valor en binario y luego se lleva al sistema numerico
+	  deseado:
+
+	 |------+------+------+------+------+------+------+------|
+	 | 0110 | 1110 | 0011 | 0000 | 1111 | 0001 | 0011 | 1111 |
+	 |------+------+------+------+------+------+------+------|
+	 |    6 |    E |    3 |    0 |    F |    1 |    3 |    F |
+	 |------+------+------+------+------+------+------+------|
+
+	- Si el grupo no completa la cantidad de valor de cuatro bits deseados se les adiciona las los ceros a final
+	  del grupo.
+	  
+    - En el proximo ejemplo se muestra en la primera de fila en la primera columna como falta valores e bits a completar,
+	  donde en la segunda se muestra ya completados los valores en ceros que faltaban. Esto se le conoce como padding.
+	  
+	|------+------+------+------+------+------|
+	|    1 | 0010 | 0100 | 1000 | 1011 | 1010 |
+	|------+------+------+------+------+------|
+	| 0001 | 0010 | 0100 | 1000 | 1011 | 1010 |
+	|------+------+------+------+------+------|
+	
+	- Rango de numeros decimales y hexadecimales.
+	|--------+---------+-------------|
+	| Binary | Decimal | Hexadecimal |
+	|--------+---------+-------------|
+	|   0000 |       0 |           0 |
+	|--------+---------+-------------|
+	|   0001 |       1 |           1 |
+	|--------+---------+-------------|
+	|   0010 |       2 |           2 |
+	|--------+---------+-------------|
+	|   0011 |       3 |           3 |
+	|--------+---------+-------------|
+	|   0100 |       4 |           4 |
+	|--------+---------+-------------|
+	|   0101 |       5 |           5 |
+	|--------+---------+-------------|
+	|   0110 |       6 |           6 |
+	|--------+---------+-------------|
+	|   0111 |       7 |           7 |
+	|--------+---------+-------------|
+	|   1000 |       8 |           8 |
+	|--------+---------+-------------|
+	|   1001 |       9 |           9 |
+	|--------+---------+-------------|
+	|   1010 |      10 |           A |
+	|--------+---------+-------------|
+	|   1011 |      11 |           B |
+	|--------+---------+-------------|
+	|   1100 |      12 |           C |
+	|--------+---------+-------------|
+	|   1101 |      13 |           D |
+	|--------+---------+-------------|
+	|   1110 |      14 |           E |
+	|--------+---------+-------------|
+	|   1111 |      15 |           F |
+	|--------+---------+-------------|
+	
+	- Rango de números octales.
+	|--------+---------+-------|
+	| Binary | Decimal | octal |
+	|--------+---------+-------|
+	|    000 |       0 |     0 |
+	|--------+---------+-------|
+	|    001 |       1 |     1 |
+	|--------+---------+-------|
+	|    010 |       2 |     2 |
+	|--------+---------+-------|
+	|    011 |       3 |     3 |
+	|--------+---------+-------|
+	|    100 |       4 |     4 |
+	|--------+---------+-------|
+	|    101 |       5 |     5 |
+	|--------+---------+-------|
+	|    110 |       6 |     6 |
+	|--------+---------+-------|
+	|    111 |       7 |     7 |
+	|--------+---------+-------|
+
+#+BEGIN_SRC C++
+  	int decimal     = 15;
+  	int octal 	    = 017;
+  	int hexadecimal = 0x0f;
+  	int binary 	    = 0b00001111; //Binario a partir de c++14
+	std::cout << decimal << std::endl;
+	std::cout << octal << std::endl;
+	std::cout << hexadecimal << std::endl;
+	std::cout << binary << std::endl;
+#+END_SRC
+
+*** DONE Decimales y enteros (Decimals and Integers)
+	CLOSED: [2024-08-02 vie 20:19]
+	- Los enteros estan representado por los _int_ en c++
+	  estos ocupan 4 bytes de memoria o mas.
+#+BEGIN_SRC C++ Inicializacion por llaves
+  // La inicializacion por llaves permite mostrar en tiempo de compilacion
+  // los errores de inicializacion de las variables
+
+  // Variable sin inicializar contiene informacion basura
+  int elephant_count;
+
+  // Inicializa la variable en 0
+  int count{};
+
+  //Inicializa en 10
+  int count2{10}; 
+
+  //Inicializa en 15
+  int count3{15};
+
+  // Se puede usar una expresion para inicializar
+  int total { count2 + count3 };
+
+  // No compilara, las variables no existen
+  int total { var1_no_existe + var2_no_existe };
+
+  // 2.9 es de tipo double, el cual tiene un rango mayor que
+  // un int, esto dara un error o advertencia.
+  int narrowing_conversion { 2.9 };
+
+#+END_SRC
+
+
+#+BEGIN_SRC C++ Inicializacion por parentesis o variables funcionales
+
+  // Inicializa la variable en 5
+  int count(5);
+
+  //Inicializa en 10
+  int count2(10); 
+
+  //Inicializa en 15
+  int count3(15);
+
+  // Se puede usar una expresion para inicializar
+  int total ( count2 + count3 );
+
+  // No compilara, las variables no existen
+  int total (var1_no_existe + var2_no_existe );
+
+  // En este caso se puede inicializar por parentesis un double
+  // este se convertira a entero, en este caso seria 2 ya que corta la
+  // parte flotante.
+  int narrowing_conversion ( 2.9 );
+
+  //El caso anterior tambien se da por la inicializacion por asignacion
+  int narrowing_conversion =  2.9 ;
+
+#+END_SRC
+
+#+BEGIN_SRC C++ Obtener el tamanio de un tipo de dato
+
+	std::cout<<"sizeof int :" << sizeof(int)<<std::endl;
+	std::cout<<"sizeof count :" << sizeof(count)<<std::endl;
+
+#+END_SRC
+
+*** DONE Modificadores de enteros (Integer Modifiers)
+	CLOSED: [2024-08-02 vie 21:01]
+	- Los modificadores de enteros permiten almacenar
+	  los valores de enteros de diferentes formas y valores.
+
+#+BEGIN_SRC C++ Modificadores de enteros.
+   // Los signed permiten almacenar enteros positivos y negativos.
+   signed int value1 {10};
+   signed int value2 {-300};
+
+  // Los unsigned permite almacenar solo valores positivos.
+   unsigned int value3 {100};
+
+  // Esto dara error ya que no se puede inicializar o almacenar valores negativos
+  // en un unsigned, donde solo se permite los positivos.
+   unsigned int value4 {-300};
+
+#+END_SRC
+
+  - n es el numeros de bits a almacenar en memoria
+	en el caos de los enteros es 4 bytes que son 32 bits
+  |----------------+------------------------|
+  | unsigned range | signed range           |
+  |----------------+------------------------|
+  | 0 ~ 2^(n) - 1  | - 2^(n-1) ~ 2^(n-1) -1 |
+  |----------------+------------------------|
+
+
+ - Los siguientes modificadores solo se aplican a tipos enteros y variables
+   que almacenen numeros decimales
+#+BEGIN_SRC C++ Modificadores de enteros
+
+  short short_var {-32768}; // 2 bytes
+  short int short_int {455}; 
+  signed short signed_short {122}; 
+  signed short int signed_short_int {-456}; 
+  unsigned short int unsigned_short_int {456};
+
+  int int_var {55}; //4 bytes 
+  signed signed_var {33}; 
+  signed int signed_int {77}; 
+  unsigned int unsigned_int {77};
+
+  long long_var {55}; //4 or 8 bytes 
+  long int long_int {33}; 
+  signed long signed_int {44}; 
+  signed long int signed_long_int {44}; 
+  unsigned long int unsigned_long_int {44};
+
+  long long long_long {888}; //8 bytes 
+  long long int long_long_int {999}; 
+  signed long long signed_long_long {444}; 
+  signed long long int signed_long_long_int {1234}; 
+  unsigned long long int unsigned_long_long_int {1234};
+
+#+END_SRC
+
+*** DONE Numeros fraccionarios (Fractional numbers)
+	CLOSED: [2024-08-02 vie 22:04]
+	- Los numeros fraccionarios representan a los tipos
+	  _doubles_, _flotantes_ y _long double_
+	- La presision se refiere a los caracteres despues de la
+	  coma. ejemplo 1.23456700001 tiene 12 caracteres de presicion
+	  porque se incluye el valor antes de la comma.
+	- La division por cero se permite en los flotantes y double
+	  donde se puede tomar un valor fraccionario y divivirlo entre 0
+	  lo cual te dara infinito.
+	- Cuando se divide dos numeros fraccionarios ejemplo 0.0 / 0.0 te dara
+	  NaN(Not a Number).
+	 |-------------+------+-----------+-------------------------|
+	 | Type        | Size | Precision | Comment                 |
+	 |-------------+------+-----------+-------------------------|
+	 | float       |    4 |         7 | ---------------         |
+	 |-------------+------+-----------+-------------------------|
+	 | double      |    8 |        15 | Recomendado por defecto |
+	 |-------------+------+-----------+-------------------------|
+	 | long double |   12 |  > double | --------------          |
+	 |-------------+------+-----------+-------------------------|
+#+BEGIN_SRC C++ Declarar e inicializar variables 
+
+  #include <iomanip> // Para usar la funcion std::setprecision
+
+  // Se debe colocar el sufijo del tipo de flotante
+  // para decirle al compilador que lo limite a tamanio del flotante
+  // sino lo tratara de convertir al tamanio de un double
+  float number1 {1.12345678901234567890f};
+  double number2 {1.12345678901234567890};
+  long double number3 {1.12345678901234567890L};
+
+  // Las salidas de std::cout solo muestra hasta 6 valores de precision para aumentar
+  // la salida por pantalla se usa la funcion std::setprecision(20);
+  std::cout<< std::setprecision(20); // Para contralar la precision de salida de std::cout
+  std::cout<<"sizeof float : "       << sizeof(float)<<std:::endl;
+  std::cout<<"sizeof double : "      << sizeof(double)<<std:::endl;
+  std::cout<<"sizeof long double : " << sizeof(long double)<<std:::endl;
+
+  // Si no se le coloca la f al final se convertira
+  // automaticamente en un double y dara error al inicializar
+  // las variables
+  float num = 194000023.0f
+
+#+END_SRC 
+
+- La IEEE_754 cubre el sistema (Floating Point Numbers Memory Representation)
+- Tambien se puede encontrar infomacion en: https://en.wikipedia.org/wiki/IEEE_754
+#+BEGIN_SRC C++ Notacion cientifica en los double
+	double number1 {192400023};
+	double number2 {192400023e8};
+	double number3 {1.924e8};
+	double number4 {0.00000000003498};
+	double number5 {3.498e-11};
+#+END_SRC 
+
+*** DONE Boleanos(Booleans)
+	CLOSED: [2024-08-03 sáb 14:37]
+	- Los boleanos en c++ son un tipo de datos que representa
+	  un tipo de dato con dos estados posible verdadero o falso
+	- Almacenar un boleano en un byte es un desperdicio de espacio
+	  ya que se puede almacenar 256 valores diferentes, este es especialmente
+	  util de optimizar en dispositivos embebidos. 
+#+BEGIN_SRC C++ booleans
+   bool red = false;
+   bool blue = true;
+
+  std::cout<< red <<std::endl; 
+  std::boolalpha; // Fuerza a la salida cout a imprimir true/false en vez de
+				  // en vez de 0 y 1
+  std::cout<< blue <<std::endl; 
+
+
+#+END_SRC
+	
+*** DONE Caracteres y textos (Characters and Text)
+	CLOSED: [2024-08-04 dom 07:31]
+	- Los tipos de datos char almacenan letras y numeros, pero
+	  estos ultimos se convierten a char una vez almacenados.
+	- La declaracion de un char se hace con comillas simples
+	  y la declaracion de una cadena se hace con comillas dobles.
+	- En un char hay un 1 byte donde caben 256 posibles valores.
+	- Ejemplo:
+	  - '5' tiene el valor int 53
+	  - Si escribimos '5'- '0' evalua 53 - 48 devolviendo el entero 5
+	  - Si escribimos char c = 'B' + 32, entonces almacena 'b'
+	  
+#+BEGIN_SRC C++ declaracion de carcteres
+  	char characters {'a'};
+	std::string nombre {"Alejandro"};
+#+END_SRC
+
+	 - Se puede asignar un valor entero a un caracter donde el compilador
+	   evaluara a char
+	   
+#+BEGIN_SRC C++ asignacion de enteros a caracteres
+	  char characters = 65;
+	  std::cout << "characters como char" << characters << std::endl;
+	  // static_cast<int>(nombre_de_variable) convierte a entero(en este caso, se puede convertir
+  	  // a cualquier tipo de dato) la variable que se le paso
+	
+	  std::cout << "valor de characters como entero : "<< static_cast<int>(characters)<< std::endl;
+#+END_SRC
+
+*** DONE Palabra Auto (Auto)
+	CLOSED: [2024-08-04 dom 07:55]
+  - La palabra _auto_ permite que el compilador decida el tipo de datos
+	que se le va asignar a la variable.
+
+#+BEGIN_SRC C++ Uso de la palabra reservada auto
+  auto var1 {12};     //int
+  auto var2 {13.0};   //double
+  auto var3 {14.0f};  //float
+  auto var4 {15.0l};  //long
+  auto var5 {'e'};    //char
+
+  // sufijos de modificadores de enteros
+  auto var6 {123u};  //unsigned 
+  auto var7 {123ul}; //unsigned long
+  auto var8 {123ll}; //long long 
+
+  std::cout << "var1 : " << sizeof(var1) << std::endl;
+  std::cout << "var2 : " << sizeof(var2) << std::endl;
+  std::cout << "var3 : " << sizeof(var3) << std::endl;
+  std::cout << "var4 : " << sizeof(var4) << std::endl;
+  std::cout << "var5 : " << sizeof(var5) << std::endl;
+  std::cout << "var6 : " << sizeof(var6) << std::endl;
+  std::cout << "var7 : " << sizeof(var7) << std::endl;
+  std::cout << "var8 : " << sizeof(var8) << std::endl;
+
+#+END_SRC
+ - Una vez que se asigne valor a una variable declarada como auto,
+   se debe llevar seguimiento de la variable ya que no se sabra que tipo de datos esta
+   almacenado en ella.
+
+** DONE Operaciones en los datos(Operations in data) [10/10]
+   CLOSED: [2024-08-07 mié. 09:07]
+*** DONE Operaciones basicas(Basic operations)
+	CLOSED: [2024-08-04 dom 14:39]
+	- Los operaciones aritmetica basica que se puede realizar en c++ son:
+	  - suma, resta, adicion, multiplicacion, division, modulo
+	- Cuando se realiza una division y el numerador es un int y el denominador es un
+	  float o un int, pero la division da flotante y se almacena en un int se tomara la parte
+	  entera(Division de enteros).
+
+#+BEGIN_SRC C++ division de enteros
+  int div = 31 / 10;
+  float div2 = 31.0 /10;
+  int div3 = 31.0 /10;
+
+  std::cout <<  div << std::endl;  // 3
+  std::cout <<  div2 << std::endl; // 3.1
+  std::cout <<  div3 << std::endl; // 3
+	
+#+END_SRC
+	
+*** DONE Presencia y asociacion (Precedence and associativity)
+	CLOSED: [2024-08-04 dom 12:11]
+	- La precedencia y asociacion de las operaciones en c++
+	  esta dada en el orden que se evaluan los operadores.
+	  ver (Precendencia de Operadores (Operator Precendence)) en el lenguage de programacion C
+	  ver (http://cppreference.com/w/cpp/language/operator_preference)
+	  _Precedencia_: Cual operacion hacer primero
+	  _Associacion_: En que direccion u order evaluar
+	  
+*** DONE Operaciones Posfija y Prefija de los operadores + y -
+	CLOSED: [2024-08-04 dom 12:39]
+	- Las operaciones de posfija y prefija de c++ permite incrementar un valor o decrementarlo
+	  antes de usarlo (postincremento postdecremento) o usar el valor despues de incrementarlo o decrmentarlo
+	  (postdecremento) 
+    - Los operadores postincremento y predecremento solo se usan con + y -.
+	- No se puede usar con otros operadores como (* % /). Por lo que %%value o value// no tiene sentido	  
+	- Estos operadores solo incrementan o disminuyen en 1 , nunca en mas.
+	  ejemplo:
+	  int value = 1;
+	  value++; es equivalente a value = value + 1 y al igual que value-- equivale a value = value - 1 
+
+#+BEGIN_SRC C++ (Post o Pre)Incremento o Decremento
+
+  #include <string> // Para usar las funciones de cadenas de caracteres
+
+  int main(int argc, char *argv[])
+  {	int value = 1;
+	  std::string sms = "El valor de value es ";
+
+	  // Se mostrara la cadena de caracteres con value antes de incrementar (value = 1)
+	  // luego se incrementara
+	  std::cout << sms + std::to_string(value++) << std::endl;
+
+	  // Se mostrara la cadena de caracteres con value despues de incrementar (value = 2)
+	  std::cout << sms + std::to_string(value) << std::endl;
+
+	  // Se mostrara la cadena de caracteres con value despues de incrementar (value = 3)
+	  // luego se incrementara
+	  std::cout << sms + std::to_string(++value) << std::endl;
+
+	  // Se mostrara la cadena de caracteres con value despues de incrementar (value = 3)
+	  std::cout << sms + std::to_string(value) << std::endl;
+
+
+	  // Se mostrara la cadena de caracteres con value antes de decrementar (value = 3)
+	  // luego se incrementara
+	  std::cout << sms + std::to_string(value--) << std::endl;
+
+	  // Se mostrara la cadena de caracteres con value despues de decrementar (value = 2)
+	  std::cout << sms + std::to_string(value) << std::endl;
+
+	  // Se mostrara la cadena de caracteres con value despues de incrementar (value = 1)
+	  // luego se incrementara
+	  std::cout << sms + std::to_string(--value) << std::endl;
+
+	  // Se mostrara la cadena de caracteres con value despues de incrementar (value = 1)
+	  std::cout << sms + std::to_string(value) << std::endl;
+	  return 0;
+
+  }
+
+#+END_SRC
+
+*** DONE Operadores de asignacion compuesta(Compound assignement operators)
+	CLOSED: [2024-08-04 dom 13:20]
+	- Los operadores de asignacion compuesta tienen son aquellos que se reduce su expresion
+	  escrita, pero funcionan igual a sus version extendida
+#+BEGIN_SRC C++ Operadores de asignacion compuestas
+  int value {45};
+
+
+  int value {45};
+
+  std::cout << "El valor de value es :" << value << std::endl;
+  std::cout << std::endl;
+  value += 5; //Equivale a value = value + 5
+  std::cout << "El valor de value despues de incrementar (value += 5) es:" << value << std::endl;
+
+
+  std::cout << "El valor de value es :" << value << std::endl;
+  std::cout << std::endl;
+  value -= 5; //Equivale a value = value - 5
+  std::cout << "El valor de value despues de decrementar (value -= 5) es:" << value << std::endl;
+
+
+  std::cout << "El valor de value es :" << value << std::endl;
+  std::cout << std::endl;
+  value *= 2; //Equivale a value = value * 2
+  std::cout << "El valor de value despues de incrementar (value *= 2) es:" << value << std::endl;
+
+  std::cout << "El valor de value es :" << value << std::endl;
+  std::cout << std::endl;
+  value /= 3; //Equivale a value = value / 3
+  std::cout << "El valor de value despues de incrementar (value /= 3) es:" << value << std::endl;
+
+  std::cout << "El valor de value es :" << value << std::endl;
+  std::cout << std::endl;
+  value %= 11; //Equivale a value = value / 3
+  std::cout << "El valor de value despues de incrementar (value %= 3) es:" << value << std::endl;
+
+#+END_SRC
+	
+*** DONE Operadores relacionales(Relational Operators)
+	CLOSED: [2024-08-04 dom 14:13]
+	- Estos operadores permiten relacionar o comparar un valor con otro.
+#+BEGIN_SRC C++
+
+  int number1 {45};
+  int number2 {60};
+
+  std::cout << number1 << std::endl;
+  std::cout << number2 << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "Comparando variables " << std::endl;
+  std::cout << std::boolalpha; //Convierte los bool en true y false en vez de 1 y 0
+  //Se debe usar los parentesis a continuacion porque dara error al compilar,
+  // donde el compilador no podra diferenciar correcrtamente si es un operador
+  // de la salida estandar o una comparacion.
+
+  std::cout << "number1 < number2 :"  << (number1 < number2) << std::endl;
+  std::cout << "number1 <= number2 :" << (number1 <= number2) << std::endl;
+  std::cout << "number1 > number2 :"  << (number1 > number2) << std::endl;
+  std::cout << "number1 >= number2 :" << (number1 >= number2) << std::endl;
+  std::cout << "number1 == number2 :" << (number1 == number2) << std::endl;
+  // std::cout << std::noboolalpha
+  std::cout << "number1 != number2 :" << (number1 != number2) << std::endl;
+
+
+
+
+#+END_SRC 
+
+*** DONE Operadores logicos(Logical operators)
+	CLOSED: [2024-08-04 dom 14:39]
+	- Los operadores logicos se usan para realizar comparaciones entre uno o mas variables
+	  que son booleanos, enteros, flotantes y otras variables.
+    - En la siguiente tabla se muestra las relaciones entre variables segun los operadores
+	  - En el caso de a or b es: a || b, pero emacs expande las barras de las tablas y deforma
+		el resultado de la tabla.
+	  
+	 |-------+-------+--------+-------+-------+--------|
+	 | a     | b     | a && b | !a    | !b    | a or b |
+	 |-------+-------+--------+-------+-------+--------|
+	 | false | false | false  | true  | true  | false  |
+	 |-------+-------+--------+-------+-------+--------|
+	 | false | true  | false  | true  | false | true   |
+	 |-------+-------+--------+-------+-------+--------|
+	 | true  | false | false  | false | true  | true   |
+	 |-------+-------+--------+-------+-------+--------|
+	 | true  | true  | true   | false | false | true   |
+	 |-------+-------+--------+-------+-------+--------|
+
+#+BEGIN_SRC C++ Operadores logicos
+  #include <iomanip>
+
+
+  bool a {true};
+  bool b {false};
+  bool c {true};
+
+  std::cout << std::boolalpha;
+  std::cout <<"a : " <<a<< std::endl;
+  std::cout <<"b : " <<b<< std::endl;
+  std::cout <<"c : " <<c<< std::endl;
+
+  std::cout <<"a && b :" << (a && b) << std::endl;
+  std::cout <<"a || b :" << (a || b) << std::endl;
+  std::cout <<"!a : " << (!a) << std::endl;
+  std::cout <<"multiple logical operator (a && b && c) : " <<(a && b && c)<< std::endl;
+  std::cout <<"!(a && b) || c : " <<(!(a && b) || c) << std::endl;
+
+#+END_SRC
+
+*** DONE Formatos de salida (Output Formating)
+	CLOSED: [2024-08-07 mié. 09:06]
+	- Para dar formato de salida de la consola en C++
+	  se usa la bibliotecas estandar de <ios> y <iomanip> .
+#+BEGIN_SRC C++
+	 // Funciones de formato de salida
+
+	 // Da un salto de linea en la consola del sistema
+	 std::endl;
+
+	 //Envia lo que tenga en el buffer de salida a la terminal
+	 std::flush 
+
+	 //set::setw(int) establece el ancho de las filas a partir de donde
+	 //se pone.
+	 std::cout << std::setw(10) << "Alejandro" << std::setw(5) << "Sanchez" << std::endl; 
+
+	 //std::right se usa en conjunto con std::setw para aliniar a la derecha
+	 //la salida de pantalla en la terminal.
+	 std::cout << std::right;
+	 std::cout << std::setw(10) << "Alejandro" << std::setw(5) << "Sanchez" << std::endl; 
+
+	 //std::left se usa en conjunto con std::setw para aliniar a la izquierda
+	 //la salida de pantalla en la terminal.
+	 std::cout << std::left;
+	 std::cout << std::setw(10) << "Alejandro" << std::setw(5) << "Sanchez" << std::endl; 
+
+	 //std::fill llena todo el espacio en blanco de la salida de la salida de la terminal
+	 //con el caracter deseado.
+	 std::cout << std::fill('-');
+	 std::cout << std::setw(10) << "Alejandro" << std::setw(5) << "Sanchez" << std::endl; 
+
+	 //std::internal ajusta el signo a la izquierda y los datos a la derecha
+	 //la salida de pantalla en la terminal.
+	 std::cout << std::internal;
+	 std::cout << std::setw(10) << -123.45 << std::endl;
+
+	 //std::boolalpha convierte la salida de teclado de un verdadero o falso de 1 y 0
+	 // a true y false
+	 bool is_true  {true};
+	 bool is_false {false};
+
+	 std::cout << std::boolalpha;
+	 std::cout << is_true << std::endl;
+	 std::cout << is_false << std::endl;
+
+	 //std::noboolalpha convierte la salida de teclado de un verdadero o falso a 1 o 0 si boolalpha
+	 //se activo anteriormente a true y false
+	 std::cout << std::noboolalpha;
+	 std::cout << is_true << std::endl;
+	 std::cout << is_false << std::endl;
+
+	 //std::showpos y std::noshowpos muestra el simbolo positivo de un int en la salida
+	 //por pantalla.
+	 int elm {3};
+	 std::cout << std::showpos;
+	 std::cout << elm << std::endl;
+	 std::cout << std::noshowpos;
+	 std::cout << elm << std::endl;
+
+	 //std::dec, std::hex, std::oct muestra en el sistema numerico correspondiente el numero 
+	 //deseado por pantalla y std::showbase muestar la base del numero.
+	 //Solo funcionan para enteros, los flotantes siguen otro protocolo
+
+	int pos_num = {717171};
+	int neg_num = {-47347};
+	std::cout << "Sin show base "<< std::endl;
+	std::cout<< "pos_num :" << std::dec << pos_num << std::endl;
+	std::cout<< "pos_num :" << std::hex << pos_num << std::endl;
+	std::cout<< "pos_num :" << std::oct << pos_num << std::endl;
+
+	std::cout << "Con show base "<< std::endl;
+	std::cout << std::showbase;
+	std::cout<< "neg_num :" << std::dec << neg_num << std::endl;
+	std::cout<< "neg_num :" << std::hex << neg_num << std::endl;
+	std::cout<< "neg_num :" << std::oct << neg_num << std::endl;
+
+	//std::uppercase convierte la salida de teclado en mayuscula
+	//se ve mejor con los hexadecimales
+	std::cout << "Con uppercase"<< std::endl;
+	std::cout << std::uppercase;
+	std::cout<< "neg_num :" << std::dec << neg_num << std::endl;
+	std::cout<< "neg_num :" << std::hex << neg_num << std::endl;
+	std::cout<< "neg_num :" << std::oct << neg_num << std::endl;
+
+
+	//std::scientific and std::fixed convierte la salida de
+	//teclado en notacion cientifica o fija 
+
+	double a{ 3.1415926535889793238 };
+	double b{ 2006.0 };
+	double c{ 1.34e-10 };
+
+	std::cout << std::endl;
+	std::cout<<"valores doubles (por defecto):"<< std::endl; 
+	std::cout<< "a : " << a << std::endl;
+	std::cout<< "b : " << b << std::endl;
+	std::cout<< "c : " << c << std::endl;
+
+	std::cout << std::endl;
+	std::cout<<"valores doubles (fixed):"<< std::endl; 
+	std::cout << std::fixed;
+	std::cout<< "a : " << a << std::endl;
+	std::cout<< "b : " << b << std::endl;
+	std::cout<< "c : " << c << std::endl;
+
+	std::cout << std::endl;
+	std::cout<<"valores doubles (scientific):"<< std::endl; 
+	std::cout << std::scientific;
+	std::cout<< "a : " << a << std::endl;
+	std::cout<< "b : " << b << std::endl;
+	std::cout<< "c : " << c << std::endl;
+
+	// std::cout.unsetf(std::ios::scientific | std::ios::fixed) revierte
+	// la conversion de numeros en notacion cientifica y fija a valores normales.
+	std::cout << std::endl;
+	std::cout<<"valores doubles (por defecto):"<< std::endl; 
+	std::cout.unsetf(std::ios::scientific | std::ios::fixed);
+	std::cout<< "a : " << a << std::endl;
+	std::cout<< "b : " << b << std::endl;
+	std::cout<< "c : " << c << std::endl;
+
+	// set::precision marca la presicion de los valores doubles
+	a = 3.141521341234123
+	std::cout<<std::setprecision(6);
+	std::cout<< "a : " << a << std::endl;
+
+	std::cout<<std::setprecision(10);
+	std::cout<< "a : " << a << std::endl;
+
+	//Resetea la posicion a 6
+	std::cout<<std::setprecision(6);
+	std::cout<< "a : " << a << std::endl;
+
+#+END_SRC 
+
+    http://en.cppreference.com/w/cpp/io/manip
+	|----------------------------------+------------+---------------------------------------------------------|
+	| Manipulator(s)                   | header     | Purpose                                                 |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::endl                        | <iostream> | Inserta nueva linea de caracteres                       |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::flush                       | <iostream> | Limpia el flujo hacia la terminal                       |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::setw                        | <iomanip>  | Cambia el ancho de la proxima salida de                 |
+	|                                  |            | consola                                                 |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::left, std::right,           | <ios>      | Justifica los valores en la consola                     |
+	| std::internal                    |            |                                                         |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::boolalpha,                  | <ios>      | Muestra u Oculta en consola el signo                    |
+	| std::noboolalpha                 |            | de los valores positivos                                |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::dec,std::hex,std::oct       | <ios>      | Controla el sistema numerico por defecto                |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::showbase,std::noshowbase    | <ios>      | Incluye un prefijo para mostrar la base                 |
+	|                                  |            | del sistema numerico.                                   |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::uppercase,std::nouppercase  | <ios>      | Muestra los valor numericos en mayuscula                |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::fixed, std::scientific      | <ios>      | Controla el formato de  salida por terminal             |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::setprecision                | <iomanip>  | Muestra el numero de digitos usados para                |
+	|                                  |            | representar los tipos flotantes                         |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::setfill                     | <iomanip>  | Cambia el caracter con que se llena los espacios vacios |
+	|----------------------------------+------------+---------------------------------------------------------|
+	| std::showpoint, std::noshowpoint | <ios>      | Controla cuando se muestra los ceros                    |
+	|----------------------------------+------------+---------------------------------------------------------|
+
+*** DONE Limites numericos (Numeric limits)
+	CLOSED: [2024-08-05 lun. 08:57]
+  -	Los limites se visualizan con funciones de la bibliotica estandar _limits_
+#+BEGIN_SRC C++ limites numericos
+   #include <limits>
+
+  // Se usan para saber el minimo el maximo y el valor mas bajos de los
+  // valores flotantes
+  std::numeric_limits<T>::min();
+  std::numeric_limits<T>::max();
+
+  // Lowest solo se usa con tipos float, double ect
+  std::numeric_limits<T>::lowest();
+
+  // Ejemplo con unsigned short 
+  std::numeric_limits<unsigned short>::min(); // 0
+  std::numeric_limits<unsigned short>::max(); // 65535
+
+  // Ejemplo con float
+  std::numeric_limits<unsigned short>::min(); // -3.40282e+38
+  std::numeric_limits<unsigned short>::max(); // 1.17549e-38
+  std::numeric_limits<float>::lowest();       // 3.40282e+38
+
+  //Solo para enteros (Dudas)
+  std::numeric_limits<int>::is_signed();   // Determina si un numero es signed
+  std::numeric_limits<int>::digits();      // Determina el numero de digitos de un entero
+
+
+#+END_SRC 
+
+*** DONE Funciones matematicas (Math functions) 
+	CLOSED: [2024-08-05 lun. 09:32]
+	- Son las funciones predefinidas de la biblioteca estandar para el calculo matematico.
+    http://en.cppreference.com/w/cpp/header/cmath
+	- (Debo revisar la referencia para saber la diferencia entre los calculos de las funciones)
+#+BEGIN_SRC C++
+  #include <cmath>
+  int main(){
+
+	// La siguientes funciones son funciones mátematicas para el calculo con double y float
+	// se usan con double 
+	std::floor();
+	std::ceil();
+	std::abs();
+	std::cos();
+	std::floor();
+
+	// exp: f(x) = e ^ x , donde e = 2.71828 
+	double exponential = std::exp(10); // 10 ^ 2.71828
+	std::log();
+	std::pow();
+	std::sqrt();
+	std::round();
+	std::sin();
+	std::tan();
+
+	return 0;
+  }
+#+END_SRC 
+
+*** DONE Tipos de enteros raros (Wierd int types)
+	CLOSED: [2024-08-05 lun. 10:09]
+	- Enteros de menos de 4 bytes no soportan operaciones aritmeticas.
+	  - char
+	  - short int
+	- El compilador convierte a enteros los valores de tipo char y short int que
+	  realizan estas operaciones.
+#+BEGIN_SRC C++ Convercion implicita de char y short a int con operaciones matematicas
+
+  short int var {10};
+  short int var2 {20};
+  char var3 {40};
+  char var4 {40};
+
+  std::cout << "size of var1 : " << sizeof(var1) << std::endl;
+  std::cout << "size of var2 : " << sizeof(var2) << std::endl;
+  std::cout << "size of var3 : " << sizeof(var3) << std::endl;
+  std::cout << "size of var4 : " << sizeof(var4) << std::endl;
+
+  auto result = var1 + var2;
+  auto result2 = var3 + var4;
+  std::cout << "size of result : "  << sizeof(result)  << std::endl;
+  std::cout << "size of result2 : " << sizeof(result2) << std::endl;
+
+#+END_SRC
+
+** DONE Literales y Constantes(Literals y Constants) [5/5]
+   CLOSED: [2024-08-07 mié. 09:07]
+*** DONE Introduccion
+	CLOSED: [2024-08-05 lun. 10:19]
+	- Los _literales_ son datos que se usan en el sistema sin almacenarse
+	  en una variable.
+    - las _constantes_ son variables de solo lectura que no se le reasigna los
+	  datos una vez declarada.
+	- Las _constexpr_ son constantes que potencialmente son evaluada en tiempo de compilacion.
+	- _Constinit_ es una variable que deberia ser inicializada como constante o literal
+	  en tiempo de compilacion.
+		- Literal
+		- const
+		- constexpr
+		- constinit
+		  
+*** DONE Literales (Literals)
+	CLOSED: [2024-08-05 lun. 14:46]
+	- Los literales son datos puros de las inicializaciones y estos se hacen manualmente.
+#+BEGIN_SRC C++
+  int var {12}; // 12 es el valor literal que se aplica a la variable.
+  //Agrupando numeros: C++14 en adelante
+  unsigned int prize {1'500'00'0u};
+
+  //Errores de convercion (Narrowing error) pueden ser capturados con la inicializacion
+  //con llaves. La inicializacion por asignacion o funcional(parentesis)
+  unsigned char distance {555u}; //Error
+  unsigned int scor {-20};      //Error
+
+#+END_SRC
+
+*** DONE Constantes (constant)
+	CLOSED: [2024-08-05 lun. 11:56]
+   - Las constantes en C++ permiten mantener un valor
+	 fijo al declarar una variable. Esta forma de declaracion permite mantenar
+	 un seguimiento de las variables ya que no cambian, porque no se puede reasignar.
+   - Las constantes garantizan que no se modificaran los datos de estas variables a
+	 en todo el programa.
+   - Se aconseja usar siempre usar constantes y cambiarla si se necesita modificarla
+	 en otra parte del programa. 
+#+BEGIN_SRC C++ Ejemplo de constantes
+  // Se puede declarar constante cualquier tipo de variable como constante
+  // Las constantes se pueden inicializar de las 3 formas conocidas
+  const unsigned int radio_de_la_tierra_en_km {6371};
+  const unsigned int radio_de_la_tierra_en_km_2 (6371);
+  const unsigned int radio_de_la_tierra_en_km_3 = 6371;
+
+  // Error se debe inicializar siempre una variable constante
+  const unsigned int radio_de_la_tierra_en_km;
+#+END_SRC
+
+*** DONE Expresiones constantes(Constant expressions)
+	CLOSED: [2024-08-05 lun. 15:01]
+	- Las expresiones constantes son operaciones que seran evaluadas
+	  en tiempo de compilacion
+	- Las expresiones _constexpr_ pueden ser evaluadas en tiempo de compilacion
+	  o tiempo de ejecucion. Esto permite realizar calculos pesados en tiempo de
+	  compilacion para que acelerar el trabajo con el programa en el usuario final.
+#+BEGIN_SRC C++ Uso de constexpr
+  constexpr int ojos {2};
+  constexpr double PI {3.14};
+  std::out << "ojos : " << ojos << std::endl;
+  std::out << "PI : " << PI << std::endl;
+
+  int piernas {2}; //No constexpr
+
+   // La cantidad de piernas no se conocen en tiempo de compilacion
+   // y no es constante
+   constexpr int total_de_piernas {piernas}; // Error
+
+   constexpr int cuartos {10}; 
+   constexpr int total_de_cuartos {cuartos}; // Ok
+
+   const int mesas{5};
+   // Funciona porque las mesas son constantes y se conocen en tiempo de compilacion 
+   constexpr int total_de_sillas {mesas * 5};
+
+#+END_SRC
+   - Se puede usar la biblioteca assert para chequear en tiempo de compilacion
+	 si se cumple con uno o varios parametros deseados.
+
+#+BEGIn_SRC C++ Uso de la biblioteca assert
+  #include <assert>
+
+  // Para chequear en tiempo de compilacion si se cumple con el valor deseado
+  //static_assert es una expresion constante 
+  static_assert(total_de_ojos == 2);
+  // El mensaje despues de && es para cuando "NO" se cumple con lo que se
+  // busca se muestra dicho mensaje y se detiene el proceso.
+  // Se debe usar con una constante.
+  static_assert(chequear_otras_cosas == 2, "No es correcto"); 
+#+END_SRC
+
+*** DONE Constinit
+	CLOSED: [2024-08-07 mié. 09:05]
+  - La palabra reservada _constinit_ se usa para inicializar variables
+	en tiempo de compilacion.(a partir de c++20), fuera de la funcion main
+  - Si se intenta inicializar con algo que no puede ser inicializado
+	en tiempo de compilacion obtendra un error de compilacion.
+    - Se dice que la variable deberia ser inicializado con const.
+  - _constinit_ solo puede ser aplicado a variables con ciclos de vidas _static_ o
+	_thread_ _storage_ .
+  - _constinit_ se creo en parte para ayudar a evadir los problemas de inicializacion
+	de las variables globales.
+  - Las variables con _constinit_ deben ser inicializada con _const_ o literales.
+  - _const_ y _constinit_ se puede combinar, pero _const_ y _constexpr_ pueden ser combinada
+	en una expresion.
+  - *CUIDADO* _constinit_ implica que el compilador es forzado a a inicializar en tiempo de 
+	compilacion.
+#+BEGIN_SRC C++ Uso de constinit
+	 #include <iostream>
+	 const int val1 {33};
+	 constexpr int val2 {34};
+	 int val3 {35};
+
+	 constinit int age = 88;
+	 const constinit int age1{val1}; // const y consinit puede ser combinados
+	 consinit int age2 {age1};       // Inicializar con age daria error del compilador
+									 // age is not const
+	 //continit int age3 {val3};     // Error val3 es evaluada en tiempo de ejecucion
+									 // no se puede inicializar con const age3
+
+	const constinit double weight {33.33};
+	//constexpr constinit double scale_factor{3.11};// No se puede inicializar constexpr
+	// y constinit
+
+   int main(int *argc,char **argv){
+	  //constinit int age4{41}; //Error de compilacion no es static o hilo local de almacenado(thread local storage)
+	  return 0;
+  }
+
+
+#+END_SRC
+
+** DONE Conversion de datos desbordamiento & vaciado(Data conversion Overflow & Underflow) [3/3]
+	CLOSED: [2024-08-07 mié. 13:56]
+*** DONE Conversion implicita de datos (Implicita data conversion)
+	CLOSED: [2024-08-07 mié. 09:35]
+	- La conversion implicita se realiza atravez del compilador
+	  donde toma el tipo de variable de mayor tamaño y convierte las demas a este
+	  tipo en operaciones aritmeticas.
+
+	- Guia de conversion implicita, por fila de izquierda a derecha
+	  |---------------+------------------------------------------------------+--------------------|
+	  | ->            | Guia de conversion implicita(de izquierda a derecha) | ->                 |
+	  |---------------+------------------------------------------------------+--------------------|
+	  | int           | unsigned int                                         | long               |
+	  |---------------+------------------------------------------------------+--------------------|
+	  | unsigned long | long long                                            | unsigned long long |
+	  |---------------+------------------------------------------------------+--------------------|
+	  | float         | double                                               | long double        |
+	  |---------------+------------------------------------------------------+--------------------|	
+
+#+BEGIN_SRC C++
+	double price {45.6};
+	int units {10};
+
+	double total = price * units;
+	std::cout << "El precio total es de : " << total << std::endl;
+	std::cout << "El precio total es de : " << sizeof(total) << std::endl;
+#+END_SRC
+
+*** DONE Conversion explicita de datos(Explicit data conversion)
+	CLOSED: [2024-08-07 mié. 10:55]
+   - La conversion explicita es la que hace el desarrollador manual, a la deseada
+	 para que pase de un tipo a otro.
+   - Se puede hacer conversion explicita de varias formas desde la forma primitiva de c y la
+	 otra es desde la conversion de con _static_cast<type>(variable)_ de c++.
+   - _static_cast_ es uno de los conversores implicito de c++ y existe variedades de estos en el
+	 lenguage.
+   - Se debe usar _static_cast_ sobre la version de casteo de c ya que en caso de error de conversion
+	 el este dara problemas y dara errores de mas claros que el type cast de C.
+#+BEGIN_SRC C++
+  double x = {12.4};
+  double y = {24.9};
+
+  //Conversion explicita con static_cast de c++
+  int sum = static_cast<int>(x) + static_cast<int>(y);
+  std::cout << "Castear la suma del resultado de sum:" << sum <<std::endl;
+
+  //Casteo estatico con conversion implicita.
+  int sum = static_cast<int>(x + y);
+  std::cout << "Castear la suma del resultado de sum:" << sum <<std::endl;
+
+  //Conversion al estilos de c
+  double PI {3.1416};
+  int res = (int)(PI);
+  std::cout << "PI : " << PI <<std::endl;
+
+#+END_SRC
+
+*** DONE Desbordamiento por arriba o por abajo(Overflow o Underflow)
+	CLOSED: [2024-08-07 mié. 13:55]
+	- Los desbordamientos ocurren cuando el se intenta poner (mas o menos) valor de lo que
+	  cabe en una variabl
+    - Los desbordamientos no estan limitados a caracteres y enteros en general
+	- Se debe usar la biblioteca limite <limits> para saber los limites de las
+	  varibles que usas, viendo los mininmos y maximos.
+	- Hay compiladores que lanzan advertencias sobre los desbordamientos
+	  por lo que se debe mantener la vision de estos advertencias.
+	  
+#+BEGIN_SRC C++ Overflow y Underflow
+	unsigned char char_var {55};
+
+	char_var = 261; // Almacenar mas de lo que puede cabe en memoria (Overflow)
+	char_var = -1;  // Almacenar numeros por debajo
+   					// de los limites del tipo de dato (Underflow)
+#+END_SRC
+
+#+BEGIN_SRC C++ Ejemplo de Overflow(desbordamiento hacia arriba)
+
+	unsigned char char_var{55};	   
+	unsigned char var1{130};	   
+	unsigned char var2{131};	   
+	char_var = var1 + var2;
+
+	// char_var vale 261 despues de la suma, pero al ser un char pasa de
+	// de 255 por lo que se desborda hacia arriba.
+	std::cout << "char_var : "<< static_cast<int>(char_var)<<std::endl;
+#+END_SRC
+
+#+BEGIN_SRC C++ Ejemplo de Underflow(desbordamiento hacia abajo)
+	unsigned char char_var{55};	   
+	unsigned char var1{130};	   
+	unsigned char var2{131};	   
+	char_var = var1 - var2;
+
+	// char_var vale 255 despues de la suma, pero al ser un char baja de
+	// de 0 por lo que se desborda hacia abajo volviendo
+    // al valor maximo de los char.
+	std::cout << "char_var : "<< static_cast<int>(char_var)<<std::endl;
+#+END_SRC
+
+	|----------------------+---------|
+	|       Desbordamiento | Valor   |
+	|----------------------+---------|
+	|             11111101 | 253 dec |
+	|----------------------+---------|
+	|             11111110 | 254 dec |
+	|----------------------+---------|
+	|             11111111 | 255 dec |
+	|----------------------+---------|
+	|     Al llegar a cero |         |
+	| se resetean los bits |         |
+	|----------------------+---------|
+	|             00000000 | 000 dec |
+	|----------------------+---------|
+	|             00000001 | 001 dec |
+	|----------------------+---------|
+
+** DONE Operadores de cambio de bits (Bitwise operators)[7/7]
+   CLOSED: [2024-08-10 sáb 17:18]
+*** DONE Mostrando valores de enteros binario(Printing intergers in binary)
+	CLOSED: [2024-08-07 mié. 14:20]
+	- Los operadores de cambio de bit manipulan los tipos _int_ a nivel de datos
+	  estos mueven con sus operaciones los bits de las variables.
+#+BEGIN_SRC C++ Mostrar en salida de consola los valores binarios
+  #include <iostream>
+  #include <bitset>
+
+  int main(){
+	  unsigned short int data {0b11111110};
+	  std::cout << "data (dec)    : " << std::dec << data << std::endl;
+	  std::cout << "data (hex)    : " << std::hex << std::showbase << data << std::endl;
+	  //std::bitset<numero de bits de salida a visualizar >(valor) muestra el "valor" entero en binario pasando los bits que
+	  //se desee visualizar.
+	  std::cout << "data (bin)    : " << std::bitset<16>(data)<< std::endl;
+	  std::cout << "Sizeof data   : " << std::noshowbase<<sizeof(data) <<" bytes"<< std::endl;
+	  std::cout << "total de bits de data : " << sizeof(data) * 8 <<" bits"<<std::endl;
+	  return 0;
+  }
+
+#+END_SRC
+
+*** DONE Operador Shift(Shift Operators (>>) (<<) )
+	CLOSED: [2024-08-08 jue 18:29]
+	- Los operadores de shift mueven los bits a la derecha o a la izquierda de datos tipos enteros
+	  y char donde se pueden realizar operaciones de bits.
+	- Los valores eliminados con el movimiento de bits a la derecha o izquierda
+	  no se pueden recuperar si se usa la operacion de movimiento hacia el
+	  otro lado, ejemplo:
+	- Despues de castear una operacion de shift a la derecha o izquierda, el valor de retorno es un
+	  _int_ (por las reglas de enteros raros)para obtener el valor deseado se debe castear al valor que se desea.
+   - Para mover con Shift a la izquierda multiplica el valor actual por 2^n donde _n_ es la cantidad de espacios a mover.
+   - Para mover con Shift a la derecha divide el valor actual por 2^n donde _n_ es la cantidad de espacios a mover.
+   - Las reglas se rompen si se saca un 1 de de los limites de la variable a la derecha o a la
+	  izquierda.
+#+BEGIN_SRC C++ Mover con Shift a la derecha divide valor actual por 2^n 
+  int value = 32512; // en binario 0b0111111100000000
+  //value en binario: (0111111100000000) 
+  //value en decimal: 32512
+  //(2^4 = 16) 32512 / 16 = 2032
+
+  //value en binario despues de mover 4 a la derecha (0000011111110000) 
+  //value en decimal despues de mover 4 a la derecha: 2032
+
+  std::cout << "value : "<< value << ", dec : "<< std::dec << (value >> 4) << " [ Despues de mover 4 bit a la derecha ]"<< std::endl;
+#+END_SRC
+
+
+#+BEGIN_SRC C++ Mover con Shift a la izquierda multiplica el valor actual por 2^n 
+  int value = 2032; // en binario 0b0000011111110000
+  //value en binario: (0000011111110000) 
+  //value en decimal: 2032
+  //(2^4 = 16) 2032 * 16 = 32512
+
+  //value en binario despues de mover 4 a la derecha: (0000011111110000) 
+  //value en decimal despues de mover 4 a la derecha:  2032
+
+  std::cout << "value : "<< value << ", dec : "<< std::dec << (value << 4) << " [ Despues de mover 4 bit a la izquierda ]"<< std::endl;
+#+END_SRC
+
+	  
+#+BEGIN_SRC C++ Ejemplo de shift a la derecha e izquierda
+	#include <bitset>
+
+	unsigned short int value {0xff0u};
+	std::cout << "value : " << std::bitset<16>(value)<< ", dec : "<< value << std::endl;
+	std::cout << std::endl;
+	std::cout << "Shifting right >>>>>"<< std::endl;
+
+	value = static_cast<unsigned short int>(value >> 1);
+	std::cout << "value : "<< std::bitset<16>(value)<< ", dec : "<< value << " [ Despues de mover 1 bit a la derecha ]"<< std::endl;
+
+	value = static_cast<unsigned short int>(value << 1);
+	std::cout << "value : "<< std::bitset<16>(value)<< ", dec : "<< value << " [ Despues de mover 1 bit a la izquierda ]"<< std::endl;
+
+	value = static_cast<unsigned short int>(value << 4);
+	std::cout << "value : "<< std::bitset<16>(value)<< ", dec : "<< value << " [ Despues de mover 4 bit a la izquierda ]"<< std::endl;
+
+	// Cuando se pone un movimiento de shift en un std::cout se debe encerrar entre parentesis
+	// para evitar errores del compilador.
+	std::cout << "value : "<<  (value << 2) << std::endl;
+#+END_SRC 
+
+
+#+BEGIN_SRC C++ Ejemplo de operaciones de shift con perdida por movimiento de datos
+    #include <bitset>
+
+    unsigned short int value{65500};
+
+	std::cout << "value : "<< std::bitset<16>(value)<< ", dec : "<< value << " [ Antes de mover 6 bit a la izquierda ]"<< std::endl;
+
+	value = static_cast<unsigned short int>(value << 6);
+	std::cout << "value : "<< std::bitset<16>(value)<< ", dec : "<< value << " [ Despues de mover 6 bit a la izquierda ]"<< std::endl;
+
+	value = static_cast<unsigned short int>(value >> 6);
+	std::cout << "value : "<< std::bitset<16>(value)<< ", dec : "<< value << " [ Despues de mover 6 bit a la derecha ]"<< std::endl;
+#+END_SRC 
+
+*** DONE Operadores logicos de cambio de bits(Logical bitwise operators) 
+	CLOSED: [2024-08-09 vie. 08:16]
+	- Los operadores de logicos de cambio de bits son:
+	  _and_ (&)
+	  _or_  (|)
+ 	  _xor_ (^) exclusive or
+ 	  not (~)
+	- Estos operadores igual que los de shift son usados en variables de
+	  tipo entero  
+	  |---+---+-------+--------+----+-----|
+	  | a | b | a & b | a or b | ~a | a^b |
+	  |---+---+-------+--------+----+-----|
+	  | 0 | 0 |     0 |      0 |  1 |   0 |
+	  |---+---+-------+--------+----+-----|
+	  | 1 | 0 |     0 |      1 |  0 |   1 |
+	  |---+---+-------+--------+----+-----|
+	  | 0 | 1 |     0 |      1 |  1 |   1 |
+	  |---+---+-------+--------+----+-----|
+	  | 1 | 1 |     1 |      1 |  0 |   0 |
+	  |---+---+-------+--------+----+-----|
+
+#+BEGIN_SRC C++ AND (&)
+	#include <bitset>
+
+	const int COLUMN_WIDTH {20};
+	unsigned char value1 {0x3};
+	unsigned char value2 {0x5};
+
+	std::cout << std::setw(COLUMN_WIDTH) << "value1 : "
+	<< std::setw(COLUMN_WIDTH) << std::bitset<8>(value1) << std::endl;
+
+	std::cout << std::setw(COLUMN_WIDTH) << "value2 : "
+	<< std::setw(COLUMN_WIDTH) << std::bitset<8>(value2) << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "Bitwise AND : " << std::endl;
+	std::cout << std::setw(COLUMN_WIDTH) << "value1 & value2 : " << std::setw(COLUMN_WIDTH)
+    << std::bitset<8>(value1 & value2)<< std::endl;
+	std::cout << std::endl;
+
+#+END_SRC 
+
+#+BEGIN_SRC C++ OR (|)
+	#include <bitset>
+
+	const int COLUMN_WIDTH {20};
+	unsigned char value1 {0x3};
+	unsigned char value2 {0x5};
+
+
+	std::cout << std::endl;
+	std::cout << "Bitwise OR : " << std::endl;
+	std::cout << std::setw(COLUMN_WIDTH) << "value1 | value2 : " << std::setw(COLUMN_WIDTH)
+    << std::bitset<8>(value1 | value2)<< std::endl;
+	std::cout << std::endl;
+
+#+END_SRC 
+
+
+#+BEGIN_SRC C++ NOT (~)
+  #include <bitset>
+
+  const int COLUMN_WIDTH {20};
+  unsigned char value1 {0x3};
+  unsigned char value2 {0x5};
+
+
+  std::cout << std::endl;
+  std::cout << "Bitwise NOT : " << std::endl;
+  std::cout << std::setw(COLUMN_WIDTH) << "~value1 : " << std::setw(COLUMN_WIDTH)
+	 << std::bitset<8>(~value1)<< std::endl;
+
+  std::cout << std::setw(COLUMN_WIDTH) << "~value2 : " << std::setw(COLUMN_WIDTH)
+	 << std::bitset<8>(~value2)<< std::endl;
+
+  // Usando literales binarios
+  std::cout << std::setw(COLUMN_WIDTH) << "~01011001 : " << std::setw(COLUMN_WIDTH)
+	 << std::bitset<8>(~0b01011001)<< std::endl;
+
+  // Usando literales hexadecimal
+  std::cout << std::setw(COLUMN_WIDTH) << "~value2 : " << std::setw(COLUMN_WIDTH)
+	 << std::bitset<8>(~0x59)<< std::endl;
+  std::cout << std::endl;
+
+#+END_SRC 
+
+#+BEGIN_SRC C++ XOR (^)
+  #include <bitset>
+
+  const int COLUMN_WIDTH {20};
+  unsigned char value1 {0x3};
+  unsigned char value2 {0x5};
+
+  std::cout << std::endl;
+  std::cout << "Bitwise XOR : " << std::endl;
+  std::cout << std::setw(COLUMN_WIDTH) << "value1 ^ value2 : " << std::setw(COLUMN_WIDTH)
+	 << std::bitset<8>(value1 ^ value2)<< std::endl;
+
+  std::cout << std::endl;
+
+#+END_SRC 
+
+*** DONE Operadores de bit compuestos (Compound Bitwise and Assignement Operators)
+	CLOSED: [2024-08-09 vie. 10:56]
+	- Los operadores de asignacion y operadores de bits son similares a los
+	  operadores de asignacion compuestos basicos (>= , <=, ====,+=) ect.
+
+#+BEGIN_SRC C++ Operadores compuestos 
+  #include <bitset>
+
+  const int COLUMN_WIDTH {20};
+  unsigned char sandvar {0b00110100}; // 8 bits : solo numeros positivos
+
+  std::cout << std::endl;
+  std::cout << "Cambios de bit dos posiciones a la izquierda : " << std::endl;
+  sandvar <<= 2;
+  std::cout << std::setw(COLUMN_WIDTH) << "sandvar : "
+   << std::setw(COLUMN_WIDTH) << std::bitset<8>(sandvar) << std::endl;
+
+  // Operador compuesto OR
+  std::cout << std::endl;
+  std::cout << "Compuesto OR con 0000 0010 : " << std::endl;
+  sandvar |= 0b00000010;
+  std::cout << std::setw(COLUMN_WIDTH) << "sandvar : "
+   << std::setw(COLUMN_WIDTH) << std::bitset<8>(sandvar) << std::endl;
+
+  // Operador compuesto AND
+  std::cout << std::endl;
+  std::cout << "Compuesto AND con 0000 0010 : " << std::endl;
+  sandvar &= 0b00001100;
+  std::cout << std::setw(COLUMN_WIDTH) << "sandvar : "
+   << std::setw(COLUMN_WIDTH) << std::bitset<8>(sandvar) << std::endl;
+
+  // Operador compuesto XOR 
+  std::cout << std::endl;
+  std::cout << "Compuesto XOR con 0000 0011 : " << std::endl;
+  sandvar ^= 0b00000011;
+  std::cout << std::setw(COLUMN_WIDTH) << "sandvar : "
+   << std::setw(COLUMN_WIDTH) << std::bitset<8>(sandvar) << std::endl;
+
+#+END_SRC
+
+#+BEGIN_SRC C++ Intercambio de dos valores con el operador XOR (^)
+  #include <bitset>
+
+  int var1 {3};
+  int var2 {2};
+
+  std::cout << "var1 : " << var1 << std::setw(10)<< " var2 : " << var2 << std::endl;
+  std::cout << "var1 : "<< std::bitset<8>(var1)<< std::endl;
+  std::cout << "var2 : "<< std::bitset<8>(var2)<< std::endl;
+  var1 = var1 ^ var2;
+  var2 = var1 ^ var2;
+  var1 = var1 ^ var2;
+  std::cout << "var1 : "<< std::bitset<8>(var1)<< std::endl;
+  std::cout << "var2 : "<< std::bitset<8>(var2)<< std::endl;
+  std::cout << "var1 : " << var1 << std::setw(10) << "var2 : " << var2 << std::endl;
+#+END_SRC
+*** DONE Mascaras de bits(Masks)
+	CLOSED: [2024-08-09 vie 17:56]
+	- Las mascaras de bit son operaciones a nivel de para activar
+	  o desactivar un bit usando una cadena binaria literal. 
+	- Para activar o desactivar un bit con una mascara se usa un valor binario
+	  que tenga activo los bits que se deseen activar y desactivar
+	- Las mascaras se pueden usar con los operados logicos de bits
+	  simples y compuestos.
+
+#+BEGIN_SRC C++ Masks
+  // Definicion de una mascara
+  // Al usar mask como mascara con una operacion and se activaran o desactivaran
+  // los bits que se deseen 
+  int mask {0b00001001};
+  int data {227}; // 1110 0011
+  data &= mask
+  std::cout << "data :" << data << std::endl; // 1
+#+END_SRC
+
+
+#+BEGIN_SRC C++ Reseteo de bit a 0 con masks
+  int mask {0b00001001}; // dec : 9
+  int data {0b11100011}; // dec : 227 
+  // Las mascara negada se usa para transformar los bit que
+  // estan en uno a cero. ejemplo
+  // mask  : 0000 1001
+  // ~mask : 1111 0110 
+
+  // Al realizar un operacion AND (&) con data y ~mask    (data &= (~mask))
+  // los bit de ~mask que estan en 0 transformaran los bit de
+  // data en cero. Esto se le conoce como reseteo de la posision de bits a 0.
+  // data      : 1110 0011
+  // ~mask     : 1111 0110
+  //----------------------
+  // data      : 1110 0010
+
+  std::cout << "mask           :" << std::bitset<8>(mask) << std::endl;
+  std::cout << "~mask          :" << std::bitset<8>(~mask) << std::endl;
+  std::cout << "data           :" << std::bitset<8>(data) << std::endl;
+  std::cout << "data & (~mask) :" << std::bitset<8>(data & (~mask)) << std::endl;
+  std::cout << "data & (~mask) :" << (data & (~mask)) << std::endl;
+#+END_SRC
+*** DONE Ejemplo de mascara (Ejemplo de mask)
+	CLOSED: [2024-08-09 vie 18:33]
+#+BEGIN_SRC C++ Ejemplo de mask
+
+   void options(unsigned char flags){
+	  std::cout << "bits0 is " << ((flags & mask0) >> 0) << std::endl;
+	  std::cout << "bits1 is " << ((flags & mask1) >> 1) << std::endl;
+	  std::cout << "bits2 is " << ((flags & mask2) >> 2) << std::endl;
+	  std::cout << "bits3 is " << ((flags & mask3) >> 3) << std::endl;
+	  std::cout << "bits4 is " << ((flags & mask4) >> 4) << std::endl;
+	  std::cout << "bits5 is " << ((flags & mask5) >> 5) << std::endl;
+	  std::cout << "bits6 is " << ((flags & mask6) >> 6) << std::endl;
+	  std::cout << "bits7 is " << ((flags & mask7) >> 7) << std::endl;
+  }
+
+  unsigned char mask0 {0b00000001};
+  unsigned char mask1 {0b00000010};
+  unsigned char mask2 {0b00000100};
+  unsigned char mask3 {0b00001000};
+  unsigned char mask4 {0b00010000};
+  unsigned char mask5 {0b00100000};
+  unsigned char mask6 {0b01000000};
+  unsigned char mask7 {0b10000000};
+
+   // EL uso de multiples banderas con operadores logicos OR
+   // crea una variable con todos los bits de las variables en 1
+   // mask2|mask3|mask4|mask6 = 0b01011100
+  
+   // mask2 = 0b00000100;
+   // mask3 = 0b00001000;
+   // mask4 = 0b00010000;
+   // mask6 = 0b01000000;
+
+   options(mask2|mask3|mask4|mask6);
+
+#+END_SRC
+
+*** DONE Empacando infomacion de color(Packing Color Information) 
+	CLOSED: [2024-08-10 sáb 16:05]
+	- La informacion de colores de se puede almacenar en
+	  un entero en formato hexadecimal
+#+BEGIN_SRC C++ Empaquetando la infomacion de los colores
+
+  const unsigned int red_mask    {0xFF000000};
+  const unsigned int blue_mask   {0x00FF0000};
+  const unsigned int green_mask  {0x0000FF00};
+  const unsigned int alpha_mask  {0x000000FF};
+
+  unsigned int color {xAABCDE00};
+  std::cout << std::hex << std::showbase << std::endl;
+
+  // Movemos los bits para asegurarse de que el byte de color
+  // este en los indeces bajos 
+  std::cout << "El rojo  es : " << (( color & red_mask   ) >> 24) << std::endl;
+  std::cout << "El azul  es : " << (( color & blue_mask  ) >> 16) << std::endl;
+  std::cout << "El verde es : " << (( color & green_mask ) >> 8) << std::endl;
+  std::cout << "El alfa es :  " << (( color & alpha_mask ) >> 0) << std::endl;
+
+#+END_SRC
+
+** DONE Tiempo de vida de las variables y alcance (Variable lifetime and Scope)[2/2]
+   CLOSED: [2024-08-10 sáb 17:18]
+*** DONE Tiempo de vida de las variables (Variable lifetime)
+	CLOSED: [2024-08-10 sáb 17:11]
+	- EL tiempo de vida de las variables es cuando la variable esta activa en
+	  memoria.
+	- Se activa cuando la declaras y se elimina cuando la liberas o cierras el programa.
+	- La variable tiene _tiempos de almacenado_ (Storage duration)
+	  - _local_ en un bloque de codigo
+	  - _static_ cuando se declara con la palabra reservada *static*, esta tiene alcanze en todo
+		la aplicacion y se elimina cuando termina el programa.
+	  - _dynamic_ es la memoria que se reserva dinamicamente y se puede eliminar con durante la
+		ejecucion de su programa.
+#+BEGIN_SRC C++ Comportamiento de los tipos de variable
+	#include <iostream>
+
+	int static_var {80}; // duracion estatica  : se elimina cuando termina el programa
+
+	void function(){
+
+	int local_var {80}; // duracion local  : se elimina cuando termina el bloque de la funcion
+	static int static_var {80}; // duracion estatica  : se elimina cuando termina el programa
+	int dynamic_var {80}; // decides cuando eliminarla 
+
+  }
+
+  int main(int *argc,char **argv){
+	int local_var1 {10};  // duracion local  : se elimina cuando termina el bloque de la funcion
+	int dynamic_var {80}; // decides cuando eliminarla 
+	   {
+			int local2{30};// duracion local  : se elimina cuando termina el bloque de la funcion
+			int dynamic_var2 {80}; // decides cuando eliminarla 
+	   }
+		return 0;
+   }
+
+
+#+END_SRC
+
+*** DONE Zona de accion de una variable(Variable Scope)
+	CLOSED: [2024-08-10 sáb 17:17]
+	- La zona de accion de una variable es donde puede ser declarada. Puedes leer
+	  la variable, escribir en ella o usarla de cualquier forma posibles. 
+	- Si se intenta usar una variable en fuera de el alcance dara error al compilar.
+** DONE Control de fujo de datos (Control Flow)[5/5]
+   CLOSED: [2024-08-11 dom 17:29]
+*** DONE Declaracion if e else (if and else statement)
+	CLOSED: [2024-08-11 dom 17:00]
+	- Las declaraciones if else sirven para controlar el flujo de
+	  ejecucion de los datos en un programa.
+	- Los if validan que las condiciones sean distintas de 0 (que es false)
+	- Los else if y los else evaluan conadiciones adicionales y otras
+	  alternativas.
+	- Las alternativas se pueden anidar una dentro de otra.
+	- Se puede usar constexpr con un if para evaluar la condicion en tiempo de
+	  compilacion.
+	- Se puede inicializar a partir de c++ 17 (Revisar) variables dentro
+	  del chequeo de un if. Esto se le conoce como inicializacion en bloque if.
+#+BEGIN_SRC C++
+   int data {0};
+   int data1 {10};
+
+   if(data1 > data) {  		//data es mayor que data1 por lo tanto entra en esta condicion
+		  int var_de_prueba {12}; // Esta variable al estar dentro de este if no se podra u
+								  // fuera ya que el alcanze de esta queda en este bloque.	
+		 std::cout << "data1 es mayor data" << std::endl;
+	}else if( data > data1){//si data fuere mayor que data1 se entraria a esta condicion
+		 std::cout << "data es mayor data1" << std::endl;
+   }else { 				   //Si no se cumple con las condiciones anteriores se ejecutara este bloque
+		 std::cout << "data son iguales data1" << std::endl;
+  }
+
+   // A este if no se evaluara ya que data es 0
+   if(data) {
+	... 
+   }
+
+   // A este if no se evaluara ya que data es 0, por lo que se ejecuta el else
+   if(data) {
+		... 
+   }else{
+		...
+   }
+  // Se puede usar constexpr con un if para evaluar la condicion en tiempo de
+  // compilacion
+  constsexpr bool condition{false};
+  if constexpr(condition) {
+	std::cout << "la condicion en verdadera." << std::endl;
+  }else {
+	std::cout << "la condicion en falsa." << std::endl;
+  }
+
+	//ejemplo de inicializacion en bloque if
+
+	bool go {true};
+	if(int speed{5};go){ // Se evaluara go porque es la ultima parte a inicializar
+						 // o chequear
+						 // speed se vera dentro del else, porque este pertenece
+						 // al bloque de la declaracion del if
+		std::cout << "Aqui se ve la variable de if " << speed <<std::endl;
+	  }else{
+		std::cout << "Aqui no se ve la variable de if? " << speed <<std::endl;
+	}
+
+#+END_SRC 
+*** DONE Interuptores (switch)
+	CLOSED: [2024-08-11 dom 17:11]
+	- Los switch permiten tener varias condiciones dentro donde solo, se
+	  ejecutara una.
+	- Si la clausula case del switch no tiene un break se continuaran ejecutando los
+	  case siguientes.
+	- Debe tener una clausula por defecto.
+	- Los case del switch pueden usar o no llaves en un case
+	- Las condiciones que se le pasa a un switch tienen que ser
+	  de tipo entero, enumerado, long ect..
+	- Se puede inicializar a partir de c++ 17 (Revisar) variables dentro
+	  del chequeo de un switch. Esto se le conoce como inicializacion en bloque switch.
+	- Se puede declarar e inicializar variables dentro de un switch pero
+	  es recomendado no hacerlo para evitar errorres en el manejo de las
+	  operaciones.
+#+BEGIN_SRC C++ switch
+  int Pen{1};
+  int Marker{2};
+  int Notebook{3};
+  int Rubber{3};
+  int tool{Pen};
+
+  // Esta es la condicion que debe ser tipo enum o entero (int, long, short)
+  switch(tool){ 
+	  case Pen:{
+		  std::cout << "Es un lapiz " << std::endl;
+	  }break;
+
+	  // En este caso no hay un break. Si coincide con este case
+	  // pasara al proximo y se ejecutara.
+	  case Marker:{
+		  std::cout << "Es un marcador " << std::endl;
+	  }
+
+	  case Notebook:
+		  std::cout << "Es una libreta " << std::endl;
+		  break;
+
+	  case Rubber:
+		  std::cout << "Es una goma de borrar " << std::endl;
+		  break;
+
+	  default:{
+		  std::cout << "Ningun instrumento sirve " << std::endl;
+	  }
+	}
+
+
+  //Ejemplo de inicializacion de variable en bloque switch
+  switch(double longitud{15.2};tool){ 
+	  case Pen:{
+		  std::cout << "Es un lapiz y mide : "<< longitud << "centimetros." << std::endl;
+	  }break;
+
+	  // En este caso no hay un break. Si coincide con este case
+	  // pasara al proximo y se ejecutara.
+	  case Marker:{
+		  std::cout << "Es un marcador " << std::endl;
+	  }
+
+	  case Notebook:
+		  std::cout << "Es una libreta " << std::endl;
+		  break;
+
+	  case Rubber:
+		  std::cout << "Es una goma de borrar " << std::endl;
+		  break;
+
+	  default:{
+		  std::cout << "Ningun instrumento sirve " << std::endl;
+	  }
+	}
+
+  // Inicializacion de variables en un switch
+  switch(tool){
+		int x;     // no dara error ya que no se va a usar la variable
+				   // por lo que no hace falta inicializarla evitando el error.
+		int x2{5}; // Dara error en la inicializacion ya que en esta par
+				   // antes de los case no hay operaciones a ejecutar
+	  case Pen:{
+		  int y {3}; // Lo mismo de x2
+		  x = 3;
+		  x++; 
+		  std::cout << "Es un lapiz " << std::endl;
+	  }break;
+
+	  case Rubber:
+		  std::cout << "Es una goma de borrar " << std::endl;
+		  break;
+
+	  default:{
+			int u{8}; // Este caso no dara error por ser el ultimo
+					// caso a evaluar del switch
+		  y = 3;
+		  x += 10;
+		  std::cout << "Ningun instrumento sirve " << std::endl;
+	  }
+	}
+
+
+
+#+END_SRC 
+
+*** DONE Evaluacion en corto circuito(Short circuit evaluation)
+	CLOSED: [2024-08-11 dom 17:11]
+    - La evaluacion en corto circuito permite evaluar condicion multiples
+	  donde se asignara a una variable(si existe una asignacion) la ultima parte
+	  de la evaluacion.
+	- Si el resultado de uno de los operando es falso el resto de los operando sera falso
+
+#+BEGIN_SRC C++ Short Circuit
+  bool a{true}; 
+  bool b{true}; 
+  bool c{true}; 
+  bool d{false}; 
+
+  bool p{false}; 
+  bool q{false}; 
+  bool r{false}; 
+  bool m{true}; 
+
+  // En el operando AND si uno resulta falso todos son falso
+   std::cout << "AND short circuit " << std::endl;
+   bool result = a && b && c && d;
+   std::cout << "El resultado es : " << std::boolalpha << result << std::endl;
+
+  // En el operando OR si uno resulta verdadero el resultado es verdadero
+   std::cout << "OR short circuit " << std::endl;
+   bool result = a || b || c || d;
+   std::cout << "El resultado es : " << std::boolalpha << result << std::endl;
+
+
+	bool carro(){
+		return true;
+	}
+
+	bool casa(){
+		return false;
+	}
+	bool esposa(){
+		return true;
+	}
+	bool trabajo(){
+		return false;
+	}
+
+	// Ejemplo de corto cicuito en un if
+	if(trabajo() && casa() && esposa() && carro()){
+		std::cout << "Soy felix" << std::endl;
+	}else {
+		std::cout << "No soy felix" << std::endl;
+	 }
+
+#+END_SRC
+
+*** DONE Operador ternario (Ternary Operator)
+	CLOSED: [2024-08-11 dom 17:11]
+	- Los operadores ternarios son operaciones if else con una sintaxis mas
+	  corta
+#+BEGIN_SRC C++
+  int anios_de_universidad {5};
+  bool graduado{true};
+  bool es_universitario {graduado && (anios_de_universidad > 4) ? true : false};
+#+END_SRC 
+
+*** DONE Operador coma (Comma operator)
+	CLOSED: [2024-08-12 lun. 10:05]
+	- Operador coma permite realizar multiples operaciones en
+	  diferentes en una sola linea asignando la operacion final
+	  a la varible declarada.
+#+BEGIN_SRC C++
+  int inc{5};
+  int number1{10};
+  int number2{20};
+  int number3{25};
+
+  // El operador coma separa las operaciones en una sola linea y
+  // el resultado sera el de la ultima operacion a la derecha.
+  // Esta forma permite reducir el espacio de codigo y realizar mas operaciones.
+  // Segun el compilador (number2 - (++inc)) es una operacion a la izquierda
+  // por lo que carece de sentido, aunque lo ejecuta igual (ver que es una operacion a la izquierda)
+  int result = (number1 *= ++inc, number2 - (++inc), number3 += ++inc );
+
+  std::cout << "Number 1 : " << number1 << std::endl;
+  std::cout << "Number 2 : " << number2 << std::endl;
+  std::cout << "Number 3 : " << number3 << std::endl;
+  std::cout << "Result : " << result << std::endl;
+#+END_SRC 
+** TODO Ciclos (Loops)[3/4]
+   - Los ciclos son usados para recrear codigo que debe repetir varias veces.
+*** DONE Ciclo for
+	CLOSED: [2024-08-12 lun. 13:29]
+	- EL ciclo for es la version basica de los ciclos
+#+BEGIN_SRC C++
+
+  //Version basica de for 
+  for (unsigned int i{};i < 10;++i){
+	std::cout<<"C++" << std::endl;
+  }
+
+  // size_t es un alias para la representacion de tipo de dato unsigned int 
+  // establecido por los estandart C99 ISO/IEC 9899
+  // el cual esta definido en la biblioteca stddef.h y en la biblioteca
+  // stdlib.h que sub incluye la biblioteca stddef.h
+  #include <stdlib.h>
+
+  for (size_t i{};i < 10;++i){ 
+	std::cout<<"C++" << std::endl;
+  }
+
+  // Se puede declarar las variables de fuera del ciclo
+  // para usarlas dentro y fuera del ciclo
+  // Se considera como mala practica declarar literales dentro de
+  // los ciclos por lo que se recomienda crear variables de control fuera
+  // del ciclo
+  size_t i{};
+  const size_t count {10};
+  for (;i < count;++i){ 
+	std::cout<<"C++" << std::endl;
+  }
+
+  // Se puede hacer multiples declaraciones de variables dentro de un ciclo for 
+  // donde se manipularan varias variables a la vez
+
+  // En el siguiente caso las variables y ,x e i se 
+  // declararon en con un tipo.
+  // Solo se declara el tipo de datos de primera variable
+  // en el bloque cuando se declara multiples variables.
+  for(size_t i{0},x{5},y{22};y > 15;++i,x+=5,y-=1){
+	std::cout << "i : " << i << " , x : " << x << " , y : " << y << std::endl;
+  }
+
+#+END_SRC 
+
+#+BEGIN_SRC C++ For basado en rango
+  // El for basado en rango usa elimina las
+  // problematicas de las iteraciones clasicas
+  // donde se tenia que implemetar las tres partes del ciclo
+  // cuando solo se deseab a el valor actual sin acceder
+  // a la posicion.
+  int values[]{1,2,3,4,5,6,7,8,9,10};
+  for (int value : values ) {
+	  std::cout << "El valor actual es de : " << value << std::endl;
+  }
+
+  // Inicializacion de los datos dentro dentro del ciclo for y 
+  // se puede usar la palabra auto para que el compilador decida
+  // el tipo de datos.
+  // for (auto value : {1,2,3,4,5,6,7,8,9,10}) 
+  for (int value : {1,2,3,4,5,6,7,8,9,10}) {
+	  std::cout << "El valor actual es de : " << value << std::endl;
+  }
+
+  // Cuando se quiere modificar los valores de un arreglo y dar salida a los valores
+  // modificados, el sistema no lo permitira y mostrara los valores originales del arreglo.
+   int array[] = {1,2,3,4,5,6,7,8,9};
+  for(auto element : array){
+	  element = *2;
+	  std::cout << element << std::endl;
+  }
+
+  // Si se quiere guardar los cambios deseados en el arreglo de convierte la
+  // variable element a referencia ya que se esta obteniendo el valor que modificado.
+   int array[] = {1,2,3,4,5,6,7,8,9};
+  for(auto& element : array){
+	  element *= 2;
+	  std::cout << element << std::endl;
+  }
+
+#+END_SRC 
+
+*** DONE Ciclo While y do while
+	CLOSED: [2024-08-12 lun. 13:25]
+	- El ciclo while se usa similar al ciclo for pero con la
+	  inicializacion e iteracion de forma diferente de forma diferente
+#+BEGIN_SRC C++ while y do while
+
+  // Los ciclos while chequean la condicion y luego ejecutan el codigo
+  // interno
+  const unsigned int COUNT {10};
+  unsigned int i {0};
+
+  while( i < COUNT ) {
+	std::cout << "I loved C++ " << std::endl;
+	++i;
+  }
+
+  // Los ciclos do while ejecutan el codigo interno y luego chequean la condicion 
+  do {
+	std::cout << "I loved C++ " << std::endl;
+	++i;
+  while( i < COUNT );
+#+END_SRC
+*** DONE Ciclos infinitos
+	CLOSED: [2024-08-12 lun. 13:58]
+	- Tanto en los ciclos _for_ como los _while_ y _do while_
+	  existen formas de ejecutar los codigos de forma indefinida.
+#+BEGIN_SRC C++ 
+   // Versiones de ciclos infinitos
+   while(true){
+	 ...
+   }
+   
+   for(;;){
+		 ...
+   }
+
+   do{
+	   ...
+  }while(true);
+
+#+END_SRC
+
+*** TODO Ejemplos de ciclos infinitos (16.Infinite Loops Practice) (0:57)
+
+#+BEGIN_SRC C++ 
+  char operacion;
+  double operando;
+#+END_SRC
+
+** TODO Arreglos (Arrays)
+** TODO Punteros (Pointers)
+** DONE Referencias (References) [3/3]
+   CLOSED: [2024-08-15 jue. 14:10]
+   - Las referencias son alias que se asignan a las variables donde se puede acceder a
+	 los valores y propiedades de la variables a travez de la referencia.
+   - Las referencias funcionan como const pointers pero tienen una sintaxis mas amigables.
+*** DONE Declaracion de una referencia
+	CLOSED: [2024-08-14 mié. 15:01]
+	- Las referencias pueden ser un poco confusas ya que usan *&* como elemento de declaracion.
+      Las referencias son alias que la cual almacena un una direccion y datos de una variable
+#+BEGIN_SRC C++
+
+  int int_value {10};
+  double double_value {20.0};
+
+  int& reference_to_int_value_1{int_value};   //Assignacion por Inicializacion 
+  int& reference_to_int_value_2 = int_value;  //Inicializacion por asignacion
+  double& reference_to_double_value{double_value};
+
+
+  std::cout << "int_value : "<< int_value << std::endl;
+  std::cout << "double_value : "<< double_value << std::endl;
+  std::cout << "reference_to_int_value_1 : "<< reference_to_int_value_1 << std::endl;
+  std::cout << "reference_to_int_value_2 : "<< reference_to_int_value_2 << std::endl;
+  std::cout << "reference_to_double_value : "<< reference_to_double_value << std::endl;
+  std::cout << "&int_value : "<< &int_value << std::endl;
+  std::cout << "&double_value : "<< &double_value << std::endl;
+  std::cout << "&reference_to_int_value_1 : " << &reference_to_int_value_1 << std::endl;
+  std::cout << "&reference_to_int_value_2 : " << &reference_to_int_value_2 << std::endl;
+  std::cout << "&reference_to_double_value : "<< &reference_to_double_value << std::endl;
+  std::cout << "sizeof(int) : "<< sizeof(int) << std::endl;
+  std::cout << "sizeof(int&) : "<< sizeof(int&) << std::endl;
+  std::cout << "sizeof(reference_to_int_value_1) : "<< sizeof(reference_to_int_value_1) << std::endl;
+
+  double_value = 60;
+
+  std::cout << "double_value : "<< double_value << std::endl;
+  std::cout << "&reference_to_double_value : "<< &reference_to_double_value << std::endl;
+  std::cout << "reference_to_double_value : "<< reference_to_double_value << std::endl;
+
+
+
+#+END_SRC
+*** DONE Diferencias entre punteros y referencias(Comparing pointers and references)
+	CLOSED: [2024-08-15 jue. 13:41]
+	|---------------------------------------------------+--------------------------------------------------------|
+	| Referencias                                       | Punteros                                               |
+	|---------------------------------------------------+--------------------------------------------------------|
+	| - No usa dereferencia para leer o escribir.       | - Se debe usar el operador de dereferencia para        |
+	| - No se puede cambiar la referencias a otra cosa. | para leer y escribir en la variable apuntada.          |
+	| - Se debe inicializar en la declaracion.          | - Se puede cambiar la direcion a donde se apunta.      |
+	|                                                   | - Se puede declarar pero no inicializar, dejandola con |
+	|                                                   | valorer basuras.                                       |
+	|---------------------------------------------------+--------------------------------------------------------|
+#+BEGIN_SRC C++ 
+
+  //Modificar despues(revisar)
+  double double_value {20.0};
+
+  double& reference_to_double_value{double_value}; //Referencia a un double_value
+  double* pointer_to_double_value{&double_value};  //Puntero a double_value
+
+  std::cout << "double_value : "<< double_value << std::endl;
+  std::cout << "address_of_double_value : "<< &double_value << std::endl;
+  std::cout << "reference_to_double_value : "<< reference_to_double_value << std::endl;
+  std::cout << "&reference_to_double_value : "<< &reference_to_double_value << std::endl;
+  std::cout << "address_of_double_value with pointer: "<< pointer_to_double_value << std::endl;
+  std::cout << "*pointer_to_double_value : "<< *pointer_to_double_value << std::endl;
+
+  reference_to_double_value = 40; // La referencia como es un alias solo se le asigna el valor a cambiar
+  *pointer_to_double_value =  50; // El puntero hay que derreferenciarlo con (*)
+
+#+END_SRC	
+
+#+BEGIN_SRC C++ Como seria una referencia como puntero
+    double *const const_p_double_value {&double_value}; 
+#+END_SRC 
+
+*** DONE Referencias y constantes(references and const)
+	CLOSED: [2024-08-15 jue. 14:10]
+#+BEGIN_SRC C++ Referencias y const
+
+  double double_value {20.0};
+
+  std::cout << std::endl;
+  std::cout << "Const references : " << std::endl;
+  int age{30};
+
+  // Las referencias constantes no pueden modificar el valor de las variables
+  // pero si se puede modificar las variables (si no son constantes)
+  // y optener el valor por la referencia
+  const int& const_ref_age{age};
+
+  std::cout << "age : "<< age << std::endl;
+  std::cout << "const_ref_age : "<< const_ref_age << std::endl;
+
+  // Intentar cambiar los valores por una referencia constante dara error
+  const_ref_age = 40; //Error de compilacion
+
+#+END_SRC 
+
+** TODO Manipulacion de caracteres y cadenas de caracteres (Characters manipulation and strings)
+** TODO Funciones (Functions)

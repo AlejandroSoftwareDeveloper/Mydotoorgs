@@ -1,0 +1,154 @@
+#+STARTUP: content
+
+
+* PHP programming language
+*** Ejecucion de php
+   - Para ejecutar php se puede usar:
+     php -S localhost:8000
+   - Se tiene que instalar php y sus respectivas biblioticas segun el sistema operativo
+   - php se ejecuta del lado del servidor en archivos que renderizan html o php solamente.
+
+#+BEGIN_SRC php index.php
+  <?php
+   echo "hola";
+#+END_SRC
+#+BEGIN_SRC php index.php
+  <?php
+   echo "hola";
+  ?>
+  <h1>
+    Esto es codigo html en php (no usarlo NUNCA usar motorers de plantilla)
+  </h1>
+
+#+END_SRC
+     
+*** Variables
+   - Las variables son dinamicas por lo que se puede asignar cualquier valor
+   - Los comentarios son o de una linea o multilinea
+   - Las variables se declaran iniciando con letras y continuan con numeros y guiones
+     bajo
+   - OJO IMPORTANTE php es case sentitive por lo que *$varName* es diferente a *$VarName*
+   - Las variables especiales del sistema no se pueden usar para almacenar datos
+     salvo lo necesarios del sistema.
+   - Las constantes empiezan son en mayuscula
+   - Me quede en la pagina 21 / 53 PHP Crash Course (el elefante en avion)
+#+BEGIN_SRC php declaracion de variables
+   $hola = "Hola";
+   $hola2 = new Clase();
+   $hola3 = bool;
+   $hola4 = 12;
+   // Comentarios de una linea 
+    /*
+  	Comentarios mutilinea
+    */
+#+END_SRC
+
+#+BEGIN_SRC php comentarios
+  $hola = "Hola";
+#+END_SRC
+
+#+BEGIN_SRC php variables del sistema
+   $this //utilizadas en las clases
+   $GLOBALS
+   $_SERVER
+   $_GET
+   $_POST
+   $_FILES
+   $_REQUEST
+   $_SESSION
+   $_ENV
+   $_COOKIE
+   $php_errormsg
+   $http_response_header
+   $argc 
+   $argv
+#+END_SRC
+#+BEGIN_SRC php Constant
+  |-------------+-------------------------------------------+-----------------------------------------------------------------------|
+  | Constant    | Description                               | Value                                                                 |
+  |-------------+-------------------------------------------+-----------------------------------------------------------------------|
+  | M_PI        | π                                         | the ratio of a circle’s circumference  to its diameter3.1415926535898 |
+  |-------------+-------------------------------------------+-----------------------------------------------------------------------|
+  | M_Ee        | Euler’s number                            | 2.718281828459                                                        |
+  |-------------+-------------------------------------------+-----------------------------------------------------------------------|
+  | PHP_INT_MAX | The largest integer that can be supported | Usually 9223372036854775807                                           |
+  |             | by the installed PHP system               |                                                                       |
+  |             | for 64-bit systems                        |                                                                       |
+  |-------------+-------------------------------------------+-----------------------------------------------------------------------|
+  - Para definir una constante se usa la funcion define()
+	<?php
+	define("MAX_PROJECTS", 99);
+	print "The maximum number of projects is: ";
+	print MAX_PROJECTS;
+	print "\n";
+#+END_SRC
+
+*** Tipos de datos
+  - Existen 10 tipos de datos basicos en php
+    1. _escalares_
+       1. string
+       2. int
+       3. float
+       4. bool
+    2. _compuestos_
+       1. array
+       2. object
+       3. callable
+       4. iterable
+    3. _especiales_
+       1. NULL
+       2. resource
+   - Se puede usar gettype para obtener el tipo de datos de la variable
+#+BEGIN_SRC php
+  $username = "matt";
+  print gettype($username); //string
+
+  // destruye la variable y su valor
+  unset($username)
+
+  // comprueba que la variable ha sido destruida retornando false
+  isset($username)
+
+  // muestra el tipo y el contenido de la variable
+  var_dump($username)
+#+END_SRC
+
+*** Operador Spaceship
+  - El operador spaceship compara dos valores y retorna
+    tres tipos de resultado en dependencia de la comparacion
+#+BEGIN_SRC php
+  $var1 = 11
+  $var2 = 11
+
+  var_dump($var1 <=> $var2);
+  int(-1)
+  // retorna 0 si las dos variables son iguales
+  // retorna 1 si la variable uno es mayor que la segunda 
+  // retorna -1 si la segunda variable es mayor que la primera
+
+#+END_SRC
+
+*** Sentencia match
+#+BEGIN_SRC php ejemplo de match
+  >?php
+   $country = 'Ireland';
+
+   $currency = match ($country) {
+     'UK' => 'pound',
+     'Ireland' => 'euro',
+     'France' => 'euro',
+     'Spain' => 'euro',
+     'USA' => 'dollar',
+      default => '(country not recognized)'
+  };
+
+  print "The currency of $country is the $currency";
+#+END_SRC
+
+*** Ruta absoluta con ___DIR___
+#+BEGIN_SRC php
+  // invoca el archivo atraves de la ruta absoluta con DIR
+  // concatenando con . la ruta al archivo o directorio
+  require_once __DIR__ . './directorio/o/archivo/a/buscar.php' 
+#+END_SRC
+pagina 131

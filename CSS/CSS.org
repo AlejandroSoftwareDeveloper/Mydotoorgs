@@ -1,0 +1,710 @@
+#+STARTUP: content
+
+* Curso de HTML y CSS
+** HTML
+  Toda el area visible del navegador se le conoce como viewport
+  Las etiquetas se componen de:
+*** Html basico
+#+BEGIN_SRC html
+  <!--Esto es un comentario-->
+  <nombre_de_la_etiqueta>
+	<otra_etiqueta>
+	Contenido de la etiqueta interna
+	</otra_etiqueta>
+	contenido de la etiqueta
+	externa
+  </nombre_de_la_etiqueta>
+
+  <!--Esto es una etiqueta real-->
+  <div>
+	<p>
+	  Hola mundo
+	</p>
+  </div>
+
+  <!--Hay etiquetas que se autocierran sin necesido de otra etiqueta externa-->
+  <!--hr es un separador-->
+  <hr>
+  <img src="ruta de la imagen" alt="texto a mostrar cuando no salga la imagen" width="200"/>
+  <link type="stylesheet" src="ruta de la imagen" />
+#+END_SRC
+
+*** Etiquetas basicas
+   Las etiquetas se _em_ tiene un valor semantico el cual permite
+   a los motores de busqueda detectar mejor el contenido de la
+   pagina marcado con esta etiqueta.
+   
+#+BEGIN_SRC html Etiquetas basicas
+
+      <!--
+  	La propiedad target="_blank" de la etiqueta <a> abre una pagina en blanco nueva, con el enlace que se les pasa
+	de youtube
+       -->
+	<em>Etiqueta con valor semantantico para detectar la informacion mejor(mustra este contenido en italica)</em>
+	<i>Solo muestra el contenido en italica</i>
+	<mark>Resalta el contenido</mark>
+	<br> <!--Genera saltos de linea--> 
+	<span>Se usa para senalar al contenido y resalatarlo</span>
+	<cite>Se usa para crear citas y senalarlas</cite>
+	 Estas esta etiqueta se usa para crear indices con contenido subindice X<sup>4</sup>
+	 Estas esta etiqueta se usa para crear indices con contenido subindice X<sub>4</sub>
+	 <a href="https://www.youtube.com" target="_blank">Esta es la etiqueta anchor, se usa para montar un hipervinculo a la linea de anclado.</a>
+	  <!-- las url en las href cuando tienen un ./ significa que el motor del navegador debe empezar a buscar desde la direccion actual-->
+	  <!-- las url en las href cuando tienen un ../ significa que el motor del navegador debe empezar a buscar desde una carpeta en el nivel anterior
+	  si sigue subiendo la cantidad de elementos con ../ significa que se debe buscar en carpeta mas arriba -->
+	 <b>Formatea el contenido a negritas</b>
+#+END_SRC 
+	
+*** Etiquetas de contenido
+	 
+#+BEGIN_SRC html Etiquetas de contenido
+  <!--Las etiquetas de contenido se usan para agrupar contenido variados-->
+  <main>
+	 <h1>Las etiqueta main solo puede existir una por documento html</h1>
+  </main>
+
+  <nav>
+	<a href="./">Inicio</a>
+	<a href="#" >Acerca de </a>
+	<a href="#" >Contacto</a>
+  </nav>
+
+  <nav>
+	<a href="./">Inicio</a>
+	<a href="#" >Acerca de </a>
+	<a href="#" >Contacto</a>
+  </nav>
+
+  <section>
+	<h2>Inicio</h2>
+	<p>Contenido de la seccion</p>
+  </section>
+  <header>
+	<nav>
+	   <a href="./">Navegacion</a>
+	</nav>
+	<h1>Contenido de la seccion</h1>
+  </header>
+  <footer>
+	<small>Derechos de autor &copy; D@rk Design</small>
+  </footer>
+#+END_SRC 
+		
+*** Atributos
+#+BEGIN_SRC html Atributos
+  <!--Los atributos id y class lo usan todas las etiquetas
+	  - EL id se usa para selecionar un elemento en especifo
+	  - Las class se pueden asignar a multiples archivos
+	- los id se escriben en el css con un # delante del identificador
+	- las class se escribren con un . delante del identificador
+  -->
+
+	 <p class="clase1" id="parrafo"></p>
+	 <p class="clase1" id="parrafo2"></p>
+ 	 <p class="clase1" id="parrafo3"></p>
+ 	 <p class="clase1" id="parrafo4"></p>
+
+#+END_SRC 
+*** Navegacion por anclas
+#+BEGIN_SRC html Navegacion por anclas
+  <!--
+	La navegacion por anclas se usa para navagar entre elementos de la
+	propia pagina 
+  -->
+	<section id="acerca-de">
+		<nav>
+			<a href="#acerca-de">Acerca de</a>
+			<a href="#contacto">Acerca de</a>
+			<a href="#home">Home</a>
+		</nav>
+	</section>
+
+	<section id="contacto">
+		<nav>
+			<a href="#acerca-de">Acerca de</a>
+			<a href="#contacto">Acerca de</a>
+			<a href="#home">Home</a>
+		</nav>
+	</section>
+	<section id="home">
+		<nav>
+			<a href="#acerca-de">Acerca de</a>
+			<a href="#contacto">Acerca de</a>
+			<a href="#home">Home</a>
+		</nav>
+	</section>
+
+#+END_SRC
+
+*** Elementos linea y bloques
+#+BEGIN_SRC html Elementos linea y bloques
+   <!-- 
+	Existen dos tipo de representacion de los elementos en 
+	html, en linea  y en bloque
+  -->
+
+   <!-- ELEMENTOS EN LINEA -->
+   <!-- Los elementos en linea como <a> solo ocupan el espacio que
+	 que tiene su texto, cuando se llena todo el espacio de la pantalla
+	con su contenido inserta un salto de linea-->
+	<a href="#">Linea</a>
+
+   <!-- ELEMENTOS EN BLOQUE -->
+   <!-- Los elementos en bloque como <p> ocupan el espacio que
+	 que tiene su texto, cuando se llena todo el espacio horizontal de la pantalla y
+	 automaticamente inserta un salto de linea -->
+	<a href="#">Linea</a>
+
+   <!-- ELEMENTOS EN BLOQUE
+		https://developer.mozilla.org/es/docs/Web/HTML/Block-level_elements
+	-->
+   <!-- ELEMENTOS EN LINEA
+		https://developer.mozilla.org/es/docs/Web/HTML/Inline_elements
+	-->
+    
+     https://htmlreference.io
+#+END_SRC
+
+*** Ejemplos de listas
+    Las lista en html son <li> y se colocan dentro de las etiquetas:
+	- ul (listas desordenadas)
+	- ol (listas ordenadas)
+	Los usos mas comunes de las listas son en los menu de navegacion.
+#+BEGIN_SRC html Ejemplo de listas
+  <nav>
+	 <ul>
+	   <li> <a href="#">Ir a youtube</a> </li>
+	   <li> <a href="#">Ir a Facebook</a> </li>
+	   <li> <a href="#">Ir a Twitter</a> </li>
+	 </ul>
+   </nav>
+#+END_SRC
+
+*** Tablas en html
+#+BEGIN_SRC html tablas en html
+  <!-- la etiqueta <caption> le da un titulo a la tabla -->
+  <table>
+  <caption>Tabla de personas</caption>
+	<tr>
+		<th>
+		  Cabecera numero 1
+		</th>	
+	</tr>	
+  </table>
+#+END_SRC
+
+*** Formularios
+#+BEGIN_SRC html formularios
+   <!-- El atributo action dice a donde se va a mandar la informacion -->
+   <!-- El atributo for de la etiqueta label hace referencia al etiqueta del id
+		del input con id en esta ejempo (nombre). Cuando se da click al label esta hace focus a la etiqueta
+		con la que se�ala el id.
+	-->
+
+   <!-- El de tipo reset resetea los campos del input-->
+
+  <form action="">
+	 <label for="nombre">Ingresa tu nombre</label>
+	 <input type="text" id="nombre"  minlength="3" placeholder="ingresa tu nombre">
+	 <select>
+		<option value="1" selected >Opcion 1</option>
+		<option value="2">Opcion 2</option>
+		<option value="3">Opcion 3</option>
+		<option value="4">Opcion 4</option>
+	 </select>
+
+	 <!-- El label asocia los texto dentro del input cuando es un radio o checkbox-->
+	 <label>
+		<input type="radio" name = "horario">Matutino
+	 </label>
+	 <label>
+		<input type="radio" name = "horario">Mixto
+	 </label>
+	 <label>
+		<input type="radio" name = "horario">Nocturno
+	 </label>
+
+	 <label>
+		<input type="checkbox">Acepta terminos y comentarios
+	 </label>
+
+		<h1>Dejame tus comentarios</h1>
+		<textarea cols="50" rows="10"></textarea>
+
+	 <input type="submit">
+	 <input type="reset">
+  </form>
+
+#+END_SRC
+
+*** Iframe
+#+BEGIN_SRC html Iframe
+
+  <!--La etiqueta iframe permite insertar pagina dentro de paginas-->
+
+   <iframe src="../direccion_de_la_pagina_a_insertar" frameborder="0" witdh="200" height="200"></iframe>
+
+#+END_SRC
+
+*** Audio y Video
+#+BEGIN_SRC html Audio y Video
+
+  <!-- El atributo controls muestra un menu de controles
+	   El atributo muted inicializa el video en mudo
+	   El atributo autoplay inicializa el video cuando lo carga
+	   El atributo poster pone la imagen seleccionada sobre el video como presentacion
+	   El atributo loop reinicia el video automaticamente cuando este finaliza
+  -->
+  <video src="../direccion_del_video" controls muted ></video>
+
+  <audio src="../direccion_del_audio" ></audio>
+
+
+#+END_SRC
+
+*** Etiquetas extras
+#+BEGIN_SRC html Etiquetas extras
+
+	  <!-- Las etiquetas figure son elementos bloques que nos ayudan a enmarcar
+		   las imagenes una debajo de la otro ya que la img son elementos en linas -->
+   <figure>
+	  <img src="">
+	  <figcaption>Muestra una leyenda asociada al contenido</figcaption>
+  </figure>
+
+  <!--  Se utiliza para imagenes de diferentes tamanios dependiendo de los dispositivos en los
+		que se muestre. Solo pueden contener una imagen, pero pueden contener varias etiquetas source
+		<source> se mostrara siempre y en caso de que no tenga imagen cargara la img que seria el valor
+		por defecto. Para cargar una imagen con source se usa srcset en vez de src y se usa el atributo
+		media para mostrar imagen segun las condiciones deseadas. En el ejemplo siguiente se muestra la
+		una imagen si el ancho minimo es de 500px.
+		Para que funcione varias source siempre las imagenes deben estar ordenadas de mayor a menor en el
+        min-width
+	 -->
+
+   <picture>
+	  <source srcset="ruta_de_la_imagen" media="(min-width:900px)">
+	  <source srcset="ruta_de_la_imagen" media="(min-width:500px)">
+	  <img src="">
+  </picture>
+#+END_SRC
+
+*** Metadatos
+#+BEGIN_SRC html Metadatos
+  <!--Los metadatos muestran informacion de la pagina y deben estar colocados en la etiqueta head-->
+   <meta name="description" content="Se usa para describir el contenido de la pagina pagina de cara a los 
+	 CEO de los motores de busqueda">
+   <meta name="keywords" content="Palabras claves separadas por comas">
+  <!-- ASi es como se carga un favicon dentro de el header -->
+   <link rel="shortcut icon" href="./favicon-32x32.png" type="image/x-icon">
+#+END_SRC
+
+** CSS
+*** Fundamentos
+   - CSS se lee y se aplica de izquierda a derecha y de arriba
+	 abajo las propiedades. 
+   - Existen dos reglas para la aplicacion de estilos
+	 - La *cascada*
+	 - La *especificidad*
+	 - La *herencia*
+     - La cascada se aplica cuando vamos escribiendo reglas
+	   una debajo de la otra y si hay dos reglas que afecten un mismo
+	   elemento se aplicara la ultima regla que se escribio ej:
+	   h1 {
+         color:red;
+	   }
+	   h1 {
+         color:blue;
+	   }
+	   En el ejemplo anterior se aplico el color red a h1 y
+	   luego el color blue, por lo que el color final sera blue.
+	   Asi funciona todas las reglas en cascada.
+	 - La especificidad es el metodo principal para determinar que metodo se aplicaran
+	- Niveles de especificidad
+	  MAX  *!important* rompe la especificidad
+	  
+	  100. *Selector de id*
+
+	   10. *Selectores de clase*
+		   *Selectores de atributos*
+		   *Pseudoclases*
+		   
+		1. *Selector de tipo*
+		   *Pseudoelementos*
+     - En algunos casos se aplica la herencia donde en la etiqueta body
+	   se aplica una fuente, los elementos dentro de body lo aplicaran tambien
+	 - Para saber que valores se heredan en css se puede ver la herramientas del
+	   desarrollador en los estilos muestra *inherit* from nombre de la etiqueta de la que heredas
+	   Las propiedades heredadas en el navegador se muestran en negrita el resto no se
+	   resaltan aunque se pueden leer.
+	   
+#+BEGIN_SRC css especifidad
+  /* si no se aplicar !important #title se aplica primero luego .title y por ultimo la etiqueta p */
+  <p id="title" class="title"></p>
+	.title {  /* especificidad de 10 */
+	  color:yellow;
+	 }
+	#title {   /* especificidad de 100 */
+	   color:blue;
+	 }
+	p {   /* !important rompe la especificidad por lo que se aplica siempre*/
+	color:red !important;
+	}
+
+#+END_SRC
+
+#+BEGIN_SRC css herencia
+
+  <div class="parent">
+	 <p id="title" class="title"></p>
+  </div>
+	.parent {
+		border: 1px solid black;
+	}
+  .title {  
+		color:yellow;
+		border: inherit; /* inherit hace que .title herede de parent*/
+	}
+
+#+END_SRC
+   
+*** Elementos de css
+    
+	1. Hay tres formas de incluir estilos en html:
+	   1. *En linea* se incorpora en las etiquetas con la propiedad *style* y tienen la maxima prioridad
+	   2. Declarandolo dentro de las etiquetas style dentro de la header
+	   3. Declarandolo en archivos externo como estilos que se anaden a clases de las etiquetas
+
+	   - La incorporacion de estilo se rige por orden de prioridad.
+		 Este orden de prioridad es el mecionado antes donde
+		 en linea se evalua primero, luego los estilos de los documentos
+		 y por ultimo los estilos en archivos externos. 
+    2. En css existen reglas que hay que seguir para asignar estilos
+	     y consta de lo siguiente:
+		 
+	   *selector {*
+		 *propiedad: valor;
+	   }*
+	3. Un elemento html puede tener tantas clases se desee
+#+BEGIN_SRC html
+    <style>
+	  #identificador {
+	  	color:"red";
+	  }
+	  
+	  .clase {
+	  	background-color:"yellow";
+	  }
+	  
+	  .clase2 {
+	  	font-family:Arial;
+	  }
+    </style>
+    <p class="clase clase2">Estilos de header</p>
+    <p class="estilos_en_fichero">Estilos en ficheros</p>
+    <p style="color: green">Estilos en linea</p>
+#+END_SRC html
+
+*** Selectores
+	- Los selectores sirven para seleccionar elementos del html que seran modificados
+	  por las propiedades asignadas al selector.
+
+	- Los selectores se definen como:
+	  - *Selector universal* este pone al principio de la hoja y se refleja con un (***).
+		*{}
+	  - *Selector de tipo* selecciona una etiqueta directamente del html como body, p, table ect...
+      - *Selector el elemento* dentro del atributo class de la etiqueta, ejemplo:
+	    Para selecionar una clase se escribe:
+		  .nombre_de_la_clase{
+    		font-family:Arial;
+		  }
+	    Para selecionar un id se escribe:
+		  #id_del_elemento{
+  				color:red;
+		   }
+    - *Selectores combinadores*  Estos combinan mas de un selector
+	  - *Combinador de descendientes* este combinador usa multiples selectores separados por espacios
+		en blanco.El primer selector debe ser ancestro del segundo selector osea debe
+		estar dentro de las etiquetas del ancestro, solo dentro del ancestro directo, y todos
+		los hijos son afectados. ejm:
+		
+		selector_padre selector_hijo {
+			las propiedades solo modificaran al hijo
+		}
+#+BEGIN_SRC html Combinador de descendientes
+
+  <div class="abuelo">
+	<div class="padre">
+		<div class="hijo">
+		</div>
+		<div class="hijo">
+		</div>
+	</div>
+  </div>
+
+	<ul>
+		<li>
+		  Comprar ropa
+		</li>
+		<li>
+		  Comprar leche
+		</li>
+		<li>
+		  Comprar calzonzillos
+		</li>
+	</ul>
+
+#+END_SRC
+
+     - *Combinador de hijos directos*: el primer selector debe ser el padre y los siguientes hijos directos.
+	  div > h1 {
+ 	   }
+	 
+#+BEGIN_SRC html Combinador de hijos directos
+<style>
+  div > h1 {
+   }
+</style>
+
+#+END_SRC
+
+*** BoxModel
+  - El *box model* el modelo de cajas en css modifica
+    el tamanio, ancho interno y el posicionamiento.
+	EL *box model* se compone por:
+	- *Contenido* es todo lo que se encuentra dentro de las
+	  etiquetas
+	- *Padding* o capa de relleno se encuentra entre la capa del
+	  contenido y el borde, la cual nos ayuda crear un espacio entre
+	  el contenido y el borde
+	  - Padding viene con 4 propiedades mas y la asignacion de los
+		valores se hacen a favor de las manecillas del reloj
+		ejm
+		padding: top right bottom left;
+		padding:10px 				asigna a los 4 lados 10px
+		padding:10px 20px 			empieza asignar arriba y abajo juntos 10xp y a los lados 20px
+		padding:10px 20px 40px      asigna 10px top, 20px derecha, 40px abajo y al no tener un valor la izquierda
+									se le asigna el valor de la derecha que es 20px
+
+		padding:10px 20px 40px 60px     asigna 10px top, 20px derecha, 40px abajo y 60px izquierda
+    - El *Border* define el borde del elemento dando diferentes estilos a la caja.
+	  el borde tiene tres caracteristicas: color, estilo, ancho
+	- El *Margin* afecta solo el espacio con respecto a otros elementos.
+
+	- Los elementos en linea contienen la propiedad de *display:inline*
+	- Los elementos en bloque contienen la propiedad de *display:block*
+    - Los elementos en linea no pueden usar las propiedades de width, heigth y padding
+	  para aplicar estas propiedades en los elementos en linea se les declara la propiedad
+	  *display: inline-block* para que puedan usar las propiedades antes mencionadas.
+
+*** BEM (Block Element Modifier)
+	*Elementos*
+    - Los elementos son independientes entre si en la metodologia BEM, se distribuyen de la siguiente forma:
+	  - class="elementobase"
+	    - class="elementobase__hijodelementobase"
+
+    *Modificador*
+	- Los modificadores son usados en elementos o bloques que se usan para representar
+	  una caracteristica que tendra el elemento o bloque
+#+BEGIN_SRC html ejemplo de metodologia BEM
+
+<!--Ejemplo de elementos-->
+<section class="gallery">
+	<img src="" class="gallery__img">
+</section>
+
+<!--Ejemplo de modificadores-->
+<button class="btn"></button>
+<button class="btn btn--active"></button> 
+#+END_SRC html
+*** Colores y fondos
+	- Hay dos propiedades principales que usan colores
+	  - color                     define el color de uns texto en css
+	  - backkground-color         define el color de fondo
+      - Las gradientes son la transicion de un color a otr con la degradacion de
+		del primer color hacia el segundo.
+*** Colapso de margenes adyacentes
+	- Los margenes verticales cuando se combinan toman el espacio mas ancho
+	  entre los elementos. Solo se aplica el margin mas grandes.
+	- Los margenes dentro de un elementos con respecto al padre si es el primer
+	  hijo son adoptados por el padre. 
+#+BEGIN_SRC css
+	   	  /*
+			  Como el margen del fondo es mayor que el superior,
+			  el de fondo se superpone por encima de el de fondo
+  			  por lo que se le asignara 50px.
+		  */
+		  p {
+			 margin-bottom:50px;
+		  }
+
+		   h1 {
+			 margin-top:30px;
+		   }
+#+END_SRC
+
+#+BEGIN_SRC html
+
+	<!-- Para que se aplique la capa de margin-top
+		 entre id1 e id2 es que id2 este sobre id1
+		 sino la el margin del id1 que es el hijo directo
+		 del div se aplicara a este.
+	   -->
+	  <style>
+		  .margen-directo {
+			   margin-top:50px;
+		   }
+	  </style>
+	  <div>
+		 <p id="1" class="margen-directo"></p>
+		 <p id="2"></p>
+	  </div>
+
+  <!--En el siguiente parrafo se aplicara los margenes
+	  entre parrafos ya que al no ser hijo directo de div
+	  id1 se aplica margin entre los elementos p.
+	-->
+
+	  <div>
+		 <p id="2"></p>
+		 <p id="1" class="margen-directo"></p>
+	  </div>
+
+  <!-- Para arreglar el problema del margin entre
+	  p y el div solo hay que separar las capas adicionando
+	  en la clase padre un padding minimo o un border
+	-->
+	  <style>
+		  div {
+			 padding:1px;  					/* Con poner 1px arregla  */
+						  					/* el problema del margin del hijo directo */
+			 border: 1px solid transparent  /* funciona tambien como el caso del padding*/
+		}
+		  .margen-directo {
+			   margin-top:50px;
+		   }
+	  </style>
+	  <div>
+		 <p id="1" class="margen-directo"></p>
+		 <p id="2"></p>
+	  </div>
+#+END_SRC
+
+*** Propiedades
+	-- Para manipular la capa de contenido
+	width: 10px            Define el ancho del contenido
+	width: max-content;    Define que el contenido ocupe todo el ancho disponible
+	max-width: 30px;       Limita el ancho del contenido hasta 30px o tamanio que se desee
+	min-width: 10px;       Define ancho minimo
+
+    heigth: 100px;         Define el alto del contenido
+	width: max-content;    Define que el contenido ocupe todo el alto disponible
+	max-heigth: 30px;      Limita el alto del contenido hasta 30px o tamanio que se desee
+	min-heigth: 10px;      Define tamanio minimo
+
+    overflow: hidden       Overflow es la propiedad de desbordamiento la cual depende varias formas
+						   para mostrar el contenido en este caso hidden oculta el contenido que
+						   se sale de los limites del boxmodel
+	-- Fin de la capa de contenido
+
+
+	-- Para manipular el relleno de la caja
+		padding: top right bottom left;
+		padding:10px 			 Asigna a los 4 lados 10px
+		padding:10px 20px 		 Empieza asignar arriba y abajo juntos 10xp y a los lados 20px
+		padding:10px 20px 40px   Asigna 10px top, 20px derecha, 40px abajo y al no tener un valor la izquierda
+								 se le asigna el valor de la derecha que es 20px
+
+   		*padding:10px 10px;*       Rellena el bloque con un margen interno de 10px 10px
+    	*padding-top:10px;*        Rellena el bloque con un margen superior de 10px 
+    	*padding-right:10px;*      Rellena el bloque con un margen a la derecha de 10px 
+    	*padding-bottom:10px;     Rellena el bloque con un margen inferior de 10px 
+    	*padding-left:10px;*       Rellena el bloque con un margen a la izquierda de 10px 
+	-- Fin de la caja de rellenos
+
+
+	
+	
+	-- Para manipular la propiedad margen
+		margin: 50px;    margin funciona igual que el padding en cuanto a los valores que almacena
+
+		Para alinear en el centro se debe usar las propiedades margin, display y width
+		Ademas de que el elemento debe ser de tipo bloque
+		  margin:auto;
+		  display:block;
+		  width:300px;    El width por defecto es auto debe estar definido
+
+		Se puede alinear automaticamente en el centro con
+		  margin-left: auto;
+		  margin-right: auto;
+		
+	-- Fin de la manipulacion de la propiedad magern
+
+	
+    -- Para manipular el borde
+	    border: 1px solid black  el orden de las propiedades no influye
+	    border: black solid 1px  es igual al caso anterior  
+		
+		borde-color: blue;   
+		borde-width: 10px;     se pueden usar palabra reservada con *thin, *mediun*, *thick*
+		border-style: solid;   se pueden usar palab
+		 - Dotted linea de estilos por puntos
+		 - Dashed linea de guiones
+		 - Solid  linea solida sin alteracion
+		 - Double Dos lineas
+		 - Groove Ranurado en 3d
+		 - Ridge  Estrillado en 3d    
+	-- Fin de la manipulacion del borde
+
+	box-sizing:content-box;   Pone como limite del tamanio de la caja el contenido y el padding ignorando el ancho y alto.
+	box-sizing:border-box;    Permite al width, al height y restaele al padding para darle tamanio final al contenido.
+							  
+	*font-family: Arial;*       Cambia el tipo de fuente y letra
+	
+	
+	*font-style: Italic;*    Cambia el style de la letra
+    *font-size:20px;*        Tamanio de fuente se da en pixeles pero cualquier fuente sirve
+	*text-align:center;*     Define la alineacion del texto
+
+
+    -- Definicion de colores
+	http://htmlcolores.com/es/nombre-de-los-colores
+	http://colors.com
+ 	*color:red;*                Cambia el color del elemento por palabra clave
+	*color:#e3104f;*            Cambia el color del elemento con codigo hexadecimal
+	*color:rgb(0,0,0);*         Cambia el color del elemento con funcion rgb
+	*color:rgba(0,0,0,0);*      Cambia el color del elemento con funcion rgba que adiciona opacidad con el ultimo elemento.
+    color:hsl(0,100%,50%)     Cambia de color segun el hue, saturacion, luminisidad
+
+    -- Definicion de colores de Background color
+	background-color              			                     Usa las mismas caracteristicas de color         
+	background-image:url("")      			                     Carga las imagenes segun la url que se cargue
+	background-image:linear-gradient(red,blue),url("./mimagen"); Carga las imagenes segun la url que se cargue
+	- Cuando hay una imagen mas pequena que el contenedor se tiende a repetir 
+    background-repeat:repeat                                     Repite las imagenes mas pequenas que el contenedor
+    background-repeat:repeat-x                                   Repite la imagen en el eje de las x
+    background-repeat:repeat-y                                   Repite la imagen en el eje de las y
+    background-repeat:no-repea                                   Hace que no se repita la imagen que no cabe en el contenedor.
+    background-size:100px 100xp                                  Hace que imagen tenga el valor deseado ejemplo 100px 
+    background-size:cover                                        Hace que imagen cubra el contenedor completo
+    background-size:contain                                      Hace que la imagen se vea completa pero que no se adapte al contenedo	r
+    background-position:center                                   Posiciona la imagen
+
+
+	-- Estilos en las letras
+	- letter-spacing: 10px;                                      El valor del texto es normal pero se puede asignar espacios con pixeles y hasta pixeles negativos
+
+	
+*** Propiedades especifica de selectores
+	- li
+	  list-style: none;    Cambia el marcador de la lista, en este caso con *none* las elimina.
+
+
+
+Hacer el proyecto descrito en este minuto
+-- Selector de paleta
+3:39:16
+
+
+Me quede en 3:46:49
+

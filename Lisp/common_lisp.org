@@ -1,0 +1,56 @@
+#+STARTUP: overview
+
+* Common Lisp 
+  - Lenguage dinamico e interpretado
+** Comentarios
+#+BEGIN_SRC lisp commentarios
+      ;;;; Comentario
+      ;;; Comentario indentado al codigo
+      ;; Comentario en una linea de codigo
+      #||
+	Comentario
+	multilinea
+      ||#
+#+END_SRC
+
+** Console Printing
+#+BEGIN_SRC lisp Imprimir en consola
+	;; ~% imprime una nueva linea con formato
+	(format t "Hello world~%")
+	;;; El formato de la declaracion declaracion comienza con t para ser impreso en la consola.
+	;;; La secuencia de control empieza con ~
+	;;; ~a : Muestra el valor
+	;;; ~s : Muestra los parentesis alrededor del valor
+	;;; ~10a : Adiciona 10 10 espacios para el valor con espacios extra a la derecha
+	;;; ~10@a : Adiciona 10 espacios para el valor con espacios extra a la izquierda
+
+	;;; Imprimir "Whats your name" sin salto de linea
+	(print "Whats your name ")
+
+
+#+END_SRC
+
+** Definicion de variables
+#+BEGIN_SRC lisp variables
+    ;;; Crea una variable que recibe el valor que es pasado por consola 
+    ;;; Una variable o simbolo es hecho por letras, numeros y los simbolos + - _ * < >
+    ;;; y minusculas porque Lisp no es case sensitive
+    ;;; No puedes usar espacios en blancos porque las lista son separadas por espacios en
+    ;;; en blancos
+
+    ;;; Para definir una variable se usa setq que deriba de la funcion (set (quote varname) value) 
+    (setq varname 12)
+
+    ;;; Asteriscos alrededor de los nombres de variables las convierte globales
+    (defvar *name* (read))
+
+    ;;; Crea una funcion y dice hola a los valores que se le pasas
+    ;;; Se supone que se debe cerrar los parentesis en la misma linea pero depende
+    ;;; del desarrollador si lo hace y si es mas facil seguirlos en otras lineas
+    (defun hello-you (*name*)
+    (format t "Hello ~a!~%" *name*))
+
+    ;;; Cambia a mayuscula o minusculas solo la primera letra (:upcase :downcase)
+    (setq *print-case* :capitalize)
+    (hello-you *name*)
+#+END_SRC

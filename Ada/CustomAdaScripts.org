@@ -1,0 +1,8 @@
+#+STARTUP: content
+
+* Scripts de ADA
+** Script basico HOLA MUNDO
+#+BEGIN_SRC ada
+
+#+END_SRC
+

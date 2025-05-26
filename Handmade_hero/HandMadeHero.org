@@ -1,0 +1,17 @@
+*HEROE HECHO A MANO*  (Handmade Hero)
+	
+* Capitulo 1
+ - El comando *subst* crea un maquina virtual y copia la ruta en una unidad deseada. ej:
+   subst x: D:/Ruta/Al/Archivo
+ - El commando *subst* /? muestra la ayuda de subst 
+ - EL commando *set*  muestra las rutas de todos los archivos instalados.
+ - En el minuto 30:35 muestra como configurar la compilacion a x64.
+ - Con window + r y shell:startup vas a la pantalla de inicializacion de programas de window.
+ - Para invocar un archivo bat dentro de otro archivo .bat se pone el comando *call* ej:
+   call "D:\Ruta de ejemplo\ejemplo.bat"
+ - Si un ruta tiene espacios en el nombre hay que poner la ruta entre comillas dobles.
+ - *pushd* inserta la ruta en la accion del compilador
+ - *popd*  vuelve a al ruta anterior antes de *pushd*
+   
+ - El minuto 59:12 te muestra como abrir un MessageBox
+  - GetModuleHandle(0); te debe mostrar si le falta algun elemento en la compilacion

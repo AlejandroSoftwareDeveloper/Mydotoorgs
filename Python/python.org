@@ -1,0 +1,795 @@
+#+STARTUP: content
+
+* Python (Descripción del lenguaje)
+** Variables
+ Las variables en python son dinamicas, donde al declarar una se le asigna el tipo.
+ Estas pueden cambiar su tipo a la hora de reasignarle un valor
+ #+BEGIN_SRC python
+   # Este es una cadena de caracteres
+   name = "Nombre"
+
+   # Este es un entero
+   edad = 38 
+
+   # Este es un flotante 
+   total = 38  
+
+   """
+   Total era un flotante ahora es un entero por la asignacion dinamica de tipo 
+		   del lenguage.
+	   """
+   total = edad
+
+   # Este es un booleano
+   married = True | Flase
+
+   # Se puede inicializar variables en una sola linea
+   x , y = 1,2
+
+
+
+ #+END_SRC
+ 
+** Formato de cadena de caracteres (string formatting)
+ A partir de la version de 3.6 de python se adiciona nuevas caracteristicas para
+ 	formatear el texto
+
+ f-string
+ - Es una caracteristica de fomateo de cadena de caracteres de python
+   se usa para hacer asignación estática.
+ - Una vez creado la f-string no se puede reasignar
+
+ #+BEGIN_SRC python
+    name = "Sanchez"
+    nombre_completo = f"Alejandro {name}"
+
+    print(nombre_completo)
+ #+END_SRC
+
+
+ Template string
+ - Los template string se usan para formatear la cadena deseada tantas veces
+   se desee.
+ - Se usa el formato   "cadena de carateres *{}*".format(*cadena*)
+ - Dentro de *{}* se inserta con la funcion format el valor que se pasa en *cadena*
+ #+BEGIN_SRC python
+   name        = "Alejandro"
+   last_name   = "Sanchez" 
+   format_name = "Alejandro {} {}".format(last_name,"Gamez")
+
+	print(format_name)
+ #+END_SRC
+
+** Entradas de teclado de usuario
+ Las funciones de entrada de teclado de usuario son globales y se pueden usar en
+ 	todos los archivos de python
+ En el siguiente caso se escribe la edad en el input pero este retorna un string
+ por lo que hay que hacer conversion explicita a enteros con la funcion int()
+ #+BEGIN_SRC python
+   edad = input("Escriba su edad")  
+   edad = int(edad) # En el caso anterior la edad era un string despues de recibir
+					# el valor del input y se convierte en int para poder hacer
+					# operaciones arítmeticas
+   meses_de_vida = edad * 12
+
+   print(meses_de_vida)
+ #+END_SRC
+
+** Lista, Tuplas y Sets
+ - Las listas y tuplas en python almacenan datos en python
+   pero la diferencia entre estos, es que cuando vas a modificar o almacenar
+   un dato en una tupla no se puede porque es inmutable despues de crearla.
+ - Las listas permiten almacenar cualquier tipo de datos variable.
+ - Los set no tienen orden de acceso a sus elementos y al igual que en
+   javascript no tienen tienen elementos repetidos.
+   
+ #+BEGIN_SRC python
+
+   #id muestra el identificador de la lista
+   lista = [1,2,3,"Alejandro"]
+   print(id(lista))
+
+   # Estas son declaraciones de listas.
+   lista = [1,2,3,"Alejandro"]
+   lista2 = list(1,1,2,True)
+
+   # Estas son declaraciones de tuplas.
+   tupla = (1,2,3,"Alejandro")
+   tupla2 = tuple(1,1,2,True)
+   tupla3 = 1,2,3
+
+   # Estas son declaraciones de sets.
+   sets1 = {1,2,3,"Alejandro"}
+   sets2 = set(1,1,2,True)
+
+   # Se puede acceder a un valor de valor en una lista y una tupla por su indice
+   # pero esto no funciona igual en los sets.
+
+   lista[1] # Devuelve el valor de la lista en el primer indice
+   tupla[1] # Devuelve el valor de la tupla en el primer indice
+
+   lista[1] = 34
+
+   # La lista se le adiciona nuevos elementos con append
+   lista.append("alex")
+
+   # La lista se le elimina elementos con remove
+   lista.remove("alex")
+
+   # A los set se le addiciona elementos con add
+   sets1.add("Sanchez")
+
+
+   # La palabra reservada in permite buscar en una lista, tupla, o set el elemento deseado
+	lista = [1,2,3,4,5,6]
+	print(1 in lista)
+
+ #+END_SRC
+
+ - Los sets tienen otras operaciones avanzadas que permiten trabajar de forma mas eficiente
+ #+BEGIN_SRC python 
+
+   # la funcion difference permite extraer elementos diferentes de dos set y almacenarlos en un tercero
+   set1 = {1,2,3,4}
+   set2 = {4,5,6,7,1}
+   set3 = set1.difference(set2)
+
+   # la funcion union permite unificar dos set y almacenarlos en un tercero
+   set1 = {1,2,3,4}
+   set2 = {4,5,6,7,1}
+   set3 = set1.union(set2)
+
+   # la funcion intersection permite unificar dos set almacenando solo los elementos iguales
+   # en un tercero
+
+   set1 = {1,2,3,4}
+   set2 = {4,5,6,7,1}
+   set3 = set1.intersection(set2)
+
+ #+END_SRC
+
+** Booleanos 
+ - Las operaciones con boolean son funcionalidades típicas en cada lenguage
+   de programación. 
+ #+BEGIN_SRC python
+   5 == 5 # Es True
+
+   5 > 5  # Es False
+
+   # Python permite los siguiente operaciones de programación.
+   # Comparacion: == , != , >, <, >= ,<=
+
+   # Tambien se puede comparar dos listas, pero solo su contenido.
+   # Si se intenta comparar si dato como objeto con is mostrara que es falso.
+   lista = ["Hola","Mundo"]
+   lista2 = ["Hola","Mundo"]
+   lista == lista2 # Es True 
+
+   lista is lista2 #Es False, porque compara las listas como variables.
+
+ #+END_SRC
+
+** Declaraciones if else elif
+ - Las declaraciones if else elif separan la logica de programación en bloque
+ #+BEGIN_SRC python
+   nombre = "Alejandro"
+   if nombre == "Alejandro":
+	  print("Su nombre es {}".format(nombre))
+   elif nombre != "Alejandro":
+	  print("Su nombre es {}".format("Otro"))
+   else:
+	  print("Su nombre es {}".format("Javier"))
+
+   # Se puede usar in para validar dentro de un bloque if
+   nombre = "alejandro"
+   lista = [1,"alejandro",2,3,4]
+   if nombre in lista:
+	 print("Alejandro".capitalize())
+
+
+ #+END_SRC
+
+** Ciclos en python
+ - Se puede iterar un numero (i)limitado de veces para realizar una acción,
+   para ello se usa ciclos *While* y *for*.
+ #+BEGIN_SRC python
+   total = 0
+   while True:
+	   if total < 10:
+		   total+=1
+		   continue # continue pasa a la iteracion si continuar al siguiente bloque
+	   else:
+		   break	 # break rompe el ciclo actual
+
+   #Itera sobre la lista de elementos
+   new_lista = ["Alejandro","Ines", "Data"]
+   for elm in new_lista:
+	   print(elm)
+
+   #Itera sobre una lista en un rango de elementos con valor inicial 0
+   for elm2 in range(4):
+	   print(elm2)
+
+   #len devuelve la longitud de la lista de elementos
+	print(len(new_lista)) #Muestra 4
+
+   #sum suma todos los elementos de la lista si son numeros
+   new_lista = [1,2,3]
+   print(sum(new_lista)) #Muestra 
+
+ #+END_SRC
+
+** Compresion de listas
+ - Es una funcionalidad de python que permite comprimir en una linea una iteracion   
+ #+BEGIN_SRC python
+   new_lista = [1,2,3]
+   print(sum([1 + i for i in new_lista]))
+ #+END_SRC
+
+** Diccionarios
+ - Los diccionarios son elementos que almacenan una coleccion de datos de tipo
+   llave, valor.
+ - Los diccionarios en su composicion son como los objetos en javascript
+ - Si se desea adicionar un nuevo elemento o cambiar uno existente se realiza
+   la misma operacione que en caso de la lista, cuando se va adicionar.
+ #+BEGIN_SRC python
+
+   # Inicializacion de un diccionario
+   dict1 = {"nombre": "Alejandro", "edad":37 }
+
+   # Adicionar y modifica una propiedad
+   dict1["apellido"] = "Sanchez"
+
+   # Modifica una propiedad
+   dict1["nombre"]   = "Alejandro Ulises"
+
+   # Cuando se itera en un diccionario se muestra solo las llaves 
+   for elm in dict1:
+	  print(elm)         # Se mostrara las llaves nombre, edad, apellido 
+	  print(dict1[elm])  # Se mostrara todos los valores llaves y valor
+
+   # Para obtener los valores de un diccionario direcctamente se usa la funcion values()
+   elementos = dict1.values()
+
+ #+END_SRC
+
+** Destructuracion de variables
+ - Extraer los componentes de una variable en varios elementos
+  #+BEGIN_SRC python
+
+	 x,y = [1,2]
+
+	# Destructuración del diccionario en tuplas
+	student_scores = { "Alejandro":90,"Guille":100 } 
+	for estudiante,nota in student_scores.items():
+		print(estudiante,nota)
+
+	# Destructuración de la lista en componentes 
+	student_scores = [("Alejandro",90,37),("Guille",100,37)]
+	for estudiante,nota,edad in student_scores.items():
+		print(estudiante,nota,edad)
+
+	# En destructuración las variables _ se usan para no almacenar los datos no deseados
+	edad , _ , nombre = (37, "informatico","Alejandro")
+
+	#Para subdividir los valores y destructurarlos se usa la nomenclatura head, *tail
+	head , *tail = [1,2,3,4,5]
+
+	print(head) # head mostrara 1
+	print(tail) # tail mostrara [2,3,4,5]
+
+	#Se puede hacer lo mismo que el caso anterior pero head debe tener el *
+	,*head , tail = [1,2,3,4,5]
+
+	print(head) # head mostrara [1,2,3,4]
+	print(tail) # tail mostrara  5 
+
+  #+END_SRC
+
+** Funciones, argumentos y parametros
+ - Las funciones en python como cualquier otro lenguage de programación
+   pueden encapsular código para ejecutarlos en otra funcion o bloque
+   de codigo.
+ - Los parametros de la funcion son los elementos con los que se declara la funcion
+   y los argumentos es cuando se le pasa parametros a la funcion a la hora de invocarla 
+ - Los argumentos se pueden desempaquetar usuando la notacion *args dentro
+   de la declaración de la función. Ademas se puede usar los **kwargs para
+   obtener información de los diccionarios.
+   
+ #+BEGIN_SRC python
+
+   # Declaración de una funcion 
+   def func():
+	  pass
+
+   # Llamada de la funcion 
+	func()
+
+   # Python permite declarar uno o mas parametros en una funcion y con la biblioteca	
+   # mypy se valida los tipos de datos 
+   def suma_1(parametro: int) -> int:
+	  return parametro + 1
+
+   suma_1(1)
+
+   # Existen los parametros nombrados los cuales permiten definir cuales serán los
+   # argumentos y en que orden se recibiran
+
+   def dime_tu_nombre(nombre: str ,apellido: str ) -> None:
+	  print( nombre, apellido )
+
+   # Primero debes asignar los argumentos de posicion y despues de los argumentos nombrados
+   # de lo contrario dara un error
+   dime_tu_nombre("Sanchez", nombre="Alejandro")  #correcto
+   dime_tu_nombre(apellido="Sanchez","Alejandro") #incorrecto
+
+   # Las funciones pueden tener parametros por defecto siguiendo el mismo concepto anterior
+   # de los argumento de posicion 
+   def dime_tu_nombre(nombre: str ,apellido: str ="Parametro por defecto") -> None:
+	  print( nombre, apellido )
+
+   # Es recomendable no usar una declaracion de paramatros para asignala a una funcion
+   # este parametro puede variar y una vez declarado no se puede alterar
+	mi_parametro = "Alejandro"
+
+   def dime_tu_nombre(nombre: str ,apellido: str = mi_parametro) -> None:
+	  print( nombre, apellido )
+
+   # Si cambio el valor de mi_parametro ahora no va a cambiar el valor por defecto de la funcion
+
+   # Para desempaquetar los parametros necesarios dentro de la funcion se usa *args en
+   # en la declaración de la misma 
+	def func(*args):
+		print(args)
+
+   func(1,2,3)
+
+   # En el caso de los diccionarios se les pasa a la funcion con el argumento **nombre_de_diccionario
+	def func2(x,y):
+		print(x + y)
+
+	nums = { "x":10, "y":15 }
+
+	func2(**nums)
+
+	# Uso de los **kwargs 
+	def named_args(**kwargs):
+		print(kwargs)
+
+	named(name="Bob", age=25)
+
+ #+END_SRC
+
+** Funciones Lambda
+ - Son funciones que se usan para retornar un valor de forma immediata
+ - Pueden tener un nombre si asigna a una variable
+ #+BEGIN_SRC python
+
+   # Declaracion de una funcion lambda
+   suma = lambda x,y: x + y
+
+   # La funcion lambda se puede llamar directamente dentro de otra funcion
+   # Sin tener que asignarle un nombrew
+   def suma_1(value):
+	   return lambda x: value + x
+
+   def empty_lambda(val)
+	   return (lambda : value + 1)() # Se tiene que colocar los parentesis para ejecutarla y retornar el valor
+
+   (lambda x,y : x + y)(5,7)  # Usar los parentesis para crear un EEFI Retorna 12
+
+   print(suma_1(1)(1))
+
+   # Ejemplo de funciones lambdas con mapas
+   # Se debe crear una lista porque el map retorna un objeto de tipo map
+   list(map(lambda x : x + 1 , [1,2,3])) 
+
+ #+END_SRC
+ 
+** Compresion de diccionarios
+ - La compresion de diccionarios es similar a la compresion de listas pero
+   con elementos { llave: valor }
+ #+BEGIN_SRC python
+
+	usuarios = [
+	(0,"Alejandro",38),
+	(1,"Guille",38),
+	(2,"Ana",37),
+	(3,"Javier",35),
+   ]
+	
+	dict = { usuario[1]: usuario for usuario in usuarios }
+
+ #+END_SRC 
+
+** Programación Orientada a Objetos
+*** Conceptos básicos
+  - La programación orientada a objetos permite crear y generar clases las cuales
+  	 siguen la reglas de:
+	1) *encapsulamiento*
+	2) *herencia*
+	3) *polimorfismo*
+	4) *abstracción*
+ #+BEGIN_SRC python
+   class MiClase:
+	# Este es el constructor de la clase en python, su nombre empieza
+	# y termina en doble guion bajo o dunder como se dice en ingles
+	# Todas las funciones dentro de la clase debe tener el parametro self
+	def __init__(self,nombre):
+		self.nombre = nombre
+		self.notas = (98,99,75)
+	def promedio(self):
+		return sum(self.notas) / len(self.notas)
+		#Para acceder a un parametro de la clase se crea y se accede con el operador .
+	#Para acceder a un metodo de la clase se crea y se accede con el operador .
+	mi_clase = MiClase("Alejandro")
+	mi_clase.nombre
+	miclase.promedio()
+ #+END_SRC
+
+*** Metodos mágicos __str__ y __repr_
+  - Los metodos magicos permiten invocar funciones dentro de la clase sin usar
+	llamada de funciones de las clases
+ #+BEGIN_SRC python
+
+   class MiClase2:
+	def __init__(self):
+		self.name      = "Alejandro Ulises"
+		self.surname   = "Sanchez Gamez"
+	def __str__(self):
+		return "Hola mundo"  
+	def __repr__(self):
+		return f"<MiClase({self.name},{self.surname})>"  
+
+	bob = MiClase2()
+
+
+	# La clase MiClase2 permite atraves de __str__ llamar una instancia de la clase
+	# sin usar funciones de intermedias.
+
+	print(bob) # Si no tiene la funcion __str__ mostrara los parametros de los objetos
+			   # sino mostrara "Hola mundo"
+
+	# Los metodos magicos se pueden invocar por defecto como una funcion mas de la clase.
+	# En caso de __repr__ se usa para la representacion no ambigua de la clase.
+	# En caso de no estar declarada los metodos magicos como __str__ se invocara automaticamente si existe. 
+	bob.__repr__()
+
+ #+END_SRC
+
+*** Metodos @classmethod y @staticmethod
+  - Las @classmethod se usan para la declaracion de metodos de la clase sin inicializar
+	la clase ni instanciarlas. 
+ #+BEGIN_SRC python
+
+   class MiClase3:
+	def instance_method(self):
+		pass
+	@classmethod
+	def class_method(cls):
+		print(f"Alejandro {cls}") #cls es una instancia de la propia clase. 
+	@staticmethod
+	def static_method():
+		print("Hola") # Esta instancia no recibe parametros como self o la clase en si como cls
+						 # o cualquier otro nombre que se le pueda poner en la classmethod
+	MiClase3.class_method() 
+	MiClase3.static_method() 
+ #+END_SRC
+
+**** Caso de uso Factoria
+ #+BEGIN_SRC python
+     class book:
+	 types = ("hardcover","paperback")
+		 def __init__(self,name,book_type,page_weight):
+			 self.name        = name
+			 self.book_type   = book_type
+			 self.page_weight = page_weight
+
+		 def __repr__(self):
+			 return f"<Book { self.name } { self.book_type } { self.page_weight }g>"
+
+		 @classmethod
+		 def hardcover(cls,name,page_weight):
+			 return Book(name,Book.types[0],page_weight + 100     
+
+		   # Se puede usar las propiedades de la clase cls en vez del nombre de la clase
+		     @classmethod
+		     def paperback(cls,name,page_weight):
+			     return cls(name,cls.types[1],page_weight     
+
+   book = Book.hardcover("Harry Potter",1500)
+   book2 = Book.paperback("Python 101",600)
+
+   print(book)
+   print(book2)
+
+ #+END_SRC 
+
+*** Herencia
+  - La herencia en python se usa insertando en la declaracion de la clase la
+	la clase a la cual se hereda. Luego se invoca en la clase heredera la
+	funcion __init__
+		super().__init__(parametros_obligatorios_de_la_clase_padre)
+
+ #+BEGIN_SRC python
+	   class Device:
+		   def __init__(self,name,connected_by):
+			   self.name         = name
+			   self.connected_by = connected_by
+			   self.connected    = True
+
+		   def __str__(self):
+			   return f"Device { self.name !r}"  
+
+	   class Printer(Device):
+		   def __init__(self,name,connected_by,capacity):
+			   super().__init__(name,connected_by)
+			   self.capacity = capacity
+			   self.remaining_pages = capacity
+
+		   def __str__(self):
+			   return f"{super().__str__()} ({self.remaining_page})"
+
+		   def print(self,pages):
+			   if not self.connected:
+				   print("Your printer is not connected!")
+				   return
+			   print("Printing {pages} pages.")
+			   self.remaining_pages -= pages
+
+
+   printer = Printer("Printer","USB",500)
+   printer.print(20)
+
+   print(printer)
+
+   printer.disconnect()
+   printer.print(30)
+
+ #+END_SRC
+
+*** Class composition
+ #+BEGIN_SRC python
+
+	class BookShelf:
+		def __init__(self,*books):
+			self.books = books
+
+		def __str__(self):
+			return f"Bookshelf with {len(self.books)} books."
+
+	shelf = Bookshelf(300)
+
+	class Book:
+		def __init__(self):
+			super().__init__(quantity)
+			self.name = name
+	        def __str__(self):
+		        return f"Book{self.name}"
+
+book = Book("Harry Potter")
+book2 = Book("Python 101")
+
+shelf = Bookshelf(book,book2)
+
+print(shelf)
+	
+ #+END_SRC
+	
+	 
+  - La composicion de clases inserta una o mas clases en una ya declarada
+	preexistente, para poder extraer las propiedades y funcionalidades
+	de las misma.
+*** Type Hinting 3.5+
+	Type hinting es una funcionalidad usada en una biblioteca de
+	nombre *mypy* que permite chequear tipos que se pueden incluir en el codigo
+	pero solo usar en python con dicha biblioteca. 
+ #+BEGIN_SRC python
+		def list_avg(sequence:list) -> float:
+			return sum(sequence) / len(sequence)
+
+		list_avg(123)
+
+	#Ejemplo con clases
+
+		from typing import List # Tuple, Set, ect...
+
+		class BookShelf:
+			def __init__(self,books:List[Book]):
+				self.books = books
+
+			def __str__(self) -> str:
+				return f"Bookshelf with {len(self.books)} books."
+
+   """
+	capitulo 32
+		"Book" es como python con mypy dice que retorna un objeto
+		 del mismo objeto que esta compuesto. Si retorna otro tipo 
+		 de objeto entonces se escribe entre comillas.  
+   """
+		@classmethod
+		def harcover(cls,name: str,page_weight: int) -> "Book":
+			return cls(name,cls.TYPEs[0],page_weight + 100)
+
+
+ #+END_SRC
+	
+*** Relative Import
+*** Errores in Python
+  - Los errores en python muestran al programador que salidas incorrectas tiene
+	el sistema en su funcionamiento. Python tiene un conjunto de funcionalidades
+	que maneja los errores de mejor forma.
+  - Se pueden crear clases para el manejo de errores en python. 
+
+ #+BEGIN_SRC python
+
+	  #Version 1
+	  def divide(dividend,divisor):
+		  raise ZeroDivisionError("Divisor cannot be 0.")
+		  #raise ValueError
+		  #raise RuntimeError
+
+
+   ·   #Version 2
+	   def divide_by_0():
+		   try:
+			   average = divide(sum(grades),len(grades))
+		   except Zerodivisionerror:
+			   print("There are no grades yet in your list.")
+
+		   print("The average grade is {average}.")
+
+ #+END_SRC
+
+*** First class functions
+** Leer y escribir en ficheros json (Archivos de texto)
+  - Para realizar cualquier operacion sobre un fichero json se usa el fichero se
+	importa la biblioteca *json*
+  - Si se desea convertir un diccionario a json se usa la funcion *json.dumps()*
+	La funcion acepta dos parametros (por ahora)
+	  - Los datos a guardar
+	  - La identacion que va a tener ej: indent = 4, identara todos los parametros
+	  	a guardar con 4 espacios.
+
+#+BEGIN_SRC python
+
+   import json
+
+   data = {
+	persons : [
+			{"name":"Alejandro","age":38},
+			{"name":"Ana Maria","age":37},
+	  ]
+  }
+  #funcion para escribir en un archivo .json
+	my_json_data = json.dumps(data,indent=2) #ident se hara con 2 espacios
+	with open("file_name.py","w") as file:
+		file.write(my_json_data)
+
+	with open("file_name.py","r") as file:
+		json_object = json.loads(file.read())
+
+	print(json_object['data_a_leer'])
+
+#+END_SRC
+	
+** Operaciones con el motor de plantilla en python flask
+	- Las operaciones con el motor de plantillas permiten en las variables
+	  usar un filtro ej:
+	  {{ nombre_la_variable| filtro }}
+	- Lista de filtros
+	  |------------+----------------------------------------------------------------------------------|
+	  | Filtro     | Descripcion                                                                      |
+	  |------------+----------------------------------------------------------------------------------|
+	  | safe       | Renders the value without applying escaping                                      |
+	  |------------+----------------------------------------------------------------------------------|
+	  | capitalize | Converts the first character of the value to uppercase and the rest to lowercase |
+	  |------------+----------------------------------------------------------------------------------|
+	  | lower      | Converts the value to lowercase characters                                       |
+	  |------------+----------------------------------------------------------------------------------|
+	  | upper      | Converts the value to uppercase characters                                       |
+	  |------------+----------------------------------------------------------------------------------|
+	  | title      | Capitalizes each word in the value                                               |
+	  |------------+----------------------------------------------------------------------------------|
+	  | trim       | Removes leading and trailing whitespace from the value                           |
+	  |------------+----------------------------------------------------------------------------------|
+	  | striptags  | Removes any HTML tags from the value before rendering                            |
+	  |------------+----------------------------------------------------------------------------------|
+
+** Pruebas con pytest
+  - Cuando estas realizando pruebas con _pytest_ en un modulo distinto de
+	donde estan las funcionalidades, se debe declarar en el modulo
+	a importar todas las bibliotecas a con su ruta exacta ej:
+	
+	Carpetas(+) y ficheros del proyecto(-)
+	+ source 
+	  - main.py
+	  - utils.py
+  	+ tests
+	  - test_data.py
+#+BEGIN_SRC python (utils.py)
+def suma2(a):
+	return a + 1
+
+#+END_SRC
+
+#+BEGIN_SRC python (main.py)
+  import source.utils as utils  
+
+  def mul2(param):
+  	return suma(param) * 2
+
+#+END_SRC
+	
+#+BEGIN_SRC python (test_data.py)
+  # para que aqui funcione la importacion de las bibliotecas
+  # debemos en los archivos que usan otras bibliotecas importar de la forma de (main.py) 
+  from source.utils import *
+  from source.main import *
+
+  def test_import_utils_works():
+	  assert mul2(3) == 6
+
+
+#+END_SRC
+** Obtener referencia de un objeto y su valor con id_ y la biblioteca _ctypes_
+	- La funcion id devuelve la direccion de memoria de la variable
+	  funcion o clase que se le pase, pero no se puede para llamar estos elementos
+	  directamente, por lo que se debe hacer uso de funciones que permita llamar
+	  estos elementos.
+	- La funcion usada para estas acciones es la funcion _ctypes.cast_ de la biblioteca
+	  _ctypes_
+#+BEGIN_SRC python
+	import ctypes
+  class TestRef:
+	  def __init__(self):
+		  pass
+
+	  def show(self):
+		  print('Hola mundo')
+
+  # Inicializar la clase Testref
+  testref = TestRef()
+
+  # Guarda en trd su direccion de memoria 
+  trd = id(testref)
+
+  # LLama a la clase TestRef con la direccion de memoria almacena en trd
+  # atraves de la funcion ctypes.cast de la libreria ctypes 
+  val = ctypes.cast(trd,ctypes.py_object).value
+
+  # Invoca la funcion show
+  val.show()
+
+#+END_SRC
+
+** Como funciona el sistema de rutas de Flask
+#+BEGIN_SRC python
+ #Rutas en Flask
+ class Flask:
+     def __init__(self):
+         self.route_functions = {}
+       
+     def route(self,url_pattern):
+         def wrap(fn):
+             self.route_functions[url_pattern] = fn
+             return fn
+         return wrap
+   
+     def get_routes(self):
+          print(self.route_functions)
+
+
+ app = Flask()
+
+ @app.route('/')
+ def index():
+     print("hola")
+
+ app.get_routes()
+#+END_SRC
+
+** Decorators
+#+BEGIN_SRC python decorator
+  
+#+END_SRC

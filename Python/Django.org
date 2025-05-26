@@ -1,0 +1,638 @@
+#+STARTUP: content
+
+* Django (Snippets de codigo)
+** Plantillas (TEMPLATES)
+*** Django tiene 4 construccion basicas
+  - Renderizado de via doble llaves *{{ }}*
+  - Script de acciones como condicionales y ciclos usandos etiquetas *{% now "Y" %}*
+  - Comentarios *{# comment #}*
+  - Modificacion de valores de salida via filtrado de datos *{{ name | upper }}*
+	el filtro se aplica despues de la variable dentro de las dobles comillas 
+  - Tambien se puede renderizar condicionales con *if else*
+*** Etiquetas predifinidas en django
+  - Existen etiquetas predefinidas en django como *{% lorem %}*
+	que se expanden para mostrar la frase mas larga 'lorem ipsum dolor sit amet...'
+  - *{% lorem %}* toma parametros adicionales para mostrar *palabras, bloques y parrafos*.
+  ejemplo *{% lorem 5 w %}* muestra solo las primeras cinco palabras
+*** Bloques mas comunes de django
+**** Bloque IF ELSE
+  - El bloque *if else* admite todas las operaciones boleanas de django su sintaxis es:
+**** Bloque FOR 
+  - El bloque *for* es similar al bloque *if*, aunque se usa mucho en operaciones con:
+	<li> <ul> <table> y tiene funciones adicionales.
+#+BEGIN_SRC python bloque if
+ {% if num > 10 and num < 100 %}
+    {{ Hola }}
+ {% else %}
+  	{{ Adios }}
+ {% endif %}
+#+END_SRC
+	
+#+BEGIN_SRC python bloque for
+  <ul>
+	{% for elementos in elmenentos %}
+	<li> {{ elementos.atributos }} </li>
+	{% empty %} # Atributo para cuando la lista este vacia
+	   <li><i>Lista vacia</i><li>
+	{% enfor %}
+  </ul>
+#+END_SRC
+
+  - Hay una variable implicita que existe dentro del ciclo for:
+    *forloop*
+  - Esta variable tiene atributos como:
+	*forloop.counter*      Devuelve el valor actual de la iteracion comenzando por 1.
+	*forloop.counter0*     Devuelve el valor actual de la iteracion comenzando por 0.
+	*forloop.revcounter*   Devuelve el valor de la iteracion en reversa terminando en 1.
+	*forloop.revcounter0*  Devuelve el valor de la iteracion en reversa terminando en 0.
+	*forloop.first*        Devuelve verdadero si es el elementos de la primera posicion. 
+	*forloop.last*         Devuelve verdadero si es el elementos de la ultima posicion. 
+	*forloop.parentloop*   Devuelve el objeto del ciclo padre para el ciclo que rodea a los ciclos
+	anidados. 
+
+#+BEGIN_SRC python bloque for
+	{% for elementos in elmenentos %}
+		{% if foorloop.last %} y {% endif %}
+		{{ foorloop.counter }}. {{ elementos.name }}
+		{% if foorloop.last %}. {% else %}, {% endif %}
+	{% enfor %}
+#+END_SRC
+
+**** Comentarios 
+	 - Los comentarios se puede pueden usar de 2 forma:
+	   - Una sola linea
+	   - Multiple lineas, para comentar (donde se puede dejar mensaje en la linea que se comenta)
+		 
+#+BEGIN_SRC python comentarios
+  <ul>
+	<li>
+	 Alumno 1 {# comentario de una linea #}
+	</li>
+		{% comment "Mensaje de este comentario" %}
+	<li>
+		Alumno 1
+	</li>
+	<li>
+		Alumno 2
+	</li>
+		{% endcomment %}
+   </ul>
+#+END_SRC
+
+**** Bloque verbatim
+	 - En los bloques verbatim se puede escribir codigo tal cual
+	   donde el motor de python ignora la sintaxis dentro de este bloque.
+
+#+BEGIN_SRC python verbatim
+  {% verbatim myblock %}
+	En este bloque se mostrara tal cual los bloques, parentesis
+	y demas elementos de que no se renderizan en el motor de plantillas,
+    ademas de los bloques {% verbatim %}
+
+	  <ul>	
+		  <li>
+		  Alumno 1 {# comentario de una linea #}
+		  </li>
+			  {% comment "Mensaje de este comentario" %}
+		  <li>
+			  {{ nombre }}
+		  </li>
+		  <li>
+			  Alumno 2
+		  </li>
+			  {% endcomment %}
+	  </ul>
+  {% endverbatim myblock %}
+#+END_SRC
+**** Etiqueta URL
+   - Se usa la etiqueta url en las plantillas para llamar a las funciones
+     definidas en las rutas.
+   - En el html se usa la etiqueta url para llamar a esa ruta.
+   - Se aconseja nombra las rutas como se muestra a continuacion.
+
+  #+BEGIN_SRC  python
+     from home import views as home_views
+
+      urlpatterns = [
+	    path('credits/', home_views.credits, name="credits"), 
+           # name = "credits" es como se nombra la ruta 
+     ]
+
+    <a href="{% url 'credits' id_del_parametro_si_existe %}">Nombre de la ruta a llamar</a> 
+  #+END_SRC
+**** Filtros comunes
+   - A veces se desea realizar operacion que se pueden hacer de forma rapida como
+     es caso del uso de un *for*, *if* ect.. Pero hay otras operaciones que se pueden relizar sobre
+     los datos a mostrar y son comunes en el motor de plantillas.
+  #+BEGIN_SRC  python
+    {{ word | upper  }}      # convierte el dato en mayuscula
+    {{ word | last  }}       # devuelve el ultimo valor de la lista
+    {{ word | first  }}      # devuelve el primer valor de la lista
+    {{ word | pluralize  }}  # convierte el dato en mayuscula
+  #+END_SRC
+**** Herencia de bloques superiores
+   - Se puede usar el contenido de un bloque superior en la herencia de
+     plantillas y evitar la sobre escritura del contenido bloque.
+  #+BEGIN_SRC  python herencia de plantillas
+    # base.html
+    <title>{% block title%}Hola {% endblock %}</title>
+    
+    # index.html hereda de base.html
+    <title>{% block title%}{{ block.super }} Mundo {% endblock %}</title>
+
+  #+END_SRC
+
+**** Includes
+    - Los includes permiten adicionar bloques de codigo
+      sin insertar en otras plantillas
+    - Los includes tambien admiten parametros con la palabar reservada _with_
+      pasandole un datos con la forma *llave=valor*
+    #+BEGIN_SRC  python Includes
+    ## Ejemplo 1
+    # base.html
+    <h1>Hola</h1>
+
+    # index.html 
+     {% include 'base.html' %}
+
+    ## Ejemplo 2
+    # pagination.html	
+	{% if prev %}
+	   <a href="?page={{prev}}">Prev</a>
+	{% endif %}
+    
+	{% if next %}
+    	   <a href="?page={{next}}">Next</a>
+	{% endif %}
+
+    # index.html 
+     {% include 'pagination.html' with prev=4 next=6 %}
+  #+END_SRC
+
+**** Etiqueta static 
+   - La etiqueta *static* se debe colocar en la cabecera de las plantillas html
+    #+BEGIN_SRC  python static
+      # base.html
+      {% load static %}
+      <html>
+	<head>
+	  <link rel="stylesheet" href="{ static 'css/style.css'}"> 
+  #+END_SRC
+** Django ORM (Object Relational Mapping)
+*** Funcionalidades de ORM
+   - Para poder migrar los modelos declarados por el usuario
+     se necesita usar el comando *makemigrations* y luego el comando
+     *migrate*
+  #+BEGIN_SRC bash
+    # Los dos comandos son similares
+    python manage.py makemigrations 
+    django-admin manage.py makemigrations 
+
+    python manage.py migrate 
+  #+END_SRC
+
+   - Otros de los componentes de django (si esta instalado sqlite3)
+     es el comando *dbshell*. Este commando activa la terminal interactiva de
+     django para trabajar con sqlite3
+
+  #+BEGIN_SRC bash
+    sqlite3> .tables # Muestra todas las tablas
+    sqlite3> .schema "table_name" # Muestra el schema en sql de la tabla en cuestion
+    
+  #+END_SRC
+  
+*** Modal Queries
+    - Todos los modelos tienen una structura declarativa y funcional
+      que permiten gestionar las consultas de los Modelos en cuestion.
+    - Las funcionalidades como *.create()* *objects.filter()* u *objects.first()*
+      permiten realizar operaciones de busqueda en los objectos que se llaman.
+    - Los Modal Querys se ejecutan de forma tardia (Lazy)
+  #+BEGIN_SRC python Ejemplo de creacion
+    >>> from bands.models import Musician
+    >>> from datetime import date
+    >>> steve = Musician.objects.create(first_name="Steve",
+						last_name="Vai",
+    						birth=date(1960, 6, 6))
+    >>> steve
+    >>> <Musician: Musician object (1)>
+  #+END_SRC
+
+  #+BEGIN_SRC python Ejemplo de busqueda del primer elemento y el ultimo elemento
+    (venv) RiffMates$ python manage.py shell
+    Python 3.12.1
+    Type "help", "copyright", "credits" or "license" for more information.
+    (InteractiveConsole)
+    >>> from bands.models import Musician
+    >>> steve = Musician.objects.first()
+    >>> steve
+    >>> <Musician: Musician(id=1, last_name=Vai)>
+
+    >>> Musician.objects.all()
+    >>> <QuerySet [<Musician: Musician(id=1, last_name=Vai)>, <Musician:
+    >>> Musician(id=2, last_name=Lennon)>, <Musician: Musician(id=3,
+    >>> last_name=Bonham)>]>
+
+    >>> result = Musician.objects.all()
+    >>> result[1]
+    >>> <Musician: Musician(id=2, last_name=Lennon)>
+  #+END_SRC
+   - Cuando se hace una consulta se puede usar determinadas
+     frases que permiten la busqueda mas certera de datos
+  #+BEGIN_SRC python
+    # En este casos se puede filtar usando __starswith para obtener
+    # todos los datos que empiezan con "J" 
+    >>> Musician.objects.filter(first_name__startswith="J")
+    >>> <QuerySet [<Musician: Musician(id=2, last_name=Lennon)>,
+	       <Musician: Musician(id=3, last_name=Bonham)>]>
+    # En este otro caso esta __gte que significa "greater than equal"
+    >>> Musician.objects.filter(birth__gte=date(1945, 1, 1))
+    >>> <QuerySet [<Musician: Musician(id=1, last_name=Vai)>, <Musician:
+	 Musician(id=3, last_name=Bonham)>]>
+
+# Insertar en la tabla mas abajo
+__inIn iterableObjects with a field value matching one of
+the values given in an iterable. Example:
+id__in=[1, 4, 6] matches objects with
+an ID field of 1, 4, or 6.
+__ltLesser thanObjects with a field lesser than the given
+value
+__lteLesser than equalObjects with a field lesser than or equal to
+the given value
+__startswithStarts withText field starts with the given value
+__istartswithCase-insensitive starts withText field starts with the given value, ignoring
+case
+__endswith | Ends withText field ends with the given value
+__iendswithCase-insensitive ends withText field ends with the given value, ignoring
+case
+
+
+
+    
+ #+END_SRC
+| Campop a buscar | Nombre                           | Descripcion                                |
+|-----------------+----------------------------------+--------------------------------------------|
+| __contains      | Contiene                         | Campo de texto contiene un valor dado      |
+|-----------------+----------------------------------+--------------------------------------------|
+| __icontains     | Contiene un ignorando mayusculas | Campo de texto contiene un valor dado      |
+|                 |                                  | en mayuscula y minuscula.                  |
+|-----------------+----------------------------------+--------------------------------------------|
+| __gte           | Mayor igual que                  | Los objetos de fecha con valor mayor igual |
+|-----------------+----------------------------------+--------------------------------------------|
+
+   - Para Obtener el elemento que se desea se usa la funcion *.get()*
+   - Para actualizar el objeto se accede a la variable que se necesita
+     como si fuera un objeto normal y luego se usa la funcion *.save()*
+     para guardar los cambios.
+  #+BEGIN_SRC python
+    >>> dad = Musician.objects.get(id=4)
+    >>> dad
+    >>> <Musician: Musician(id=4, last_name=Trudeau)>
+
+    # Para guardar los cambios en la base de datos
+    >>> dad.last_name = "Bush"
+    >>> dad.save()
+  #+END_SRC
+   - Para borrar un elemento de la base de datos se usa *.delete()*
+     el cual devuelve una tupla con el valor borrado de la base de datos
+     pero dentro del alcanze de la funcion, que permite volver a insertalo.
+     
+  #+BEGIN_SRC python
+   >>> joseph.delete()
+   >>> (1, {'bands.Musician': 1})
+  #+END_SRC
+  
+*** Modelos Query en las vistas
+  #+BEGIN_SRC python
+    http://localhost:8000/bands/musician/1/
+    http://localhost:8000/bands/musicians/?page=3
+
+
+
+    # ruta basica 1
+    http://localhost:8000/bands/musician/1/
+
+    # view path
+    bands/musician/1/
+
+    # Argumento URL
+    /1/
+
+    
+    # ruta basica 2
+    http://localhost:8000/bands/musician/?page=3
+
+    # view path
+    bands/musician/
+
+    # Parametros de consulta (Query params)
+    /?page=3
+  #+END_SRC
+
+*** Consultas de varios elementos
+  #+BEGIN_SRC python
+    #view.py		
+    from .models import Musician
+
+	def musicians(request):
+	    last_name field.
+	    data = {
+	    'musicians':Musician.objects.all().order_by('last_name'),
+	    }
+	return render(request, "allmusicians.html", data)
+
+    # url.py
+    from django.urls import path
+
+    urlpatterns = [
+	path('musicians/', views.musicians, name="musicians"),
+    ]
+
+    # allmusicians.html
+    {% extends 'base.html' %} 
+    <ul>
+        {% for musician in musicians %}
+	    <li> <a href="{% url 'musician' musician.id %}">
+	    {{musician.last_name}}, {{musician.first_name}}</a> </li>
+        {% empty %}
+	    <li> <i>No musicians in the database</i> </li>
+        {% endfor %}
+    </ul>
+  #+END_SRC
+*** Paginacion
+
+  #+BEGIN_SRC python
+		from django.core.paginator import Paginator # importa la clase paginator
+
+		def musicians(request):
+		    all_musicians = Musician.objects.all().order_by('last_name') # LLama todos los elementos ordenados por apellidos
+		    paginator = Paginator(all_musicians, 2) # Crea una consulta con la clase Paginator limitado a dos elementos por pagina
+		    page_num = request.GET.get('page', 1) # Llama a la llave de la pagina desde el diccionario GET devolviendo por defecto 1 si el diccionario no existe
+		    page_num = int(page_num) # Convierte la direccion de texto a int
+		    if page_num < 1:         # El valor minimo para la pagina es 1
+			    page_num = 1
+		    elif page_num > paginator.num_pages: # El valor maximo para el numero de paginas es el numero de paginas
+			    page_num = paginator.num_pages
+
+		    page = paginator.page(page_num) # Llama el conjunto de objetos 
+		    data = {
+			    'musicians':page.object_list,  # Mantiene la plantilla limpia y mejor para leer
+			    'page':page,		       # Pasa el objeto para obtener la informacion del numero de la pagina
+			    }
+		    return render(request, "musicians.html", data)
+
+	    # Pagina allmusicians.html
+	    {% if page.has_other_pages %}
+	    {% if page.has_previous %}
+	    <a href="{% url 'musicians' %}?page={{page.previous_page_number}}">Prev</a> &nbsp;&nbsp;&nbsp;
+	    {% endif %}
+	    {% if page.has_next %}
+	    <a href="{% url 'musicians' %}?page={{page.next_page_number}}">Next</a>
+	    And a query parameter
+	    {% endif %}
+	    for the next page
+	    {% endif %}
+
+    # Url.py
+    from django.urls import path
+    from . import views
+
+    urlpatterns = [
+	path("<int:musician_id>/", views.musicians, name="musicians"),
+	path("musicos/", views.all_musicians, name="musicos"),
+    ]
+
+  #+END_SRC
+
+*** Modelos uno a muchos
+
+  #+BEGIN_SRC python modelo uno a muchos
+	class Venue(models.Model):
+ 	    name = models.CharField(max_length=20)
+	
+    	    def __str__(self):
+     	        return f"Venue(id={self.id}, name={self.name})"
+	
+	
+	class Room(models.Model):
+    	    name = models.CharField(max_length=20)
+    	    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+	
+    	    def __str__(self):
+                return f"Room(id={self.id}, name={self.name})"I
+  #+END_SRC 
+
+  #+BEGIN_SRC python consulta hacia adelante con modelos relacionales
+(venv) RiffMates$ python manage.py shell
+Python 3.12.1
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from bands.models import Venue, Room
+>>> cbgb = Venue.objects.create(name="CBGB")
+>>> red = Room.objects.create(name="Red", venue=cbgb)
+>>> blue = Room.objects.create(name="Blue", venue=cbgb)
+
+>>> red.venue
+>>> <Venue: Venue(id=1, name=CBGB)>
+>>> red.venue.id
+>>> 1
+>>> red.venue.name
+>>> 'CBGB'
+  #+END_SRC 
+
+    - Se puede hacer consulta hacia atras con el modelo padre
+      usando el nombre del modelo hijo en minuscula separado por
+      *_set*, donde todas las funciones de Query se pueden usar tambien
+      como *.all()* como se muestra en el proximo ejemplo.
+    - Debido a que room_set is un attributo y las queries son llamadas,Puedes pasar el objeto Venue
+      en la plantilla e iterar sobre los rooms usando *{% for room in venue.room_set.all %}*
+  #+BEGIN_SRC python consulta hacia atras con modelos relacionales
+    (venv) RiffMates$ python manage.py shell
+    Python 3.12.1
+    Type "help", "copyright", "credits" or "license" for more information.
+    (InteractiveConsole)
+    >>> venue.room_set.all()
+    >>> <QuerySet [<Room: Room(id=1, name=Red)>, <Room: Room(id=2, name=Blue)>]>
+    
+    >>> venue.room_set.filter(room__name="Red")
+    >>> <QuerySet [<Room: Room(id=1, name=Red)>]>
+    >>> venue.room_set.filter(room__name__startswith="Red")
+  #+END_SRC 
+
+*** Modelos muchos a muchos
+   - Cuando se crea modelos muchos a muchos la relacion de la tabla
+     intermedia puede ir en la tabla que se desee
+  #+BEGIN_SRC python
+    class Musicians(models.Model):
+	first_name = models.CharField("first_name", max_length=50)
+	last_name = models.CharField("last_name", max_length=50)
+	birth_date = models.DateField("birth_date", auto_now=False, auto_now_add=False)
+
+	def __str__(self) -> str:
+	    return f"{self.first_name}  {self.last_name}"
+
+
+    class Band(models.Model):
+	name = models.CharField(max_length=20)
+	musicians = models.ManyToManyField(Musician)
+
+	def __str__(self):
+	    return f"Band(id={self.id}, name={self.name})"
+
+    # Inserto una nueva banda
+    >>> from bands.models import Band
+    >>> beatles = Band.objects.create(name="The Beatles")
+
+    # Obtener el objeto por nombre del musico
+    >>> from bands.models import Musician
+    >>> lennon = Musician.objects.get(last_name="Lennon")
+    >>> lennon
+    >>> <Musician: Musician(id=2, last_name=Lennon)>
+
+    # Adiciono un musico a la banda de los beatles  
+    >>> beatles.musicians.add(lennon)
+
+    # Obtengo la lista de todos los musicos
+    >>> beatles.musicians.all()
+    >>> <QuerySet [<Musician: Musician(id=2, last_name=Lennon)>]>
+
+    # Obtengo la lista de todas las bandas a travez de los musicos
+    >>> Musicians.band_set.all()
+    >>> <QuerySet [<Musician: Musician(id=2, last_name=Lennon)>]>
+    >>> <QuerySet [<Band: Band(id=1, name=The Beatles)>]>
+
+    # Ejemplo de multiple relaciones muchos a muchos
+    >>> vai = Musician.objects.get(last_name="Vai")
+    >>> bonham = Musician.objects.get(last_name="Bonham")
+    >>> wishful = Band.objects.create(name="Wishful Thinking")
+    >>> wishful.musicians.add(lennon, vai, bonham)
+    >>> wishful.musicians.all()
+    >>> <QuerySet [<Musician: Musician(id=1, last_name=Vai)>,
+    >>> <Musician: Musician(id=2, last_name=Lennon)>,
+    >>> <Musician: Musician(id=3, last_name=Bonham)>]>
+  #+END_SRC 
+
+*** Salvar y restaurar la base de datos usando fixtures
+  #+BEGIN_SRC python
+    # Leer la base de datos en format legible
+    (venv) RiffMates$ python manage.py dumpdata bands | python -m json.tool
+
+    # Salvar la base de datos con el modelo bands en el archivo bands.json
+    (venv) RiffMates$ python manage.py dumpdata bands > bands.json
+
+    (venv) RiffMates$ mkdir bands/fixtures
+    (venv) RiffMates$ mv bands.json bands/fixtures/
+    Move the bands.json fixture
+    (venv) RiffMates$ rm db.sqlite3
+    into the new directory.
+    (venv) RiffMates$ python manage.py migrate
+    Operations to perform:
+    Apply all migrations: admin, auth, bands, contenttypes, sessions
+    Running migrations:
+    Applying contenttypes.0001_initial... OK
+    Applying auth.0001_initial... OK
+    Applying admin.0001_initial... OK
+    Applying admin.0002_logentry_remove_auto_add... OK
+    Applying admin.0003_logentry_add_action_flag_choices... OK
+    Applying contenttypes.0002_remove_content_type_name... OK
+    Applying auth.0002_alter_permission_name_max_length... OK
+    Applying auth.0003_alter_user_email_max_length... OK
+    Applying auth.0004_alter_user_username_opts... OK
+    Applying auth.0005_alter_user_last_login_null... OK
+    Applying auth.0006_require_contenttypes_0002... OK
+    Applying auth.0007_alter_validators_add_error_messages... OK
+    Applying auth.0008_alter_user_username_max_length... OK
+    Applying auth.0009_alter_user_last_name_max_length... OK
+    Applying auth.0010_alter_group_name_max_length... OK
+    Applying auth.0011_update_proxy_permissions... OK
+    Applying auth.0012_alter_user_first_name_max_length... OK
+    Applying bands.0001_initial... OK
+    Applying bands.0002_venue_room... OK
+    Applying bands.0003_band... OK
+    Load the fixture using the app
+    Applying sessions.0001_initial... OK
+    name instead of the filename.
+
+    # Cargar la base de datos con el nombre de la app en vez del archivo
+    # de bands.json
+    (venv) RiffMates$ python manage.py loaddata bands
+    Installed 8 object(s) from 1 fixture(s)
+
+    # Cargar la base de datos con el archivo bands.json
+    (venv) RiffMates$ python manage.py loaddata bands.json
+    
+  #+END_SRC 
+*** Adicionando tu propio modelo administrativo (Pendient)
+** Decoradores de validacion de autenticacion
+ - Para validar que se trabaja en una funcion con una ruta authenticada
+   se usa las funciones decoradoras de la biblioteca de django
+ 
+  #+BEGIN_SRC python
+    # views.py
+    from django.contrib.auth.decorator import login_require
+
+    @login_require() # se puede definir la ruta aqui aunque por defecto es login_url="/accounts/login/"
+    def function(request):
+	retrun render(request,"ruta/de/la/pagina.html",data={})
+
+    # Se puede definir en los setting.py del proyecto
+    # como:
+    # LOGIN_URL = "login"
+    # donde "login" es name="login" de la
+    # ruta path("autenticarse",views.mi_funcion_de_logeo, name="login")
+
+  #+END_SRC 
+** Uso de generics
+  #+BEGIN_SRC python
+	from django.shortcuts import get_object_or_404 
+	from django.views import generic
+
+	class NomencladoresListView(generic.ListView):
+	     model = Nomencladores
+	     template_name = "nomencladores/index.html"
+	    # context_object_name = "nomencladores"
+
+	    # Se debe usar el context_object_name cuando no se define el model y
+	    # se usa la funcion get_queryset sino se usara el nombre_del_modelo con el sufijo _list por defecto:
+	    # nombre_del_modelo_list
+	    # def get_queryset(self):
+	    #     return Nomencladores.objects.all()
+
+	    # Para usar parametros dentro de la funcion get_queryset hay que invocarlos con:
+	    def get_queryset(self):
+		pk = self.kwargs.get('pk')
+		return get_object_or_404(Nomencladores,pk=pk)
+
+    # Ejemplo de como capturar parametros a una function ClassView 
+    class NomencladoresDetailView(generic.DetailView):
+	model = Nomencladores
+	template_name = "nomencladores/edit.html"
+	context_object_name = "nom"
+
+	def get_object(self):
+	    id_ = self.kwargs.get("pk") 
+	    return get_object_or_404(Nomencladores, id=id_)
+  #+END_SRC 
+** Importar contenido de la views a la template para leer con js
+#+BEGIN_SRC python
+   def lista_de_nomencladores(request):
+	 data = {
+		 "nomencladores" :Nomencladores.objects.all(),
+		 # Se debe convertir a lista de valores de django para poder ser leidos en la template
+		 "json4temp" : list(Nomencladores.objects.values()), # IMPORTANTE convertir a .values()
+	  }
+	 return render(request,"vista.html",data)
+
+   # vista.html
+
+   # La siguiente etiqueta convertira los datos que se le pase a la vista donde:
+   # - json4temp es el nombre del parametro que se le pasa los parametros
+   # - json_script es el filtro que  dice a que tipo de datos filtar en este caso
+   # una etiqueta de tipo apclication/json con una lista de parametros json
+   # y el identificador que recibira la etiqueta: "identificador_de_la_etiqueta_que_se_crea"
+   {{ json4temp|json_script:"identificador_de_la_etiqueta_que_se_crea" }}
+  <script>
+   const info_block = document.getElementById("identificador_de_la_etiqueta_que_se_crea");
+   const nomencladores = JSON.parse(info_block.innerHTML);
+  </script>
+#+END_SRC 
+

@@ -1,0 +1,91 @@
+
+* Adimistracion de Redes
+** Tipo de cables y conectores
+1. coaxial
+2. conector bnb
+3. Par trenzado
+4. Rj 45 (Tipologia de estrella)
+5. Cables y conectores de fibra optica
+** Topologias de red
+1. Topologia en bus
+   - Permite la conexion de todas la maquinas a un solo cable,
+      perfecta para grupos de pocas computadoras.
+   - Todos los ordenadores estan pendiente a los mensajes de la red y recogen solo una trama
+      si son destinatarios sino la ignoran
+   - Pro:  
+     1. Facil de instalar
+     2. Bajo costo
+     3. Cantidad minima de cable a utillizar
+   - Con:
+     1. La velocidad disminuye a medida que se conectan mas maquinas
+2. Topologia en anillo
+   - Se conectan una pc a continuacion de la otra, donde la ultima de la red se conecta
+      a la primera formando un anillo  
+   - La senial se transmite en una sola direccion, cada pc resive y envia la informacion
+   - Pro:
+     1. Se pueden aunmentar el numero de maquinas en la red
+     2. Cada pc amplifica la senial no importa la distancia   
+     3. No hay colicion en la informacion trasnmitida que se envia porque en la red
+           se circula un token y un pass que identifica la coputadora que tiene derecho
+           a transmitir informacion
+   - Cons:
+     1. A medida que aumenta la cantidad de maquinas en la red,
+           disminuye la velocidad de respuesta de la red.
+     2. Un fallo en la estacion o canal de comunicacion bloquea toda la red,
+           por lo general resulta dificil localizar el fallo y repararlo de forma inmediata
+3. Topologia en estrella
+   - Se conectan una pc a un dispositivo central que se encargan de recibir y transmitir seniales a las pc
+      Estos equipos simplifican el uso de la administracion de la red y su reparacion
+   - Pro:
+      1. Se pueden aunmentar o disminuir el numero de estaciones
+      2. Si se produce un fallos no repercutira en el funcionamiento general de la red 
+      3. Alta velocidad de transmicion entre las maquina principal y el servidor
+   - Cons:
+      1. Baja velocidad de transmicion entre la maquinas
+** Tipos de redes segun su alcanze
+1. Local Area Network(LAN)
+   1. Es una red de extension reducida donde no hay mas de 5 kilometros de distancia entre dos pc
+   2. Una configuracion tipica en un area de red local es tener una pc llamada servidor de fichero
+       en la que se almacena todo el software de control de la red.
+   3. La mayoria estan conectadas entre por targetas y cable de red.
+2. Metropolitan Area Network(MAN)
+   1. Tienen extensiones mayores como ciudades o distritos. Mediante la interconexion de redes LAN se distribuye
+       la informatica de los territorios 
+   2. Se conectan mediante enlaces telefonicos de alta y muy alta velocidad
+3. World Area Network (WAN)
+   1. Las redes de area extensa, como paises y continentes. Se utilizan cables transoceanicos o satelites
+       para enlazar puntos distantes
+   2. Se utilizan multiplexores para conectar redes metropolitanas a redes globales utilizando tecnicas que permite
+       la interconecion de distento tipos de redes. la red mas conocida es la internet.
+** Recursos compartidos
+1. Es cuando se comparte un dispositivo de hardware en la red
+   1. Disco duro
+   2. Carpetas
+   3. Archivos
+   4. Quemadores
+   5. Impresora
+2. Para compartir los recursos en window se siguen los siguintes pasos
+   1. Click derecho sobre el objeto a compartir
+   2. Selecione la pestania de compartir
+   3. Habilite las opciones para compartir asi como los ususarios a los que le dara permiso
+   4. Click en aceptar y verifique que el recurso a sido compartido
+3. Mi sitios de red
+   1. Mediante esta carpeta podemos buscar recursos compartidos en la red que esta conectado el equipo
+   2. Doble click en el icono de red
+   3. Si se abre una ventana vera los archivos compartidos y si tiene permiso del usuario podra navegar
+       por los datos como si fueran suyos
+   4. Para acceder a toda la red haga doble click sobre el icono de todo la red y explore el arbol de equipos
+       hasta que encuentre la maquina que busca
+** Protocolos de comunicacion
+- Servidor:
+  Ordenador potente para ser consultado por otros clientes u otros ordenadores
+- Tipos:
+  - Web: Contiene ls sitios web de uso institucional
+  - ICR: Servicio de chat o mesajeria instantanea
+  - DNS: Servidor de nombre de dominio
+  - ISP: Proveedor de servicios de internet
+  - FTP: Protocolo de transferencia de archivo
+  - EMAIL: Correo electronico
+- Router:
+  Ordenador especial que interconecta redes y selecciona el camino mas optimo
+  para el intercambio de informacion 

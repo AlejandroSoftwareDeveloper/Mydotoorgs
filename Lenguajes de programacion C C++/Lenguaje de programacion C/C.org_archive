@@ -1,0 +1,61 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file d:/Literatura y Videotutoriales/Base de conocimiento/Lenguaje de programacion C/C.org
+
+
+* TODO Aritmetica de punteros(Pointer arithmetic)
+:PROPERTIES:
+:ARCHIVE_TIME: 2023-10-31 mar 19:50
+:ARCHIVE_FILE: d:/Literatura y Videotutoriales/Base de conocimiento/Lenguaje de programacion C/C.org
+:ARCHIVE_OLPATH: Lenguaje C/12. Pointers
+:ARCHIVE_CATEGORY: C
+:ARCHIVE_TODO: TODO
+:END:
+	- El verdadero poder de un puntero se muestra cuando se ve trabaja con una secuencia de elementos
+	  en un arreglo.
+    - La aritmetica de punteros te permite incrementar o decrementar la direccion de punteros sumando valores enteros al puntero.
+	  Esta accion solo funciona bien con arreglos
+#+BEGIN_SRC C
+  // En (Punteros y arreglos (seccion anterior)) se muestra el uso de *valuesPtr y como este accede al primer elemento del arreglo con
+  // con values[0]
+  int values[] = {1,2,3,4};
+  int *valuePtr = NULL;  //puede ser usado para ser acecedido al primer valor del arreglo values
+  valuePtr = values;     //valuePtr puede ser usado para acceder al arreglo en la primera posicion.
+						 // o sea values[0]
+
+  //Si se desea acceder al valor, del tercer elemento del arreglo (values[3]) con el puntero valuePtr
+  //se puede aplicar el operador
+
+  int array[] = "Hola me llamo Alejandro";
+  int *ptr    = array;
+
+  printf("%c",*ptr); //Aqui se motrara el carater 'H'  
+  ptr++              //incremento en uno, tambien puedo escribirlo ptr = ptr + 1
+  //
+  printf("%c",*ptr); //Aqui se motrara el carater 'o'  
+
+  --ptr
+  printf("%c",*ptr); //Aqui se motrara el carater 'H' nuevamente 
+#+END_SRC
+
+- Otro ejemplo de aritmetica de punteros
+#+BEGIN_SRC C
+
+	int arraySum(int array[],const int n){
+			int sum = 0,*ptr;
+			int *const arrayEnd = array + n;
+			for(ptr = array;ptr < arrayEnd;ptr++ ){
+					sum += *ptr;
+			 }
+			 return sum;
+	}	
+
+	void main(){
+		int arraySum(int array[],const int n);
+		int values[10] = {3,7,-9,3,6,-1,7,9,1,-5};
+		printf("The sum is %i\n",arraySum(values,10));
+	}
+#+END_SRC	  
+	min 1:34
+	

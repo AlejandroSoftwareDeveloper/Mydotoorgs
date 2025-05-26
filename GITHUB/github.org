@@ -1,0 +1,9 @@
+#+STARTUP: content
+
+* Scripts
+
+-- Script para iniciar github en window 10 x84 por cmd:
+start "nombre del fichero o espacio en blanco" "%SYSTEMDRIVE%\Program Files(x86)\Git\bin\sh.exe" --login
+
+-- Script para iniciar github en window 10 x64 por cmd:
+start "nombre del fichero o espacio en blanco" "%PROGRAMFILES%\Git\bin\sh.exe" --login

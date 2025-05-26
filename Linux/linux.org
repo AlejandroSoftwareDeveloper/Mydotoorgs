@@ -1,0 +1,82 @@
+#+STARTAPP :content
+* Linux
+** Comandos
+  - Lista de comandos para trabajar en linux
+*** Alias
+    - En linux la palabra alias permite crear comandos
+      personalizados
+#+BEGIN_SRC bash
+  # Para crearlos en Ubuntu/Debian
+  # se usa el archivo .bashrc
+  # en la direccion ~/.bashrc
+
+  # CREACION DE UN ALIAS Para ver todos
+  # los archivos en todos los modos
+  alias ll="ls -alF"
+
+  # Para guardar los cambios y se ejecute los cambios
+  source ~/.bashrc
+
+  # Para eliminar un alias o todos se ejecutan los
+  # Los siguientes comandos
+
+  # Eliminar un alias
+   unalias nombre_del_alias
+   unalias -a [nombre_de_todos_los_alias]
+
+#+END_SRC
+*** Subir y bajar volumen por consola
+   - Para subir el volumen en 10%
+     pactl set-sink-volume 0 10% 
+      O
+     pactl set-sink-volume 0 +10% 
+   - Para bajar el volumen en 10%
+     pactl set-sink-volume 0 -10% 
+   - Tambien se puede ajustar solo poniendo el volumen
+     que se desea subir o bajar pasando el numero max
+     ejemplo
+     
+     pactl set-sink-volume 0 10%
+     El ejemplo anterior pondra el volumen 10%
+
+     _CUIDADO LA SIGUIENTE CONFIGURACION PUEDE ROMPER EL EQUIPO_ 
+     pactl set-sink-volume 0 980%
+     El ejemplo anterior pondra el volumen 980%
+
+*** Copiar las rutas de la terminal
+#+BEGIN_SRC bash
+
+  # Instalar la herramienta xclip
+  # sudo apt install xclip
+
+  # Copiar la ruras actual en el clipboard
+  pwd | xclip
+
+#+END_SRC
+
+*** Enlazes simbolicos en linux
+#+BEGIN_SRC bash Crear enlazes simbolicos en linux
+
+  ln -s origen destino
+
+  # Para crear un enlaze de archivos:
+  ln -s /www/server/index.html /carpeta/de/destino/mismo_nombre_u_otro.html
+  ln -s /www/server/index.html /carpeta/de/destino/index.html
+  ln -s /www/server/index.html /carpeta/de/destino/
+
+  # Para crear un enlaze de directorios:
+  ln -s /www/server/  /carpeta/de/destino/
+  
+  # Se deben poner las rutas completas del origen, porque dara problemas al construir el enlace
+  #ejemplo de ruta completa en mi disco duro:
+  ln -s /media/dark/Work System/index.html /carpeta/de/destino/index.html
+
+
+  ln -s /www/server/index.html /carpeta/de/destino/index.html
+
+
+
+  # Para crear un enlaze de carpetas:
+  ln -s /www/server/  /carpeta/de/destino
+
+#+END_SRC

@@ -1,0 +1,8 @@
+#+BEGIN_SRC C
+
+  #include <stdio.h>
+  int main(){
+	  printf("Hola mundo \n");
+	  return 0;
+  }
+#+END_SRC

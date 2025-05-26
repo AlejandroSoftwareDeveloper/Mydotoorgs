@@ -1,0 +1,10 @@
+#+STRATUP: content
+
+* Comandos de mysql
+
+** Acceder al root de mysql
+#+BEGIN_SRC bash
+  # te pedira la contrasenia
+  sudo mysql -u root -p 
+#+END_SRC 
+

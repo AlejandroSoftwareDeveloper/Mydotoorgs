@@ -1,0 +1,53 @@
+#+STARTUP: content
+
+* Relacion uno a uno
+
+#+BEGIN_SRC java OneToOne 
+
+  @Entity
+  public class Person{
+	@id
+	@GeneratedValue(strategy = GenerationType:IDENTITY)
+	private int id
+
+
+	/*
+	   Esta relacion es una version unidireccional
+	   donde en la tabla de persona se mostrara la llave de passport_id
+	   por convencion de hiberbate. Donde passport no sabe de la exitencia
+	   de person, pero al contrario.
+	   Si se quiere cambiar el nombre de la columna se usa @JoinColumn
+	   con la propiedad name que le da el nombre de la columna que se desea
+	*/
+	// Nombre personalizado de la columna
+	// La anotacion @JoinColumn en una relacion uno a uno en la tabla del dueño
+    	// Como en este caso. Person tiene un Passport
+    	// Hibernate sigue por convencion usar como llave primaria el nombre del atributo 
+  	// y id de forma "passport_id" si se quiere cambiar esta forma se usa como se muestra
+	// a continuacion la anotacion JoinColumn. 
+    
+	@OneToOne
+	@JoinColumn(name="passport") 
+	private Passport passport   
+
+	}
+
+  @Entity
+  public class Passport{
+	@id
+	@GeneratedValue(strategy = GenerationType:IDENTITY)
+	private int id
+
+	 /*
+		Si se desea acceder desde la clase opuesta en la relacion uno
+		a uno, se usa @OneToOne con la propiedad mappedBy dando a conocer
+		la variable a la que se hace referencia.
+	 ,*/
+
+	//Nombre de la variable Passport en la clase Person que es passport
+	@OneToOne(mappedBy="passport") 
+	private Person persion
+  }
+#+END_SRC
+
+Me quede en el minuto 22:03 lesson 5
